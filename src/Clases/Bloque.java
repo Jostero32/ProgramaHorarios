@@ -16,7 +16,25 @@ public class Bloque {
 
     public Bloque(String nombre) {
         this.nombre = nombre;
+        this.listaAulas=new ArrayList<>();
     }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Object> getListaAulas() {
+        return this.listaAulas;
+    }
+
+    public void setListaAulas(ArrayList<Object> listaAulas) {
+        this.listaAulas = listaAulas;
+    }
+    
     
     
 }
