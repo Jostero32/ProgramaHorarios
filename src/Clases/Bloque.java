@@ -4,10 +4,19 @@
  */
 package Clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Usuario
  */
 public class Bloque {
+    private String nombre;
+    private ArrayList<Object> listaAulas;
+
+    public Bloque(String nombre) {
+        this.nombre = nombre;
+    }
+    
     
 }
