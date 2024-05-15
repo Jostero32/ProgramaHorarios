@@ -39,7 +39,7 @@ public class Modelo_Usuarios {
     }
 
     public boolean agregarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (username, password, tipo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (usuario, clave, tipo) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, usuario.getUsuario());
             pstmt.setString(2, usuario.getClave());
@@ -72,14 +72,17 @@ public class Modelo_Usuarios {
         return usuarios;
     }
 
-    public boolean actualizarUsuario(Usuario usuario) {
-        String sql = "UPDATE usuarios SET username = ?, password = ?, tipo = ? ";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    public boolean actualizarUsuario(Usuario usuario, String usuarioAnterior) {
+        String sql = "UPDATE usuarios SET usuario = ?, clave = ?, tipo = ? where usuario = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, usuario.getUsuario());
             pstmt.setString(2, usuario.getClave());
             pstmt.setString(3, usuario.getTipo());
+            pstmt.setString(4, usuarioAnterior);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
+
         } catch (SQLException e) {
             if (e.getSQLState().equals("23000")) {
                 JOptionPane.showMessageDialog(null, "Error: El username ya existe.", "Error", 0);

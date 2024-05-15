@@ -207,11 +207,11 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Modificar_U;
     public javax.swing.JTable Tabla_Usuarios;
     public javax.swing.JPasswordField Txt_Clave;
-    private javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
 }

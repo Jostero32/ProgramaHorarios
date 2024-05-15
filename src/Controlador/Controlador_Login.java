@@ -26,7 +26,8 @@ public class Controlador_Login implements MouseListener {
     private Interfaz_Login interfaz;
     private Modelo_Usuarios modeloUsuario;
     private Connection con;
-
+    private Controlador_Inicio inicio;
+    
     public Controlador_Login(Connection con) {
         this.interfaz = new Interfaz_Login();
         this.modeloUsuario = new Modelo_Usuarios(con);
@@ -41,7 +42,10 @@ public class Controlador_Login implements MouseListener {
             try {
                 Usuario us = this.modeloUsuario.entrarLogin(this.interfaz.TextField_Usuario.getText(), this.interfaz.TextField_Clave.getText());
                 if (us != null) {
-                    Controlador_Inicio inicio=new Controlador_Inicio(this.con,us);
+                    this.inicio=new Controlador_Inicio(this.con,us,this);
+                    this.interfaz.dispose();
+                    this.interfaz.TextField_Clave.setText("");
+                    this.interfaz.TextField_Usuario.setText("");
                     inicio.getInterfaz().setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos", "Error", 0);
