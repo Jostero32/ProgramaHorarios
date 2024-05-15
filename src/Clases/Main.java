@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import Controlador.Controlador_Login;
+
 /**
  *
  * @author Usuario
@@ -17,6 +19,8 @@ public class Main {
         // TODO code application logic here
         Mysql m=new Mysql();
         m.closeConnection();
+        Controlador_Login a=new Controlador_Login();
+        a.getInterfaz().setVisible(true);
     }
     
 }
