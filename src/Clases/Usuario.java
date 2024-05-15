@@ -9,31 +9,31 @@ package Clases;
  * @author Usuario
  */
 public class Usuario {
-    private String username;
-    private String password;
+    private String usuario;
+    private String clave;
     private String tipo;
 
     public Usuario( String username, String password, String tipo) {
-        this.username = username;
-        this.password = password;
+        this.usuario = username;
+        this.clave = password;
         this.tipo = tipo;
     }
 
 
-    public String getUsername() {
-        return this.username;
+    public String getUsuario() {
+        return this.usuario;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getClave() {
+        return this.clave;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     public String getTipo() {

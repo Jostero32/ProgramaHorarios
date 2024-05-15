@@ -4,17 +4,37 @@
  */
 package Controlador;
 
+import Modelo.Modelo_Usuarios;
 import Vista.Pestaña_Usuarios;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
  * @author Usuario
  */
-class Controlador_Usuarios {
+class Controlador_Usuarios implements ActionListener {
+
     private Pestaña_Usuarios interfaz;
-    
-    public Controlador_Usuarios (){
-        this.interfaz=new Pestaña_Usuarios();
+    private Modelo_Usuarios modelo;
+
+    public Controlador_Usuarios(Connection conn) throws SQLException {
+        this.interfaz = new Pestaña_Usuarios();
+        this.modelo = new Modelo_Usuarios(conn);
+        this.interfaz.Btn_Agregar_U.addActionListener(this);
+        this.interfaz.Btn_Eliminar_U.addActionListener(this);
+        this.interfaz.Btn_Modificar_U.addActionListener(this);
+        this.interfaz.setUsuarios(this.modelo.obtenerTodosLosUsuarios());
+        this.interfaz.ActualizarTablaUsuarios();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==this.interfaz.Btn_Agregar_U){
+            
+        }
     }
 
     public Pestaña_Usuarios getInterfaz() {
@@ -24,5 +44,5 @@ class Controlador_Usuarios {
     public void setInterfaz(Pestaña_Usuarios interfaz) {
         this.interfaz = interfaz;
     }
-    
+
 }

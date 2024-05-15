@@ -7,6 +7,7 @@ package Controlador;
 import Clases.Usuario;
 import java.sql.Connection;
 import Vista.Interfaz_Inicio;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,9 +19,9 @@ public class Controlador_Inicio {
     private Controlador_Usuarios controlador_usuarios;
     
     
-    public Controlador_Inicio(Connection con,Usuario usuario){
+    public Controlador_Inicio(Connection con,Usuario usuario) throws SQLException{
         this.interfaz=new Interfaz_Inicio();
-        this.controlador_usuarios=new Controlador_Usuarios();
+        this.controlador_usuarios=new Controlador_Usuarios(con);
         this.usuario=usuario;
         this.generarPestañas();
     }

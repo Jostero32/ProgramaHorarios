@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import Clases.Usuario;
+import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,9 +22,17 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
      */
     public Pestaña_Usuarios() {
         initComponents();
-        String columnas[]={"Usuario"};
+        String columnas[] = {"Usuario"};
         this.tabla.setColumnIdentifiers(columnas);
         this.Tabla_Usuarios.setModel(tabla);
+        this.Tabla_Usuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (Tabla_Usuarios.getSelectedRow() != -1) {
+                    actualizarCampos();
+                }
+            }
+        });
     }
 
     /**
@@ -133,9 +145,30 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    public void ActualizarTablaUsuarios() {
+        this.tabla.setRowCount(0);
+        for (Usuario u : this.Usuarios) {
+            this.tabla.addRow(new Object[]{u.getUsuario()});
+        }
+    }
+
+    private void actualizarCampos() {
+        for(Usuario u : this.Usuarios){
+            if(u.getUsuario().matches(this.Tabla_Usuarios.getValueAt(this.Tabla_Usuarios.getSelectedRow(), this.Tabla_Usuarios.getSelectedColumn()).toString())){
+                this.jTextField1.setText(u.getUsuario());
+                this.Txt_Clave.setText(u.getClave());
+                if(u.getTipo().matches("Admin")){
+                    this.jComboBox1.setSelectedIndex(0);
+                }else{
+                    this.jComboBox1.setSelectedIndex(1);
+                }
+                return;
+            }
+        }
+    }
     private void Btn_Agregar_UActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Agregar_UActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_Btn_Agregar_UActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -144,20 +177,29 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
 
     private void BTN_VerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTN_VerMousePressed
         // TODO add your handling code here:
-                this.Txt_Clave.setEchoChar((char)0);
+        this.Txt_Clave.setEchoChar((char) 0);
     }//GEN-LAST:event_BTN_VerMousePressed
 
     private void BTN_VerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTN_VerMouseReleased
         // TODO add your handling code here:
-                this.Txt_Clave.setEchoChar('\u2022');
+        this.Txt_Clave.setEchoChar('\u2022');
     }//GEN-LAST:event_BTN_VerMouseReleased
 
-    public DefaultTableModel tabla = new DefaultTableModel(){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Hacer todas las celdas no editables
-            }
-        };
+    public DefaultTableModel tabla = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Hacer todas las celdas no editables
+        }
+    };
+    private ArrayList<Usuario> Usuarios = new ArrayList<>();
+
+    public ArrayList<Usuario> getUsuarios() {
+        return this.Usuarios;
+    }
+
+    public void setUsuarios(ArrayList<Usuario> Usuarios) {
+        this.Usuarios = Usuarios;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BTN_Ver;
     public javax.swing.JButton Btn_Agregar_U;
@@ -171,4 +213,5 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }
