@@ -18,8 +18,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         Mysql m=new Mysql();
-        m.closeConnection();
-        Controlador_Login a=new Controlador_Login();
+        Controlador_Login a=new Controlador_Login(m.getConnection());
         a.getInterfaz().setVisible(true);
     }
     

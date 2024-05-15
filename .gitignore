@@ -3,8 +3,6 @@
 ##############################
 .mtj.tmp/
 *.class
-*.jar
-Mysql.java
 *.war
 *.ear
 *.nar
