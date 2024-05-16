@@ -9,14 +9,21 @@ import Clases.Bloque;
 import Modelo.Modelo_Aulas;
 import Modelo.Modelo_Bloques;
 import Vista.Pestaña_BloquesAulas;
+import java.awt.Component;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -56,7 +63,6 @@ public class Controlador_BloquesAulas implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.pestaña.jComboBoxBloque) {
-            
             actualizarAulas();
         }
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
@@ -68,13 +74,13 @@ public class Controlador_BloquesAulas implements ActionListener {
             }
             Bloque bloque = new Bloque(nombreBloque, aulas);
             this.modeloBloque.crearBloque(bloque);
+            inicializarBloques();
         }
 
         if (e.getSource() == this.pestaña.Btn_Modificar_Bloque) {
             String nombreAnterior = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-
             this.modeloBloque.modificarBloque(nombreAnterior, JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Bloque"));
-        inicializarBloques();
+            inicializarBloques();
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Bloque) {
             String nombre = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
@@ -84,22 +90,21 @@ public class Controlador_BloquesAulas implements ActionListener {
         if (e.getSource() == this.pestaña.Btn_Agregar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
             Aula aula = new Aula(nombreBloque, JOptionPane.showInputDialog(null, "Ingrese el nombre del Aula"), JOptionPane.showInputDialog(null, "Ingrese el piso del Aula"), Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la capacidad del Aula")), JOptionPane.showInputDialog(null, "Ingrese el tipo del Aula"));
-
             this.modeloAula.crearAula(aula, nombreBloque);
+            actualizarAulas();
         }
         if (e.getSource() == this.pestaña.Btn_Modificar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-
-            Aula aula = new Aula(nombreBloque,JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Aula"), JOptionPane.showInputDialog(null, "Ingrese el nuevo piso del Aula"),  Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la nueva capacidad del Aula")), JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo de Aula"));
-            this.modeloAula.modificarAula(aula);
+            Aula aula = new Aula(nombreBloque, JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Aula"), JOptionPane.showInputDialog(null, "Ingrese el nuevo piso del Aula"), Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la nueva capacidad del Aula")), JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo de Aula"));
+            JOptionPane.showMessageDialog(null, this.modeloAula.modificarAula(aula));
+            actualizarAulas();
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Aula) {
             String nombre = this.pestaña.jComboBoxAula.getSelectedItem().toString();
             this.modeloAula.eliminarAula(nombre);
+            actualizarAulas();
         }
     }
-
-  
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
@@ -117,9 +122,86 @@ public class Controlador_BloquesAulas implements ActionListener {
             // Agregar las aulas al JComboBox de aulas y a la JTable
             for (Aula aula : aulas) {
                 this.pestaña.jComboBoxAula.addItem(aula.getNombre());
-                model.addRow(new Object[]{aula.getNombre(), aula.getTipo(), aula.getCapacidad()});
+                model.addRow(new Object[]{aula.getNombre(), aula.getTipo(), aula.getCapacidad(), "Reservar"});
             }
-this.pestaña.jTableAulas.setModel(model);
+
+            // Configurar el renderer y el editor para la columna del botón
+            this.pestaña.jTableAulas.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+            this.pestaña.jTableAulas.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox()));
+        }
+    }
+
+    // Clase interna para el renderer del botón
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    // Clase interna para el editor del botón
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Aquí puedes manejar el evento del botón
+                JOptionPane.showMessageDialog(button, label + ": Button clicked");
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
         }
     }
 
@@ -130,7 +212,4 @@ this.pestaña.jTableAulas.setModel(model);
     public void setPestaña(Pestaña_BloquesAulas pestaña) {
         this.pestaña = pestaña;
     }
-
-   
-
 }
