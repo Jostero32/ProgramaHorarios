@@ -48,8 +48,9 @@ public class Controlador_BloquesAulas implements ActionListener {
         this.pestaña.Btn_Modificar_Aula.addActionListener(this);
         this.pestaña.Btn_Modificar_Bloque.addActionListener(this);
         this.pestaña.jComboBoxBloque.addActionListener(this);
-        actualizarAulas();
         inicializarBloques();
+        inicializarTabla();
+        actualizarAulas();
     }
 
     private void inicializarBloques() {
@@ -57,7 +58,16 @@ public class Controlador_BloquesAulas implements ActionListener {
         for (Bloque bloque : this.bloques) {
             this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());
         }
-        actualizarAulas();
+    }
+
+    private void inicializarTabla() {
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Tipo", "Capacidad", "Acción"}, 0);
+        pestaña.jTableAulas.setModel(model);
+
+        // Configurar el renderer y el editor para la columna del botón
+        TableColumn column = pestaña.jTableAulas.getColumnModel().getColumn(3);
+        column.setCellRenderer(new ButtonRenderer());
+        column.setCellEditor(new ButtonEditor(new JCheckBox()));
     }
 
     @Override
@@ -124,15 +134,12 @@ public class Controlador_BloquesAulas implements ActionListener {
                 this.pestaña.jComboBoxAula.addItem(aula.getNombre());
                 model.addRow(new Object[]{aula.getNombre(), aula.getTipo(), aula.getCapacidad(), "Reservar"});
             }
-
-            // Configurar el renderer y el editor para la columna del botón
-            this.pestaña.jTableAulas.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-            this.pestaña.jTableAulas.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox()));
         }
     }
 
     // Clase interna para el renderer del botón
     class ButtonRenderer extends JButton implements TableCellRenderer {
+
         public ButtonRenderer() {
             setOpaque(true);
         }
@@ -153,6 +160,7 @@ public class Controlador_BloquesAulas implements ActionListener {
 
     // Clase interna para el editor del botón
     class ButtonEditor extends DefaultCellEditor {
+
         protected JButton button;
         private String label;
         private boolean isPushed;
