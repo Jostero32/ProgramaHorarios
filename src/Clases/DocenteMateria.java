@@ -17,7 +17,6 @@ public class DocenteMateria {
         this.materiaId = materiaId;
     }
 
-    // Getters y setters
     public int getDocenteId() {
         return docenteId;
     }
