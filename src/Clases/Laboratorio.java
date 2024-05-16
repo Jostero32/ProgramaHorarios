@@ -11,7 +11,7 @@ package Clases;
 public class Laboratorio extends Aula{
     private int numComputadoras;
 
-    public Laboratorio(int numComputadoras, Object Bloque, String nombre, String piso, String capacidad) {
+    public Laboratorio(int numComputadoras, Bloque Bloque, String nombre, String piso, String capacidad) {
         super(Bloque, nombre, piso, capacidad);
         this.numComputadoras = numComputadoras;
     }
