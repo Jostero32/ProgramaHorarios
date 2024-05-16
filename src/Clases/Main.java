@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import Controlador.Controlador_Login;
+
 /**
  *
  * @author Usuario
@@ -15,6 +17,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Mysql m=new Mysql();
+        Controlador_Login a=new Controlador_Login(m.getConnection());
+        a.getInterfaz().setVisible(true);
     }
     
 }
