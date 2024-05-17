@@ -109,7 +109,8 @@ public class Modelo_Bloques {
                 String aulaNombre = rs.getString("nombre");
                 String piso = rs.getString("piso");
                 String capacidad = rs.getString("capacidad");
-                Aula aula = new Aula(nombreBloque, aulaNombre, piso, capacidad);
+                String tipo = rs.getString("tipo");
+                Aula aula = new Aula(nombreBloque, aulaNombre, piso, capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {

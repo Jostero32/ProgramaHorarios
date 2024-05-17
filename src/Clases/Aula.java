@@ -13,12 +13,14 @@ public class Aula {
     private String nombre;
     private String piso;
     private String capacidad;
+    private String tipo;
 
-    public Aula(String nombreBloque, String nombre, String piso, String capacidad) {
+    public Aula(String nombreBloque, String nombre, String piso, String capacidad,String tipo) {
         this.nombreBloque = nombreBloque;
         this.nombre = nombre;
         this.piso = piso;
         this.capacidad = capacidad;
+        this.tipo=tipo;
     }
 
     public String getNombreBloque() {
@@ -51,6 +53,14 @@ public class Aula {
 
     public void setCapacidad(String capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
 }
