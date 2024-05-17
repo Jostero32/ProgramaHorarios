@@ -9,24 +9,24 @@ package Clases;
  * @author ASUS GAMER
  */
 public class Aula {
-    private Bloque Bloque;
+    private String nombreBloque;
     private String nombre;
     private String piso;
     private String capacidad;
 
-    public Aula(Bloque Bloque, String nombre, String piso, String capacidad) {
-        this.Bloque = Bloque;
+    public Aula(String nombreBloque, String nombre, String piso, String capacidad) {
+        this.nombreBloque = nombreBloque;
         this.nombre = nombre;
         this.piso = piso;
         this.capacidad = capacidad;
     }
 
-    public Bloque getBloque() {
-        return this.Bloque;
+    public String getBloque() {
+        return this.nombreBloque;
     }
 
-    public void setBloque(Bloque Bloque) {
-        this.Bloque = Bloque;
+    public void setNombreBloque(String nombreBloque) {
+        this.nombreBloque = nombreBloque;
     }
 
     public String getNombre() {
