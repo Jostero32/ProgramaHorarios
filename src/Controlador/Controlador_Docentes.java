@@ -56,20 +56,13 @@ class Controlador_Docentes implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Docentes.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombreAnterior = this.interfaz.jtblTabla_Docentes.getValueAt(selectedRow, 0).toString();
-                    String correoAnterior = this.interfaz.jtblTabla_Docentes.getValueAt(selectedRow, 1).toString();
-
-                    String nombreModificado = this.interfaz.jtxtNombreDocente.getText();
-                    String correoModificado = this.interfaz.jtxtCorreoDocente.getText();
-
-                    Docente docenteAnterior = new Docente(nombreAnterior, correoAnterior);
-                    Docente docenteModificado = new Docente(nombreModificado, correoModificado);
-
-                    if (this.modelo.actualizarDocente(docenteModificado, docenteAnterior)) {
+                    String nombreAnterior = this.interfaz.jtblTabla_Docentes.getValueAt(this.interfaz.jtblTabla_Docentes.getSelectedRow(), this.interfaz.jtblTabla_Docentes.getSelectedColumn()).toString();
+                    Docente docenteModificado = new Docente(this.interfaz.jtxtNombreDocente.getText(), this.interfaz.jtxtCorreoDocente.getText().toString());
+                    if (this.modelo.actualizarDocente(docenteModificado,nombreAnterior)) {
                         for (int i = 0; i < this.interfaz.getDocentes().size(); i++) {
                             Docente d = this.interfaz.getDocentes().get(i);
-                            if (d.getNombre().equals(nombreAnterior) && d.getEmail().equals(correoAnterior)) {
-                                this.interfaz.getDocentes().remove(i);
+                            if (d.getNombre().matches(nombreAnterior)) {
+                                this.interfaz.getDocentes().remove(d);
                                 this.interfaz.getDocentes().add(docenteModificado);
                                 break;
                             }
@@ -91,8 +84,8 @@ class Controlador_Docentes implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Docentes.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombre = this.interfaz.jtblTabla_Docentes.getValueAt(selectedRow, 0).toString();
-                    String correo = this.interfaz.jtblTabla_Docentes.getValueAt(selectedRow, 1).toString();
+                    String nombre = this.interfaz.jtxtNombreDocente.getText();
+                    String correo = this.interfaz.jtxtCorreoDocente.getText();
 
                     Docente docente = new Docente(nombre, correo);
 
@@ -100,7 +93,7 @@ class Controlador_Docentes implements ActionListener {
                         for (int i = 0; i < this.interfaz.getDocentes().size(); i++) {
                             Docente d = this.interfaz.getDocentes().get(i);
                             if (d.getNombre().equals(nombre) && d.getEmail().equals(correo)) {
-                                this.interfaz.getDocentes().remove(i);
+                                this.interfaz.getDocentes().remove(d);
                                 break;
                             }
                         }

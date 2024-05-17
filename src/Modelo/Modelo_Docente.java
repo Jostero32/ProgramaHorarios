@@ -52,26 +52,29 @@ public class Modelo_Docente {
         return docentes;
     }
 
-    public boolean actualizarDocente(Docente docenteModificado, Docente docenteAnterior) {
-        String sql = "UPDATE docentes SET nombre = ?, email = ? WHERE nombre = ? AND email = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, docenteModificado.getNombre());
-            pstmt.setString(2, docenteModificado.getEmail());
-            pstmt.setString(3, docenteAnterior.getNombre());
-            pstmt.setString(4, docenteAnterior.getEmail());
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
+    public boolean actualizarDocente(Docente docenteModificado, String docenteAnterior) {
+    String sql = "UPDATE docentes SET nombre = ?, email = ? WHERE nombre = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, docenteModificado.getNombre());
+        pstmt.setString(2, docenteModificado.getEmail());
+        pstmt.setString(3, docenteAnterior);
+        int rowsAffected = pstmt.executeUpdate();
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+        if (e.getSQLState().equals("23000")) {
+            JOptionPane.showMessageDialog(null, "Error: El nombre o email del docente ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             e.printStackTrace();
         }
-        return false;
     }
+    return false;
+}
+
 
     public boolean eliminarDocente(Docente docente) {
-        String sql = "DELETE FROM docentes WHERE nombre = ? AND email = ?";
+        String sql = "DELETE FROM docentes WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, docente.getNombre());
-            pstmt.setString(2, docente.getEmail());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
