@@ -56,16 +56,17 @@ public class Controlador_Materias implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Materias.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 0).toString();
-                    String codigoAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 1).toString();
-
-                    String nombreModificado = this.interfaz.jtxtNombreMateria.getText();
-                    String codigoModificado = this.interfaz.jtxtCodigoMateria.getText();
-
-                    Materia materiaAnterior = new Materia(nombreAnterior, codigoAnterior);
-                    Materia materiaModificada = new Materia(nombreModificado, codigoModificado);
-
-                    if (this.modelo.actualizarMateria(materiaModificada, materiaAnterior)) {
+                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(this.interfaz.jtblTabla_Materias.getSelectedRow(),this.interfaz.jtblTabla_Materias.getSelectedColumn()).toString();
+                    Materia materiaModificada = new Materia(this.interfaz.jtxtNombreMateria.getText(), this.interfaz.jtxtCodigoMateria.getText().toString());
+                    if (this.modelo.actualizarMateria(materiaModificada,nombreAnterior)) {
+                        for (int i = 0; i < this.interfaz.getMaterias().size(); i++) {
+                            Materia m = this.interfaz.getMaterias().get(i);
+                            if (m.getNombre().matches(nombreAnterior)) {
+                                this.interfaz.getMaterias().remove(m);
+                                this.interfaz.getMaterias().add(materiaModificada);
+                                break;
+                            }
+                        }
                         this.interfaz.actualizarTablaMaterias();
                         JOptionPane.showMessageDialog(null, "Materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -85,12 +86,19 @@ public class Controlador_Materias implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Materias.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombre = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 0).toString();
-                    String codigo = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 1).toString();
+                    String nombre = this.interfaz.jtxtNombreMateria.getText();
+                    String codigo = this.interfaz.jtxtCodigoMateria.getText();
 
                     Materia materia = new Materia(nombre, codigo);
 
                     if (this.modelo.eliminarMateria(materia)) {
+                        for (int i = 0; i < this.interfaz.getMaterias().size(); i++) {
+                            Materia m = this.interfaz.getMaterias().get(i);
+                            if (m.getNombre().equals(nombre) && m.getCodigo().equals(codigo)) {
+                                this.interfaz.getMaterias().remove(m);
+                                break;
+                            }
+                        }
                         this.interfaz.actualizarTablaMaterias();
                         this.interfaz.jtxtNombreMateria.setText("");
                         this.interfaz.jtxtCodigoMateria.setText("");

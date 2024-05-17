@@ -30,9 +30,15 @@ public class Modelo_Materia {
             pstmt.setString(1, materia.getNombre());
             pstmt.setString(2, materia.getCodigo());
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getSQLState().equals("23000")) {
+                JOptionPane.showMessageDialog(null, "Error: La materia ya existe.", "Error", 0);
+            } else {
+                e.printStackTrace();
+            }
         }
         return false;
     }
@@ -45,29 +51,34 @@ public class Modelo_Materia {
             while (rs.next()) {
                 materias.add(new Materia(rs.getString("nombre"), rs.getString("codigo")));
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
         return materias;
     }
 
-    public boolean actualizarMateria(Materia materiaModificada, Materia materiaAnterior) {
+    public boolean actualizarMateria(Materia materia, String materiaAnterior) {
         String sql = "UPDATE materias SET nombre = ?, codigo = ? WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, materiaModificada.getNombre());
-            pstmt.setString(2, materiaModificada.getCodigo());
-            pstmt.setString(3, materiaAnterior.getNombre());
+            pstmt.setString(1, materia.getNombre());
+            pstmt.setString(2, materia.getCodigo());
+            pstmt.setString(3, materiaAnterior);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getSQLState().equals("23000")) {
+                JOptionPane.showMessageDialog(null, "Error: La materia ya existe.", "Error", 0);
+            } else {
+                e.printStackTrace();
+            }
         }
         return false;
     }
 
     public boolean eliminarMateria(Materia materia) {
-        String sql = "DELETE FROM materias WHERE nombre = ? AND codigo = ?";
+        String sql = "DELETE FROM materias WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, materia.getNombre());
-            pstmt.setString(2, materia.getCodigo());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
