@@ -4,7 +4,9 @@
  */
 package Modelo;
 
+import Clases.Aula;
 import Clases.Bloque;
+import Clases.Laboratorio;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +34,7 @@ public class Modelo_Bloques {
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
-
+            e.printStackTrace();
             return false;
         }
     }
@@ -45,7 +47,7 @@ public class Modelo_Bloques {
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
-
+            e.printStackTrace();
             return false;
         }
     }
@@ -57,21 +59,24 @@ public class Modelo_Bloques {
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
-
+            e.printStackTrace();
             return false;
         }
     }
 
-    public Bloque verBloque(int id) {
-        String sql = "SELECT * FROM bloques WHERE id = ?";
+    public Bloque verBloque(String nombre) {
+        String sql = "SELECT * FROM bloques WHERE nombre = ?";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
+            pstmt.setString(1, nombre);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                String nombre = rs.getString("nombre");
-                return new Bloque(nombre);
+                String nombreBD = rs.getString("nombre");
+                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombreBD);
+                ArrayList<Laboratorio> laboratorios = obtenerLaboratoriosPorBloque(nombreBD);
+                return new Bloque(nombreBD, aulas, laboratorios);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
         return null;
@@ -82,12 +87,54 @@ public class Modelo_Bloques {
         try (Statement stmt = (Statement) conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
-                Bloque bloque = new Bloque(nombre);
+                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombre);
+                ArrayList<Laboratorio> laboratorios = obtenerLaboratoriosPorBloque(nombre);
+                Bloque bloque = new Bloque(nombre, aulas, laboratorios);
                 bloques.add(bloque);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
         return bloques;
+    }
+
+    private ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
+        String sql = "SELECT a.nombre, a.piso, a.capacidad FROM aulas a JOIN bloques b ON a.bloque_id = b.id WHERE b.nombre = ?";
+        ArrayList<Aula> aulas = new ArrayList<>();
+        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombreBloque);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String aulaNombre = rs.getString("nombre");
+                String piso = rs.getString("piso");
+                String capacidad = rs.getString("capacidad");
+                Aula aula = new Aula(nombreBloque, aulaNombre, piso, capacidad);
+                aulas.add(aula);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return aulas;
+    }
+
+    private ArrayList<Laboratorio> obtenerLaboratoriosPorBloque(String nombreBloque) {
+        String sql = "SELECT l.nombre, l.piso, l.capacidad, l.num_computadoras FROM laboratorios l JOIN bloques b ON l.bloque_id = b.id WHERE b.nombre = ?";
+        ArrayList<Laboratorio> laboratorios = new ArrayList<>();
+        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombreBloque);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String labNombre = rs.getString("nombre");
+                String piso = rs.getString("piso");
+                String capacidad = rs.getString("capacidad");
+                int numComputadoras = rs.getInt("num_computadoras");
+                Laboratorio laboratorio = new Laboratorio(numComputadoras, nombreBloque, labNombre, piso, capacidad);
+                laboratorios.add(laboratorio);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return laboratorios;
     }
 }
