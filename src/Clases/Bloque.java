@@ -14,12 +14,11 @@ public class Bloque {
 
     private String nombre;
     ArrayList<Aula> aulas;
-    ArrayList<Laboratorio> laboratorios;
 
-    public Bloque(String nombre,ArrayList<Aula> aulas,ArrayList<Laboratorio> laboratorios) {
+    public Bloque(String nombre, ArrayList<Aula> aulas) {
         this.nombre = nombre;
         this.aulas = aulas;
-        this.laboratorios = laboratorios;
+
     }
 
     public String getNombre() {
@@ -36,14 +35,6 @@ public class Bloque {
 
     public void setAulas(ArrayList<Aula> aulas) {
         this.aulas = aulas;
-    }
-
-    public ArrayList<Laboratorio> getLaboratorios() {
-        return this.laboratorios;
-    }
-
-    public void setLaboratorios(ArrayList<Laboratorio> laboratorios) {
-        this.laboratorios = laboratorios;
     }
 
 }

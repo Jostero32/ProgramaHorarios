@@ -5,32 +5,32 @@
 package Modelo;
 
 import Clases.Aula;
-import Clases.Bloque;
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
-import java.sql.ResultSet;
-import com.mysql.jdbc.Statement;
 import java.util.ArrayList;
+import java.sql.ResultSet;
 
 /**
  *
  * @author ASUS GAMER
  */
-public class Modelo_Bloques {
-
-    private ArrayList<Bloque> bloques;
+public class Modelo_Aulas {
+    
+    private ArrayList<Aula> aulas;
     private Connection conn;
 
-    public Modelo_Bloques(Connection conn) {
+    public Modelo_Aulas(Connection conn) {
         this.conn = conn;
-        this.bloques = new ArrayList<>();
+        this.aulas = new ArrayList<>();
     }
 
-    public boolean crearBloque(Bloque bloque) {
-        String sql = "INSERT INTO bloques (nombre) VALUES (?)";
+    public boolean crearAula(Aula aula) {
+        String sql = "INSERT INTO aulas (nombre, piso, capacidad, nombre_bloque) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
-            pstmt.setString(1, bloque.getNombre());
+            pstmt.setString(1, aula.getNombre());
+            pstmt.setString(2, aula.getPiso());
+            pstmt.setString(3, aula.getCapacidad());
+            pstmt.setString(4, aula.getNombreBloque());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -39,11 +39,13 @@ public class Modelo_Bloques {
         }
     }
 
-    public boolean modificarBloque(String nombreAnterior, String nombreNuevo) {
-        String sql = "UPDATE bloques SET nombre = ? WHERE nombre = ?";
+    public boolean modificarAula(Aula aula) {
+        String sql = "UPDATE aulas SET piso = ?, capacidad = ?, nombre_bloque = ? WHERE nombre = ?";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombreNuevo);
-            pstmt.setString(2, nombreAnterior);
+            pstmt.setString(1, aula.getPiso());
+            pstmt.setString(2, aula.getCapacidad());
+            pstmt.setString(3, aula.getNombreBloque());
+            pstmt.setString(4, aula.getNombre());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -52,8 +54,8 @@ public class Modelo_Bloques {
         }
     }
 
-    public boolean eliminarBloque(String nombre) {
-        String sql = "DELETE FROM bloques WHERE nombre = ?";
+    public boolean eliminarAula(String nombre) {
+        String sql = "DELETE FROM aulas WHERE nombre = ?";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
@@ -64,16 +66,16 @@ public class Modelo_Bloques {
         }
     }
 
-    public Bloque verBloque(String nombre) {
-        String sql = "SELECT * FROM bloques WHERE nombre = ?";
+    public Aula verAula(String nombre) {
+        String sql = "SELECT * FROM aulas WHERE nombre = ?";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                String nombreBD = rs.getString("nombre");
-                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombreBD);
-               
-                return new Bloque(nombreBD, aulas);
+                String piso = rs.getString("piso");
+                String capacidad = rs.getString("capacidad");
+                String nombreBloque = rs.getString("nombre_bloque");
+                return new Aula(nombreBloque, nombre, piso, capacidad);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,34 +84,17 @@ public class Modelo_Bloques {
         return null;
     }
 
-    public ArrayList<Bloque> verTodosLosBloques() {
-        String sql = "SELECT * FROM bloques";
-        try (Statement stmt = (Statement) conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombre);
-            
-                Bloque bloque = new Bloque(nombre, aulas);
-                bloques.add(bloque);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return bloques;
-    }
-
-    private ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
-        String sql = "SELECT a.nombre, a.piso, a.capacidad FROM aulas a JOIN bloques b ON a.bloque_id = b.id WHERE b.nombre = ?";
+   public ArrayList<Aula> verAulasPorBloque(String nombreBloque) {
+        String sql = "SELECT * FROM aulas WHERE nombre_bloque = ?";
         ArrayList<Aula> aulas = new ArrayList<>();
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
             pstmt.setString(1, nombreBloque);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String aulaNombre = rs.getString("nombre");
+                String nombre = rs.getString("nombre");
                 String piso = rs.getString("piso");
                 String capacidad = rs.getString("capacidad");
-                Aula aula = new Aula(nombreBloque, aulaNombre, piso, capacidad);
+                Aula aula = new Aula(nombreBloque, nombre, piso, capacidad);
                 aulas.add(aula);
             }
         } catch (Exception e) {
@@ -117,6 +102,4 @@ public class Modelo_Bloques {
         }
         return aulas;
     }
-
-
 }

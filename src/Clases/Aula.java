@@ -21,7 +21,7 @@ public class Aula {
         this.capacidad = capacidad;
     }
 
-    public String getBloque() {
+    public String getNombreBloque() {
         return this.nombreBloque;
     }
 
