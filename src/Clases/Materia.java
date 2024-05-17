@@ -13,19 +13,12 @@ public class Materia {
     private String nombre;
     private String codigo;
 
-    public Materia(int id, String nombre, String codigo) {
-        this.id = id;
+    public Materia(String nombre, String codigo) {
         this.nombre = nombre;
         this.codigo = codigo;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
 
     public String getNombre() {
         return nombre;

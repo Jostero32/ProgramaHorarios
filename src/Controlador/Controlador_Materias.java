@@ -36,11 +36,10 @@ public class Controlador_Materias implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.interfaz.jtbtnAgregar) {
             try {
-                int id = Integer.parseInt(this.interfaz.jtxtIdMateria.getText());
                 String nombre = this.interfaz.jtxtNombreMateria.getText();
                 String codigo = this.interfaz.jtxtCodigoMateria.getText();
 
-                Materia materia = new Materia(id, nombre, codigo);
+                Materia materia = new Materia(nombre, codigo);
 
                 if (this.modelo.agregarMateria(materia)) {
                     this.interfaz.getMaterias().add(materia);
@@ -49,8 +48,6 @@ public class Controlador_Materias implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo agregar la materia", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "ID de materia inválido", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al agregar la materia", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -59,26 +56,16 @@ public class Controlador_Materias implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Materias.getSelectedRow();
                 if (selectedRow != -1) {
-                    int idAnterior = Integer.parseInt(this.interfaz.jtxtIdMateria.getText());
-                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 1).toString();
-                    String codigoAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 2).toString();
+                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 0).toString();
+                    String codigoAnterior = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 1).toString();
 
-                    int idModificado = Integer.parseInt(this.interfaz.jtxtIdMateria.getText());
                     String nombreModificado = this.interfaz.jtxtNombreMateria.getText();
                     String codigoModificado = this.interfaz.jtxtCodigoMateria.getText();
 
-                    Materia materiaAnterior = new Materia(idAnterior, nombreAnterior, codigoAnterior);
-                    Materia materiaModificada = new Materia(idModificado, nombreModificado, codigoModificado);
+                    Materia materiaAnterior = new Materia(nombreAnterior, codigoAnterior);
+                    Materia materiaModificada = new Materia(nombreModificado, codigoModificado);
 
                     if (this.modelo.actualizarMateria(materiaModificada, materiaAnterior)) {
-                        for (int i = 0; i < this.interfaz.getMaterias().size(); i++) {
-                            Materia m = this.interfaz.getMaterias().get(i);
-                            if (m.getId() == idAnterior) {
-                                this.interfaz.getMaterias().remove(i);
-                                this.interfaz.getMaterias().add(materiaModificada);
-                                break;
-                            }
-                        }
                         this.interfaz.actualizarTablaMaterias();
                         JOptionPane.showMessageDialog(null, "Materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -98,22 +85,13 @@ public class Controlador_Materias implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Materias.getSelectedRow();
                 if (selectedRow != -1) {
-                    int id = Integer.parseInt(this.interfaz.jtxtIdMateria.getText());
-                    String nombre = this.interfaz.jtxtNombreMateria.getText();
-                    String codigo = this.interfaz.jtxtCodigoMateria.getText();
+                    String nombre = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 0).toString();
+                    String codigo = this.interfaz.jtblTabla_Materias.getValueAt(selectedRow, 1).toString();
 
-                    Materia materia = new Materia(id, nombre, codigo);
+                    Materia materia = new Materia(nombre, codigo);
 
                     if (this.modelo.eliminarMateria(materia)) {
-                        for (int i = 0; i < this.interfaz.getMaterias().size(); i++) {
-                            Materia m = this.interfaz.getMaterias().get(i);
-                            if (m.getId() == id) {
-                                this.interfaz.getMaterias().remove(i);
-                                break;
-                            }
-                        }
                         this.interfaz.actualizarTablaMaterias();
-                        this.interfaz.jtxtIdMateria.setText("");
                         this.interfaz.jtxtNombreMateria.setText("");
                         this.interfaz.jtxtCodigoMateria.setText("");
                         JOptionPane.showMessageDialog(null, "Materia eliminada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);

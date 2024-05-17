@@ -25,19 +25,14 @@ public class Modelo_Materia {
     }
 
     public boolean agregarMateria(Materia materia) {
-        String sql = "INSERT INTO materias (id, nombre, codigo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO materias (nombre, codigo) VALUES (?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, materia.getId());
-            pstmt.setString(2, materia.getNombre());
-            pstmt.setString(3, materia.getCodigo());
+            pstmt.setString(1, materia.getNombre());
+            pstmt.setString(2, materia.getCodigo());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El ID de materia ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
         return false;
     }
@@ -48,35 +43,31 @@ public class Modelo_Materia {
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
-                materias.add(new Materia(rs.getInt("id"), rs.getString("nombre"), rs.getString("codigo")));
+                materias.add(new Materia(rs.getString("nombre"), rs.getString("codigo")));
             }
         }
         return materias;
     }
 
     public boolean actualizarMateria(Materia materiaModificada, Materia materiaAnterior) {
-        String sql = "UPDATE materias SET id = ?, nombre = ?, codigo = ? WHERE id = ?";
+        String sql = "UPDATE materias SET nombre = ?, codigo = ? WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, materiaModificada.getId());
-            pstmt.setString(2, materiaModificada.getNombre());
-            pstmt.setString(3, materiaModificada.getCodigo());
-            pstmt.setInt(4, materiaAnterior.getId());
+            pstmt.setString(1, materiaModificada.getNombre());
+            pstmt.setString(2, materiaModificada.getCodigo());
+            pstmt.setString(3, materiaAnterior.getNombre());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El ID de materia ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
         return false;
     }
 
     public boolean eliminarMateria(Materia materia) {
-        String sql = "DELETE FROM materias WHERE id = ?";
+        String sql = "DELETE FROM materias WHERE nombre = ? AND codigo = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, materia.getId());
+            pstmt.setString(1, materia.getNombre());
+            pstmt.setString(2, materia.getCodigo());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {

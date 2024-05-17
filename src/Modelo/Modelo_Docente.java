@@ -25,16 +25,15 @@ public class Modelo_Docente {
     }
 
     public boolean agregarDocente(Docente docente) {
-        String sql = "INSERT INTO docentes (id, nombre, correo) VALUES (?, ?, ?)";
-        try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, docente.getId());
-            pstmt.setString(2, docente.getNombre());
-            pstmt.setString(3, docente.getEmail());
+        String sql = "INSERT INTO docentes (nombre, email) VALUES (?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, docente.getNombre());
+            pstmt.setString(2, docente.getEmail());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El ID de docente ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error: El docente ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 e.printStackTrace();
             }
@@ -45,37 +44,34 @@ public class Modelo_Docente {
     public ArrayList<Docente> obtenerTodosLosDocentes() throws SQLException {
         ArrayList<Docente> docentes = new ArrayList<>();
         String sql = "SELECT * FROM docentes";
-        try ( PreparedStatement pstmt = conn.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
-                docentes.add(new Docente(rs.getInt("id"), rs.getString("nombre"), rs.getString("correo")));
+                docentes.add(new Docente(rs.getString("nombre"), rs.getString("email")));
             }
         }
         return docentes;
     }
 
     public boolean actualizarDocente(Docente docenteModificado, Docente docenteAnterior) {
-        String sql = "UPDATE docentes SET id = ?, nombre = ?, correo = ? WHERE id = ?";
-        try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, docenteModificado.getId());
-            pstmt.setString(2, docenteModificado.getNombre());
-            pstmt.setString(3, docenteModificado.getEmail());
-            pstmt.setInt(4, docenteAnterior.getId());
+        String sql = "UPDATE docentes SET nombre = ?, email = ? WHERE nombre = ? AND email = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, docenteModificado.getNombre());
+            pstmt.setString(2, docenteModificado.getEmail());
+            pstmt.setString(3, docenteAnterior.getNombre());
+            pstmt.setString(4, docenteAnterior.getEmail());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El ID de docente ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
         return false;
     }
 
     public boolean eliminarDocente(Docente docente) {
-        String sql = "DELETE FROM docentes WHERE id = ?";
-        try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, docente.getId());
+        String sql = "DELETE FROM docentes WHERE nombre = ? AND email = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, docente.getNombre());
+            pstmt.setString(2, docente.getEmail());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {

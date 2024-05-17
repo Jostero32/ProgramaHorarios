@@ -9,23 +9,14 @@ package Clases;
  * @author Bryan
  */
 public class Docente {
-    private int id;
     private String nombre;
     private String email;
 
-    public Docente(int id, String nombre, String email) {
-        this.id = id;
+    public Docente(String nombre, String email) {
         this.nombre = nombre;
         this.email = email;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;

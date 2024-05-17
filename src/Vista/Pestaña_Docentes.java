@@ -49,10 +49,8 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         jtbtnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblTabla_Docentes = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtxtNombreDocente = new javax.swing.JTextField();
-        jtxtIdDocente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jtxtCorreoDocente = new javax.swing.JTextField();
 
@@ -122,17 +120,13 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 370, 350));
 
-        jLabel2.setText("ID Docente");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 110, 30));
-
         jLabel3.setText("Nombre");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
-        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 150, 40));
-        add(jtxtIdDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 150, 40));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 110, 30));
+        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 150, 40));
 
         jLabel4.setText("Correo");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 110, 30));
-        add(jtxtCorreoDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 150, 40));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 110, 30));
+        add(jtxtCorreoDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -153,7 +147,6 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
 
         for (Docente d : this.docentes) {
             if (d.getNombre().equals(nombreDocenteSeleccionado)) {
-                this.jtxtIdDocente.setText(String.valueOf(d.getId()));
                 this.jtxtNombreDocente.setText(d.getNombre());
                 this.jtxtCorreoDocente.setText(d.getEmail());
 
@@ -192,7 +185,6 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         this.docentes = docentes;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -201,7 +193,6 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
     public javax.swing.JButton jtbtnEliminar;
     public javax.swing.JButton jtbtnModificar;
     public javax.swing.JTextField jtxtCorreoDocente;
-    public javax.swing.JTextField jtxtIdDocente;
     public javax.swing.JTextField jtxtNombreDocente;
     // End of variables declaration//GEN-END:variables
     

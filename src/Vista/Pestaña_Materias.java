@@ -53,7 +53,6 @@ public class Pestaña_Materias extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jtxtCodigoMateria = new javax.swing.JTextField();
         jtxtNombreMateria = new javax.swing.JTextField();
-        jtxtIdMateria = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -128,7 +127,6 @@ public class Pestaña_Materias extends javax.swing.JPanel {
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 110, 30));
         add(jtxtCodigoMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 150, 40));
         add(jtxtNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 150, 40));
-        add(jtxtIdMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -150,7 +148,7 @@ public class Pestaña_Materias extends javax.swing.JPanel {
 
             for (Materia m : this.materias) {
                 if (m.getNombre().equals(nombreMateriaSeleccionada)) {
-                    this.jtxtIdMateria.setText(m.getNombre());
+                    this.jtxtNombreMateria.setText(m.getNombre());
                     this.jtxtCodigoMateria.setText(m.getCodigo());
 
                     return;
@@ -197,7 +195,6 @@ public class Pestaña_Materias extends javax.swing.JPanel {
     public javax.swing.JButton jtbtnEliminar;
     public javax.swing.JButton jtbtnModificar;
     public javax.swing.JTextField jtxtCodigoMateria;
-    public javax.swing.JTextField jtxtIdMateria;
     public javax.swing.JTextField jtxtNombreMateria;
     // End of variables declaration//GEN-END:variables
     
