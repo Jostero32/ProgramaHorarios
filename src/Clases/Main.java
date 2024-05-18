@@ -4,7 +4,9 @@
  */
 package Clases;
 
+import Controlador.Controlador_Bloques;
 import Controlador.Controlador_Login;
+import com.mysql.jdbc.Connection;
 
 /**
  *
@@ -17,9 +19,11 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Mysql m=new Mysql();
-        Controlador_Login a=new Controlador_Login(m.getConnection());
+        Mysql m = new Mysql();
+        Controlador_Login a = new Controlador_Login(m.getConnection());
         a.getInterfaz().setVisible(true);
+     /*   Controlador_Bloques b = new Controlador_Bloques(m.getConnection());
+        b.getPestaña().setVisible(true);*/
     }
-    
+
 }

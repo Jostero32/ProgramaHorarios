@@ -6,9 +6,8 @@ package Modelo;
 
 import Clases.Aula;
 import Clases.Bloque;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import com.mysql.jdbc.Statement;
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class Modelo_Bloques {
             if (rs.next()) {
                 String nombreBD = rs.getString("nombre");
                 ArrayList<Aula> aulas = obtenerAulasPorBloque(nombreBD);
-               
+
                 return new Bloque(nombreBD, aulas);
             }
         } catch (Exception e) {
@@ -84,11 +83,11 @@ public class Modelo_Bloques {
 
     public ArrayList<Bloque> verTodosLosBloques() {
         String sql = "SELECT * FROM bloques";
-        try (Statement stmt = (Statement) conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt =  (Statement) conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 ArrayList<Aula> aulas = obtenerAulasPorBloque(nombre);
-            
+
                 Bloque bloque = new Bloque(nombre, aulas);
                 bloques.add(bloque);
             }
@@ -99,7 +98,7 @@ public class Modelo_Bloques {
         return bloques;
     }
 
-    private ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
+    public ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
         String sql = "SELECT a.nombre, a.piso, a.capacidad FROM aulas a JOIN bloques b ON a.bloque_id = b.id WHERE b.nombre = ?";
         ArrayList<Aula> aulas = new ArrayList<>();
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
@@ -118,6 +117,5 @@ public class Modelo_Bloques {
         }
         return aulas;
     }
-
 
 }
