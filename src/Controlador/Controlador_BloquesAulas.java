@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ASUS GAMER
  */
-public class Controlador_BloquesAulas implements ActionListener, MouseListener {
+public class Controlador_BloquesAulas implements ActionListener {
 
     private ArrayList<Bloque> bloques;
     private Modelo_Bloques modeloBloque;
@@ -40,19 +40,25 @@ public class Controlador_BloquesAulas implements ActionListener, MouseListener {
         this.pestaña.Btn_Eliminar_Bloque.addActionListener(this);
         this.pestaña.Btn_Modificar_Aula.addActionListener(this);
         this.pestaña.Btn_Modificar_Bloque.addActionListener(this);
-        this.pestaña.jComboBoxBloque.addMouseListener(this);
+        this.pestaña.jComboBoxBloque.addActionListener(this);
         actualizarAulas();
         inicializarBloques();
     }
 
     private void inicializarBloques() {
+        this.pestaña.jComboBoxBloque.removeAllItems();
         for (Bloque bloque : this.bloques) {
             this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());
         }
+        actualizarAulas();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.pestaña.jComboBoxBloque) {
+            
+            actualizarAulas();
+        }
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
             ArrayList<Aula> aulas = new ArrayList<>();
             String nombreBloque = JOptionPane.showInputDialog(null, "Agregue el nombre del nuevo Bloque");
@@ -68,10 +74,12 @@ public class Controlador_BloquesAulas implements ActionListener, MouseListener {
             String nombreAnterior = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
 
             this.modeloBloque.modificarBloque(nombreAnterior, JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Bloque"));
+        inicializarBloques();
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Bloque) {
             String nombre = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
             this.modeloBloque.eliminarBloque(nombre);
+            inicializarBloques();
         }
         if (e.getSource() == this.pestaña.Btn_Agregar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
@@ -91,12 +99,7 @@ public class Controlador_BloquesAulas implements ActionListener, MouseListener {
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == this.pestaña.jComboBoxBloque) {
-            actualizarAulas();
-        }
-    }
+  
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
@@ -116,7 +119,7 @@ public class Controlador_BloquesAulas implements ActionListener, MouseListener {
                 this.pestaña.jComboBoxAula.addItem(aula.getNombre());
                 model.addRow(new Object[]{aula.getNombre(), aula.getTipo(), aula.getCapacidad()});
             }
-
+this.pestaña.jTableAulas.setModel(model);
         }
     }
 
@@ -128,20 +131,6 @@ public class Controlador_BloquesAulas implements ActionListener, MouseListener {
         this.pestaña = pestaña;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+   
 
 }

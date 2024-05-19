@@ -54,18 +54,30 @@ public class Modelo_Aulas {
     }
 
     public boolean modificarAula(Aula aula) {
-        String sql = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, aula.getTipo());
-            pstmt.setInt(2, aula.getCapacidad());
-            pstmt.setString(3, aula.getNombre());
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
+    String sqlUpdateRelacion = "UPDATE bloque_aula SET bloque_id = (SELECT id FROM bloques WHERE nombre = ?) WHERE aula_id = (SELECT id FROM aulas WHERE nombre = ?)";
+    
+    try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);
+         PreparedStatement pstmtUpdateRelacion = conn.prepareStatement(sqlUpdateRelacion)) {
+        
+        // Actualizar los datos de la aula
+        pstmtUpdateAula.setString(1, aula.getTipo());
+        pstmtUpdateAula.setInt(2, aula.getCapacidad());
+        pstmtUpdateAula.setString(3, aula.getNombre());
+        int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
+        
+        // Actualizar la relación con el bloque
+        pstmtUpdateRelacion.setString(1, aula.getNombreBloque());
+        pstmtUpdateRelacion.setString(2, aula.getNombre());
+        int rowsAffectedRelacion = pstmtUpdateRelacion.executeUpdate();
+        
+        // Devolver true si al menos una fila se vio afectada en cualquiera de las actualizaciones
+        return rowsAffectedAula > 0 || rowsAffectedRelacion > 0;
+    } catch (Exception e) {
+        System.out.println("Error al modificar el aula: " + e);
+        return false;
     }
+}
 
     public boolean eliminarAula(String nombre) {
         String sql = "DELETE FROM aulas WHERE nombre = ?";
