@@ -9,7 +9,7 @@ import Clases.Bloque;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +51,7 @@ public class Modelo_Bloques {
         }
     }
 
-    public boolean eliminarBloque(String nombre) {
+   /* public boolean eliminarBloque(String nombre) {
         String sql = "DELETE FROM bloques WHERE nombre = ?";
         try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
@@ -61,7 +61,42 @@ public class Modelo_Bloques {
             e.printStackTrace();
             return false;
         }
+    }*/
+    
+    //Aqui impolemente un metodo mas seguro de eliminado
+    public boolean eliminarBloque(String nombre) {
+    String sql = "DELETE FROM bloques WHERE nombre = ?";
+    
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        // Iniciar la transacción
+        conn.setAutoCommit(false);
+
+        // Eliminar el bloque
+        pstmt.setString(1, nombre);
+        int rowsAffected = pstmt.executeUpdate();
+
+        // Confirmar la transacción
+        conn.commit();
+        
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        try {
+            // Revertir la transacción en caso de error
+            conn.rollback();
+        } catch (Exception rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+        return false;
+    } finally {
+        try {
+            // Restaurar el modo de confirmación automática
+            conn.setAutoCommit(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+}
 
     public Bloque verBloque(String nombre) {
         String sql = "SELECT * FROM bloques WHERE nombre = ?";
@@ -83,7 +118,7 @@ public class Modelo_Bloques {
 
     public ArrayList<Bloque> verTodosLosBloques() {
         String sql = "SELECT * FROM bloques";
-        try (Statement stmt =  (Statement) conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt =  conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 ArrayList<Aula> aulas = obtenerAulasPorBloque(nombre);

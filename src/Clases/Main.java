@@ -4,7 +4,7 @@
  */
 package Clases;
 
-import Controlador.Controlador_Bloques;
+import Controlador.Controlador_BloquesAulas;
 import Controlador.Controlador_Login;
 import com.mysql.jdbc.Connection;
 

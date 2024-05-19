@@ -20,11 +20,14 @@ public class Controlador_Inicio implements MouseListener{
     private Usuario usuario;
     private Controlador_Usuarios controlador_usuarios;
     private Controlador_Login login;
-    
+    //añadiendo el controlador de bloques y aulass
+    private Controlador_BloquesAulas controlador_bloque;
     
     public Controlador_Inicio(Connection con,Usuario usuario, Controlador_Login login) throws SQLException{
         this.interfaz=new Interfaz_Inicio();
         this.controlador_usuarios=new Controlador_Usuarios(con);
+        //igual aqui añado el controlador de bloque
+        this.controlador_bloque=new Controlador_BloquesAulas(con);
         this.usuario=usuario;
         this.login=login;
         this.interfaz.Btn_CerrarSesion.addMouseListener(this);
@@ -34,6 +37,7 @@ public class Controlador_Inicio implements MouseListener{
     private void generarPestañas() {
         if(this.usuario.getTipo().matches("Admin")){
             this.interfaz.jTabbedPane1.addTab("Usuarios",this.controlador_usuarios.getInterfaz() );
+            this.interfaz.jTabbedPane1.addTab("Bloques", this.controlador_bloque.getPestaña());
         }
     }
 

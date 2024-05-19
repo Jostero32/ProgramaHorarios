@@ -5,8 +5,8 @@
 package Modelo;
 
 import Clases.Aula;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 
@@ -26,7 +26,7 @@ public class Modelo_Aulas {
 
     public boolean crearAula(Aula aula) {
         String sql = "INSERT INTO aulas (nombre, piso, capacidad, tipo, nombre_bloque) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt =  conn.prepareStatement(sql)) {
             pstmt.setString(1, aula.getNombre());
             pstmt.setString(2, aula.getPiso());
             pstmt.setString(3, aula.getCapacidad());
@@ -42,7 +42,7 @@ public class Modelo_Aulas {
 
     public boolean modificarAula(Aula aula) {
         String sql = "UPDATE aulas SET piso = ?, capacidad = ?, tipo = ?, nombre_bloque = ? WHERE nombre = ?";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt =  conn.prepareStatement(sql)) {
             pstmt.setString(1, aula.getPiso());
             pstmt.setString(2, aula.getCapacidad());
             pstmt.setString(3, aula.getTipo());
@@ -58,7 +58,7 @@ public class Modelo_Aulas {
 
     public boolean eliminarAula(String nombre) {
         String sql = "DELETE FROM aulas WHERE nombre = ?";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt =  conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;

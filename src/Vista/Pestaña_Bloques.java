@@ -37,7 +37,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Agregar_Bloque = new javax.swing.JButton();
         Btn_Modificar_Bloque = new javax.swing.JButton();
         Btn_Eliminar_Bloque = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelNombreAula = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBoxAula = new javax.swing.JComboBox<>();
         jComboBoxBloque = new javax.swing.JComboBox<>();
@@ -45,7 +45,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Modificar_Aula = new javax.swing.JButton();
         Btn_Eliminar_Aula = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAulas = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -72,8 +72,8 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Eliminar_Bloque.setText("Eliminar");
         add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 130, 30));
 
-        jLabel2.setText("Aulas del bloque: ");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 110, 30));
+        jLabelNombreAula.setText("Aulas del bloque: ");
+        add(jLabelNombreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 110, 30));
 
         jLabel3.setText("Aula");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 110, 30));
@@ -108,7 +108,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Eliminar_Aula.setText("Eliminar");
         add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 130, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -124,7 +124,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAulas);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 440, 140));
 
@@ -172,11 +172,11 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Modificar_Bloque;
     public javax.swing.JComboBox<String> jComboBoxAula;
     public javax.swing.JComboBox<String> jComboBoxBloque;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JLabel jLabelNombreAula;
+    public javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable jTableAulas;
     // End of variables declaration//GEN-END:variables
 
 }
