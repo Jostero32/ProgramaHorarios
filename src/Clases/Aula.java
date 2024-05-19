@@ -9,18 +9,19 @@ package Clases;
  * @author ASUS GAMER
  */
 public class Aula {
+
     private String nombreBloque;
     private String nombre;
     private String piso;
-    private String capacidad;
+    private int capacidad;
     private String tipo;
 
-    public Aula(String nombreBloque, String nombre, String piso, String capacidad,String tipo) {
+    public Aula(String nombreBloque, String nombre, String piso, int capacidad,String tipo) {
         this.nombreBloque = nombreBloque;
         this.nombre = nombre;
         this.piso = piso;
         this.capacidad = capacidad;
-        this.tipo=tipo;
+        this.tipo = tipo;
     }
 
     public String getNombreBloque() {
@@ -47,11 +48,11 @@ public class Aula {
         this.piso = piso;
     }
 
-    public String getCapacidad() {
+    public int getCapacidad() {
         return this.capacidad;
     }
 
-    public void setCapacidad(String capacidad) {
+    public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
 
@@ -62,5 +63,5 @@ public class Aula {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
 }

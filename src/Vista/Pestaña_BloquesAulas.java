@@ -15,12 +15,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class Pestaña_Bloques extends javax.swing.JPanel {
+public class Pestaña_BloquesAulas extends javax.swing.JPanel {
 
     /**
      * Creates new form NewJPanel
      */
-    public Pestaña_Bloques() {
+    public Pestaña_BloquesAulas() {
         initComponents();
         
     }

@@ -22,8 +22,7 @@ public class Main {
         Mysql m = new Mysql();
         Controlador_Login a = new Controlador_Login(m.getConnection());
         a.getInterfaz().setVisible(true);
-     /*   Controlador_Bloques b = new Controlador_Bloques(m.getConnection());
-        b.getPestaña().setVisible(true);*/
+
     }
 
 }

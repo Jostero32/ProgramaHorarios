@@ -18,19 +18,29 @@ import java.util.ArrayList;
  */
 public class Modelo_Bloques {
 
+    private Modelo_Aulas modeloAulas;
     private ArrayList<Bloque> bloques;
     private Connection conn;
 
     public Modelo_Bloques(Connection conn) {
         this.conn = conn;
         this.bloques = new ArrayList<>();
+        this.modeloAulas = new Modelo_Aulas(conn);
     }
 
     public boolean crearBloque(Bloque bloque) {
         String sql = "INSERT INTO bloques (nombre) VALUES (?)";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, bloque.getNombre());
             int rowsAffected = pstmt.executeUpdate();
+
+            // Crear aulas si el bloque tiene aulas
+            if (!bloque.getAulas().isEmpty()) {
+                for (Aula aula : bloque.getAulas()) {
+                    modeloAulas.crearAula(aula, bloque.getNombre());
+                }
+            }
+
             return rowsAffected > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +50,7 @@ public class Modelo_Bloques {
 
     public boolean modificarBloque(String nombreAnterior, String nombreNuevo) {
         String sql = "UPDATE bloques SET nombre = ? WHERE nombre = ?";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombreNuevo);
             pstmt.setString(2, nombreAnterior);
             int rowsAffected = pstmt.executeUpdate();
@@ -51,9 +61,9 @@ public class Modelo_Bloques {
         }
     }
 
-   /* public boolean eliminarBloque(String nombre) {
+    public boolean eliminarBloque(String nombre) {
         String sql = "DELETE FROM bloques WHERE nombre = ?";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
@@ -61,52 +71,16 @@ public class Modelo_Bloques {
             e.printStackTrace();
             return false;
         }
-    }*/
-    
-    //Aqui impolemente un metodo mas seguro de eliminado
-    public boolean eliminarBloque(String nombre) {
-    String sql = "DELETE FROM bloques WHERE nombre = ?";
-    
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        // Iniciar la transacción
-        conn.setAutoCommit(false);
-
-        // Eliminar el bloque
-        pstmt.setString(1, nombre);
-        int rowsAffected = pstmt.executeUpdate();
-
-        // Confirmar la transacción
-        conn.commit();
-        
-        return rowsAffected > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        try {
-            // Revertir la transacción en caso de error
-            conn.rollback();
-        } catch (Exception rollbackEx) {
-            rollbackEx.printStackTrace();
-        }
-        return false;
-    } finally {
-        try {
-            // Restaurar el modo de confirmación automática
-            conn.setAutoCommit(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
-}
 
     public Bloque verBloque(String nombre) {
         String sql = "SELECT * FROM bloques WHERE nombre = ?";
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 String nombreBD = rs.getString("nombre");
-                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombreBD);
-
+                ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombreBD);
                 return new Bloque(nombreBD, aulas);
             }
         } catch (Exception e) {
@@ -118,11 +92,10 @@ public class Modelo_Bloques {
 
     public ArrayList<Bloque> verTodosLosBloques() {
         String sql = "SELECT * FROM bloques";
-        try (Statement stmt =  conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
-                ArrayList<Aula> aulas = obtenerAulasPorBloque(nombre);
-
+                ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombre);
                 Bloque bloque = new Bloque(nombre, aulas);
                 bloques.add(bloque);
             }
@@ -134,17 +107,17 @@ public class Modelo_Bloques {
     }
 
     public ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
-        String sql = "SELECT a.nombre, a.piso, a.capacidad FROM aulas a JOIN bloques b ON a.bloque_id = b.id WHERE b.nombre = ?";
+        String sql = "SELECT a.nombre, a.tipo, a.capacidad FROM aulas a JOIN bloque_aula ba ON a.id = ba.aula_id JOIN bloques b ON ba.bloque_id = b.id WHERE b.nombre = ?";
         ArrayList<Aula> aulas = new ArrayList<>();
-        try (PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombreBloque);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String aulaNombre = rs.getString("nombre");
-                String piso = rs.getString("piso");
-                String capacidad = rs.getString("capacidad");
+                String nombre = rs.getString("nombre");
                 String tipo = rs.getString("tipo");
-                Aula aula = new Aula(nombreBloque, aulaNombre, piso, capacidad, tipo);
+                int capacidad = rs.getInt("capacidad");
+                // Ajustando la instancia de Aula para incluir el nombre del bloque
+                Aula aula = new Aula(nombreBloque, nombre, "", capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {
