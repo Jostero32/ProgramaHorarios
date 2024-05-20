@@ -76,19 +76,30 @@ public class Controlador_DocentesMaterias implements ActionListener {
         try {
             int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
             if (filaSeleccionada != -1) {
-                String docenteAntiguo = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-                String materiaAntigua = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+                int docenteAntiguo = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+                int materiaAntigua = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
 
                 String docenteNuevo = (String) this.pestaña.jcbxDocente.getSelectedItem();
                 String materiaNueva = (String) this.pestaña.jcbxMateria.getSelectedItem();
 
                 // Extraer el ID del string seleccionado (asumiendo el formato "id - nombre")
+                
+                /*
                 int oldDocenteId = Integer.parseInt(docenteAntiguo.split(" - ")[0]);
                 int oldMateriaId = Integer.parseInt(materiaAntigua.split(" - ")[0]);
-                int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
-                int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
-
-                if (this.modelo.modificarDocenteMateria(oldDocenteId, oldMateriaId, newDocenteId, newMateriaId)) {
+                */
+                
+                String[] lstDocente = docenteNuevo.split("-");
+                int newDocenteId = Integer.valueOf(lstDocente[0].replaceAll(" ",""));
+                
+                String[] lstMateria = materiaNueva.split("-");
+                int newMateriaId = Integer.valueOf(lstMateria[0].replaceAll(" ",""));
+                
+                //int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
+                //int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
+                
+                
+                if (this.modelo.modificarDocenteMateria(docenteAntiguo, materiaAntigua, newDocenteId, newMateriaId)) {
                     JOptionPane.showMessageDialog(null, "Relación docente-materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     actualizarTablaDocentesMaterias();
                 } else {
@@ -108,14 +119,10 @@ public class Controlador_DocentesMaterias implements ActionListener {
         try {
             int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
             if (filaSeleccionada != -1) {
-                String docenteSeleccionado = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-                String materiaSeleccionada = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+                int docenteAntiguo = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+                int materiaAntigua = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
 
-                // Extraer el ID del string seleccionado (asumiendo el formato "id - nombre")
-                int docenteId = Integer.parseInt(docenteSeleccionado.split(" - ")[0]);
-                int materiaId = Integer.parseInt(materiaSeleccionada.split(" - ")[0]);
-
-                if (this.modelo.eliminarDocenteMateria(docenteId, materiaId)) {
+                if (this.modelo.eliminarDocenteMateria(docenteAntiguo, materiaAntigua)) {
                     JOptionPane.showMessageDialog(null, "Relación docente-materia eliminada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     actualizarTablaDocentesMaterias();
                 } else {

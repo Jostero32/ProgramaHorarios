@@ -121,6 +121,11 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
         jtblTabla_Docentes_Materias.setGridColor(new java.awt.Color(102, 102, 102));
         jtblTabla_Docentes_Materias.setRowHeight(30);
         jtblTabla_Docentes_Materias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtblTabla_Docentes_Materias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtblTabla_Docentes_MateriasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtblTabla_Docentes_Materias);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 370, 350));
@@ -178,6 +183,47 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
+
+    private void jtblTabla_Docentes_MateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblTabla_Docentes_MateriasMouseClicked
+        // TODO add your handling code here:
+        
+        int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
+        if (selectedRow != -1) {
+            int docenteId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
+            int materiaId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+
+            int cant = jcbxDocente.getItemCount();
+            int indice = 0;
+            for (int i = 0; i < cant; i++) {
+               String docenteNuevo = (String) jcbxDocente.getItemAt(i);
+                String[] lstDocente = docenteNuevo.split("-");
+                int newDocenteId = Integer.valueOf(lstDocente[0].replaceAll(" ",""));
+                
+                if(newDocenteId == docenteId){
+                    indice = i;
+                }
+            }
+            
+            jcbxDocente.setSelectedIndex(indice);
+       
+            cant = jcbxMateria.getItemCount();
+            indice = 0;
+            for (int i = 0; i < cant; i++) {
+               String materiaNuevo = (String) jcbxMateria.getItemAt(i);
+                String[] lstMateria = materiaNuevo.split("-");
+                int newMateriaId = Integer.valueOf(lstMateria[0].replaceAll(" ",""));
+                
+                if(newMateriaId == materiaId){
+                    indice = i;
+                }
+            }
+            
+            jcbxMateria.setSelectedIndex(indice);
+        }
+        
+        
+        
+    }//GEN-LAST:event_jtblTabla_Docentes_MateriasMouseClicked
 
     private DefaultTableModel tabla = new DefaultTableModel() {
         @Override
