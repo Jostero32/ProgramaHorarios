@@ -20,11 +20,17 @@ public class Controlador_Inicio implements MouseListener{
     private Usuario usuario;
     private Controlador_Usuarios controlador_usuarios;
     private Controlador_Login login;
+    private Controlador_Docentes controlador_docentes;
+    private Controlador_Materias controlador_materias;
+    private Controlador_DocentesMaterias controlador_docentes_materias;
     
     
     public Controlador_Inicio(Connection con,Usuario usuario, Controlador_Login login) throws SQLException{
         this.interfaz=new Interfaz_Inicio();
         this.controlador_usuarios=new Controlador_Usuarios(con);
+        this.controlador_docentes = new Controlador_Docentes(con);
+        this.controlador_materias = new Controlador_Materias(con);
+        this.controlador_docentes_materias = new Controlador_DocentesMaterias(con);
         this.usuario=usuario;
         this.login=login;
         this.interfaz.Btn_CerrarSesion.addMouseListener(this);
@@ -34,6 +40,9 @@ public class Controlador_Inicio implements MouseListener{
     private void generarPestañas() {
         if(this.usuario.getTipo().matches("Admin")){
             this.interfaz.jTabbedPane1.addTab("Usuarios",this.controlador_usuarios.getInterfaz() );
+            this.interfaz.jTabbedPane1.addTab("Docentes", this.controlador_docentes.getInterfaz());
+            this.interfaz.jTabbedPane1.addTab("Materias", this.controlador_materias.getInterfaz());
+            this.interfaz.jTabbedPane1.addTab("DocentesMaterias", this.controlador_docentes_materias.getPestaña());
         }
     }
 
