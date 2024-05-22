@@ -213,5 +213,5 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
+    
 }

@@ -14,12 +14,10 @@ import java.sql.SQLException;
  */
 public class Mysql {
 
-  private static final String URL = "jdbc:mysql://localhost:3306/programaHorarios?characterEncoding=UTF-8";
-    private static final String USER = "pc_java";
-    private static final String PASSWORD = "1234";
-   /* private static final String URL = "jdbc:mysql://localhost:3306/horarios";
-    private static final String USER = "root"; 
-    private static final String PASSWORD = "yPaqryDz24";*/
+
+    private static final String URL = "jdbc:mysql://localhost:3306/programaHorarios?characterEncoding=UTF-8";
+    private static final String USER = "root";
+    private static final String PASSWORD = "081005";
 
     private Connection connection;
 

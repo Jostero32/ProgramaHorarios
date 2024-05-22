@@ -6,36 +6,31 @@ package Clases;
 
 /**
  *
-<<<<<<< HEAD
- 
-=======
  * @author Bryan
  */
-public class Materia {
-    private int id;
+public class Docente {
     private String nombre;
-    private String codigo;
+    private String email;
 
-    public Materia(String nombre, String codigo) {
+    public Docente(String nombre, String email) {
         this.nombre = nombre;
-        this.codigo = codigo;
+        this.email = email;
     }
+
 
     public String getNombre() {
         return nombre;
-
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
