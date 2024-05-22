@@ -74,7 +74,7 @@ public class Interfaz_Inicio extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Inicio", jPanel1);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 1020, 430));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 1050, 430));
 
         Barraa_Mover.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Barraa_Mover.setOpaque(false);
