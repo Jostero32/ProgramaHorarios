@@ -8,12 +8,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 /**
  *
  * @author Usuario
  */
 public class Mysql {
+
 
     private static final String URL = "jdbc:mysql://localhost:3306/programaHorarios?characterEncoding=UTF-8";
     private static final String USER = "pc_java";
@@ -23,7 +23,7 @@ public class Mysql {
     public Mysql() {
         try {
             // Cargar el driver de MySQL
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             // Establecer la conexión
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Conexión exitosa a la base de datos MySQL.");

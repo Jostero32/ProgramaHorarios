@@ -4,38 +4,37 @@
  */
 package Clases;
 
+import java.util.ArrayList;
+
 /**
  *
-<<<<<<< HEAD
- 
-=======
- * @author Bryan
+ * @author ASUS GAMER
  */
-public class Materia {
-    private int id;
-    private String nombre;
-    private String codigo;
+public class Bloque {
 
-    public Materia(String nombre, String codigo) {
+    private String nombre;
+    ArrayList<Aula> aulas;
+
+    public Bloque(String nombre, ArrayList<Aula> aulas) {
         this.nombre = nombre;
-        this.codigo = codigo;
+        this.aulas = aulas;
+
     }
 
     public String getNombre() {
-        return nombre;
-
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public ArrayList<Aula> getAulas() {
+        return this.aulas;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-
+    public void setAulas(ArrayList<Aula> aulas) {
+        this.aulas = aulas;
     }
+
 }
