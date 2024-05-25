@@ -23,7 +23,7 @@ public class Mysql {
     public Mysql() {
         try {
             // Cargar el driver de MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             // Establecer la conexión
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Conexión exitosa a la base de datos MySQL.");

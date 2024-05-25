@@ -40,7 +40,7 @@ public class Controlador_Inicio implements MouseListener{
         this.controlador_docentes = new Controlador_Docentes(con);
         this.controlador_materias = new Controlador_Materias(con);
         this.controlador_docentes_materias = new Controlador_DocentesMaterias(con);
-        this.controlador_reservas=new Controlador_Reservas();
+        this.controlador_reservas=new Controlador_Reservas(con);
         this.usuario=usuario;
         this.login=login;
         this.interfaz.Btn_CerrarSesion.addMouseListener(this);

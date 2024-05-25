@@ -26,13 +26,13 @@ public class Modelo_Usuarios {
     }
 
     public Usuario entrarLogin(String usuario, String clave) throws SQLException {
-        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM usuarios WHERE usuario = ? AND clave = ?";
         PreparedStatement pstmt = this.conn.prepareStatement(sql);
         pstmt.setString(1, usuario);
         pstmt.setString(2, clave);
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
-            return new Usuario(rs.getString("username"), rs.getString("password"), rs.getString("tipo"));
+            return new Usuario(rs.getString("usuario"), rs.getString("clave"), rs.getString("tipo"));
         }
         return null;
 

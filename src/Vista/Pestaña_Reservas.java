@@ -43,7 +43,7 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        boton_agregar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
@@ -118,19 +118,19 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
         jLabel3.setText("Filtro");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 30));
 
-        jButton1.setText("jButton1");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 110, 50));
+        boton_agregar.setText("Agregar");
+        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 110, 50));
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Editar");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 120, 50));
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Eliminar");
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 110, 50));
         jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 430, -1, -1));
 
         jScrollPane1.setViewportView(jPanel1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 430));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 460));
     }// </editor-fold>//GEN-END:initComponents
 
     public void ActualizarTablaUsuarios() {
@@ -152,7 +152,7 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
     };
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton boton_agregar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
