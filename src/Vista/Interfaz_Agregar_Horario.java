@@ -43,14 +43,18 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         BTN_Agregar1 = new javax.swing.JLabel();
         BTN_Cancelar = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        ComboBox_Aulas = new javax.swing.JComboBox<>();
+        ComboBox_Bloques = new javax.swing.JComboBox<>();
         ComboBox_Materias = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        ComboBox_Horario1 = new javax.swing.JComboBox<>();
+        ComboBox_Dia = new javax.swing.JComboBox<>();
         ComboBox_Horario = new javax.swing.JComboBox<>();
         ComboBox_Docentes = new javax.swing.JComboBox<>();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        fecha_inicio = new com.toedter.calendar.JDateChooser();
+        fecha_fin = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -97,6 +101,21 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         });
         jPanel1.add(BTN_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 90, 30));
 
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
+        jLabel9.setText("Bloque:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 60, -1));
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Aula:");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 60, -1));
+
+        jPanel1.add(ComboBox_Aulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 170, 30));
+
+        jPanel1.add(ComboBox_Bloques, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 170, 30));
+
         jPanel1.add(ComboBox_Materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 170, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -110,8 +129,8 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel8.setText("Dia:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, -1));
 
-        ComboBox_Horario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }));
-        jPanel1.add(ComboBox_Horario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 170, 30));
+        ComboBox_Dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }));
+        jPanel1.add(ComboBox_Dia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 170, 30));
 
         jPanel1.add(ComboBox_Horario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 170, 30));
 
@@ -122,19 +141,19 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         });
         jPanel1.add(ComboBox_Docentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 170, 30));
 
-        jDateChooser2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        fecha_inicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooser2PropertyChange(evt);
+                fecha_inicioPropertyChange(evt);
             }
         });
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 140, 40));
+        jPanel1.add(fecha_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 140, 40));
 
-        jDateChooser3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        fecha_fin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooser3PropertyChange(evt);
+                fecha_finPropertyChange(evt);
             }
         });
-        jPanel1.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 140, 40));
+        jPanel1.add(fecha_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 140, 40));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
@@ -214,15 +233,15 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
     }//GEN-LAST:event_formWindowLostFocus
 
-    private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+    private void fecha_inicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fecha_inicioPropertyChange
         // TODO add your handling code here:
-        this.jDateChooser3.setMinSelectableDate(this.jDateChooser2.getDate());
-    }//GEN-LAST:event_jDateChooser2PropertyChange
+        this.fecha_fin.setMinSelectableDate(this.fecha_inicio.getDate());
+    }//GEN-LAST:event_fecha_inicioPropertyChange
 
-    private void jDateChooser3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser3PropertyChange
+    private void fecha_finPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fecha_finPropertyChange
         // TODO add your handling code here:
-        this.jDateChooser2.setMaxSelectableDate(this.jDateChooser3.getDate());
-    }//GEN-LAST:event_jDateChooser3PropertyChange
+        this.fecha_inicio.setMaxSelectableDate(this.fecha_fin.getDate());
+    }//GEN-LAST:event_fecha_finPropertyChange
 
     /**
      * @param args the command line arguments
@@ -265,19 +284,23 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel BTN_Agregar1;
     public javax.swing.JLabel BTN_Cancelar;
+    public javax.swing.JComboBox<String> ComboBox_Aulas;
+    public javax.swing.JComboBox<String> ComboBox_Bloques;
+    public javax.swing.JComboBox<String> ComboBox_Dia;
     public javax.swing.JComboBox<String> ComboBox_Docentes;
     public javax.swing.JComboBox<String> ComboBox_Horario;
-    private javax.swing.JComboBox<String> ComboBox_Horario1;
     public javax.swing.JComboBox<String> ComboBox_Materias;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
+    public com.toedter.calendar.JDateChooser fecha_fin;
+    public com.toedter.calendar.JDateChooser fecha_inicio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
