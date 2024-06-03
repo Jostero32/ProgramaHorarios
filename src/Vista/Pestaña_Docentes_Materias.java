@@ -137,10 +137,10 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
 
         jcbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jcbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 110, -1));
+        add(jcbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 270, -1));
 
         jcbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jcbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 110, -1));
+        add(jcbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 270, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     public void actualizarTablaDocentesMaterias(ArrayList<DocenteMateria> docentesMaterias) {

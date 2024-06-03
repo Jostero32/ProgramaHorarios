@@ -74,7 +74,7 @@ public class Interfaz_Inicio extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Inicio", jPanel1);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 1020, 430));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 1050, 470));
 
         Barraa_Mover.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Barraa_Mover.setOpaque(false);
@@ -90,11 +90,12 @@ public class Interfaz_Inicio extends javax.swing.JFrame {
         });
         getContentPane().add(Barraa_Mover, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 40));
 
-        jLabel1.setBackground(new java.awt.Color(37, 39, 44));
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/FondoInicio.png"))); // NOI18N
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel1.setOpaque(true);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 585));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
