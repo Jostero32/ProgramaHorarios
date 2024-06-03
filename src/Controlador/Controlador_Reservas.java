@@ -316,8 +316,8 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         if (this.interfaz.jComboBox1.getSelectedItem().toString().matches("Docentes/Materias")) {
             try {
                 this.horariosCalendario = this.modelo.getReservasPorMateriaYRangoDeFechas(Integer.parseInt(this.interfaz.jComboBox3.getSelectedItem().toString().split("-")[0]), this.fecha_inicio, this.fecha_fin);
-                for (int i = 0; i < 6; i++) {
-                    for (int j = 0; j < 14; j++) {
+                for (int i = 1; i < 6; i++) {
+                    for (int j = 1; j < 14; j++) {
                         if (j < 13) {
                             this.interfaz.jTable1.setValueAt(this.horariosCalendario[j][i], j-1, i);
                         }
@@ -330,7 +330,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         } else {
             try {
                 this.horariosCalendario = this.modelo.getReservasEnRangoDeFechasYHorario(Integer.parseInt(this.interfaz.jComboBox3.getSelectedItem().toString().split("-")[0]), this.fecha_inicio, this.fecha_fin);
-                for (int i = 0; i < 6; i++) {
+                for (int i = 1; i < 6; i++) {
                     for (int j = 0; j < 14; j++) {
                         if (!this.horariosCalendario[j][i].isEmpty()) {
                             if (j < 13) {

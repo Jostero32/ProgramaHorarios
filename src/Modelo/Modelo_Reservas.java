@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  *
@@ -255,10 +256,17 @@ public class Modelo_Reservas {
                         int diaIndex = getDiaIndex(dia);
                         horarioVector[horarioId][diaIndex] = reservaInfo;
                     } else {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(rs.getDate("fecha_inicio"));
+                        int day1 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        calendar.setTime(rs.getDate("fecha_fin"));
+                        int day2 = calendar.get(Calendar.DAY_OF_WEEK)-1;
                         // Si el día es null, colocar la reserva en todos los días del rango
                         for (int i = 0; i < 6; i++) {
                             if (horarioId >= 1 && horarioId <= 14) {
-                                horarioVector[horarioId][i] = reservaInfo;
+                                if (i >= day1 && i <= day2) {
+                                    horarioVector[horarioId][i] = reservaInfo;
+                                }
                             }
                         }
                     }
@@ -311,9 +319,17 @@ public class Modelo_Reservas {
                         horarioVector[horarioId][diaIndex] = reservaInfo;
                     } else {
                         // Si el día es null, colocar la reserva en todos los días del rango
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(rs.getDate("fecha_inicio"));
+                        int day1 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        calendar.setTime(rs.getDate("fecha_fin"));
+                        int day2 = calendar.get(Calendar.DAY_OF_WEEK)-1;
                         for (int i = 0; i < 6; i++) {
                             if (horarioId >= 1 && horarioId <= 14) {
-                                horarioVector[horarioId][i] = reservaInfo;
+
+                                if (i >= day1 && i <= day2) {
+                                    horarioVector[horarioId][i] = reservaInfo;
+                                }
                             }
                         }
                     }
