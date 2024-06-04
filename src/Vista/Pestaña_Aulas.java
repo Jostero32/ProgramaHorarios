@@ -42,15 +42,14 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         Btn_Modificar_Aula = new javax.swing.JButton();
         Btn_Eliminar_Aula = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableAulas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtNmbreAula = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
         txtCapacidad = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableAulas = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(700, 450));
@@ -105,6 +104,18 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         jLabel4.setText("Bloque");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, 30));
 
+        jLabel1.setText("Nombre:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+
+        jLabel2.setText("Tipo:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
+
+        jLabel5.setText("Capacidad:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
+        add(txtNmbreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 190, -1));
+        add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 190, -1));
+        add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 190, -1));
+
         jTableAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -121,23 +132,11 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        jTableAulas.setEnabled(false);
+        jTableAulas.setFocusable(false);
         jScrollPane1.setViewportView(jTableAulas);
 
-        jScrollPane2.setViewportView(jScrollPane1);
-
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 470, 220));
-
-        jLabel1.setText("Nombre:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
-
-        jLabel2.setText("Tipo:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
-
-        jLabel5.setText("Capacidad:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
-        add(txtNmbreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 190, -1));
-        add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 190, -1));
-        add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 190, -1));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 440, 140));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -179,7 +178,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabelNombreAula;
     public javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTableAulas;
     public javax.swing.JTextField txtCapacidad;
     public javax.swing.JTextField txtNmbreAula;

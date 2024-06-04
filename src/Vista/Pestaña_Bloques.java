@@ -69,6 +69,8 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        jTableBloques.setEnabled(false);
+        jTableBloques.setFocusable(false);
         jScrollPane1.setViewportView(jTableBloques);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 360, 200));
