@@ -117,7 +117,7 @@ public class Modelo_Bloques {
                 String tipo = rs.getString("tipo");
                 int capacidad = rs.getInt("capacidad");
                 // Ajustando la instancia de Aula para incluir el nombre del bloque
-                Aula aula = new Aula(nombreBloque, nombre, "", capacidad, tipo);
+                Aula aula = new Aula(nombreBloque, nombre, capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {

@@ -54,30 +54,24 @@ public class Modelo_Aulas {
     }
 
     public boolean modificarAula(Aula aula) {
-    String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
-    String sqlUpdateRelacion = "UPDATE bloque_aula SET bloque_id = (SELECT id FROM bloques WHERE nombre = ?) WHERE aula_id = (SELECT id FROM aulas WHERE nombre = ?)";
-    
-    try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);
-         PreparedStatement pstmtUpdateRelacion = conn.prepareStatement(sqlUpdateRelacion)) {
-        
-        // Actualizar los datos de la aula
-        pstmtUpdateAula.setString(1, aula.getTipo());
-        pstmtUpdateAula.setInt(2, aula.getCapacidad());
-        pstmtUpdateAula.setString(3, aula.getNombre());
-        int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
-        
-        // Actualizar la relación con el bloque
-        pstmtUpdateRelacion.setString(1, aula.getNombreBloque());
-        pstmtUpdateRelacion.setString(2, aula.getNombre());
-        int rowsAffectedRelacion = pstmtUpdateRelacion.executeUpdate();
-        
-        // Devolver true si al menos una fila se vio afectada en cualquiera de las actualizaciones
-        return rowsAffectedAula > 0 || rowsAffectedRelacion > 0;
-    } catch (Exception e) {
-        System.out.println("Error al modificar el aula: " + e);
-        return false;
+        String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
+
+        try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);) {
+
+            // Actualizar los datos de la aula
+            pstmtUpdateAula.setString(1, aula.getTipo());
+            pstmtUpdateAula.setInt(2, aula.getCapacidad());
+            pstmtUpdateAula.setString(3, aula.getNombre());
+            int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
+
+
+            // Devolver true si al menos una fila se vio afectada en cualquiera de las actualizaciones
+            return rowsAffectedAula > 0 ;
+        } catch (Exception e) {
+            System.out.println("Error al modificar el aula: " + e);
+            return false;
+        }
     }
-}
 
     public boolean eliminarAula(String nombre) {
         String sql = "DELETE FROM aulas WHERE nombre = ?";
@@ -92,31 +86,30 @@ public class Modelo_Aulas {
     }
 
     public Aula verAula(String nombre) {
-    String sql = "SELECT a.nombre, a.tipo, a.capacidad, b.nombre AS nombre_bloque " +
-                 "FROM aulas a INNER JOIN bloque_aula ba ON a.id = ba.aula_id " +
-                 "INNER JOIN bloques b ON ba.bloque_id = b.id " +
-                 "WHERE a.nombre = ?";
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setString(1, nombre);
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            String tipo = rs.getString("tipo");
-            int capacidad = rs.getInt("capacidad");
-            String nombreBloque = rs.getString("nombre_bloque");
-            return new Aula(nombreBloque, nombre, null, capacidad, tipo);
+        String sql = "SELECT a.nombre, a.tipo, a.capacidad, b.nombre AS nombre_bloque "
+                + "FROM aulas a INNER JOIN bloque_aula ba ON a.id = ba.aula_id "
+                + "INNER JOIN bloques b ON ba.bloque_id = b.id "
+                + "WHERE a.nombre = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String tipo = rs.getString("tipo");
+                int capacidad = rs.getInt("capacidad");
+                String nombreBloque = rs.getString("nombre_bloque");
+                return new Aula(nombreBloque, nombre, capacidad, tipo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
-
 
     public ArrayList<Aula> verAulasPorBloque(String nombreBloque) {
-        String sql = "SELECT a.nombre, a.tipo, a.capacidad " +
-                     "FROM aulas a INNER JOIN bloque_aula ba ON a.id = ba.aula_id " +
-                     "INNER JOIN bloques b ON ba.bloque_id = b.id " +
-                     "WHERE b.nombre = ?";
+        String sql = "SELECT a.nombre, a.tipo, a.capacidad "
+                + "FROM aulas a INNER JOIN bloque_aula ba ON a.id = ba.aula_id "
+                + "INNER JOIN bloques b ON ba.bloque_id = b.id "
+                + "WHERE b.nombre = ?";
         ArrayList<Aula> aulas = new ArrayList<>();
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombreBloque);
@@ -126,7 +119,7 @@ public class Modelo_Aulas {
                 String tipo = rs.getString("tipo");
                 int capacidad = rs.getInt("capacidad");
                 // Agregando el nombre del bloque al constructor de Aula
-                Aula aula = new Aula(nombreBloque, nombre, null, capacidad, tipo);
+                Aula aula = new Aula(nombreBloque, nombre, capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {

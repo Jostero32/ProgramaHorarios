@@ -61,16 +61,17 @@ public class Controlador_Bloques implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
-            String nombreBloque = JOptionPane.showInputDialog(null, "Agregue el nombre del nuevo Bloque");
-
-            Bloque bloque = new Bloque(nombreBloque, null);
+            Bloque bloque = new Bloque(this.pestaña.txtNombrebloque.getText(), null);
             this.modeloBloque.crearBloque(bloque);
 
         }
 
         if (e.getSource() == this.pestaña.Btn_Modificar_Bloque) {
             String nombreAnterior = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            this.modeloBloque.modificarBloque(nombreAnterior, JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Bloque"));
+            
+            
+            //igual aqui hacer una interfaz aparte que se bloquee para que modifique
+            this.modeloBloque.modificarBloque(nombreAnterior, this.pestaña.txtNombrebloque.getText());
 
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Bloque) {

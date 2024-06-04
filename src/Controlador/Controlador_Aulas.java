@@ -63,14 +63,20 @@ public class Controlador_Aulas implements ActionListener {
     
         if (e.getSource() == this.pestaña.Btn_Agregar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            Aula aula = new Aula(nombreBloque, JOptionPane.showInputDialog(null, "Ingrese el nombre del Aula"), JOptionPane.showInputDialog(null, "Ingrese el piso del Aula"), Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la capacidad del Aula")), JOptionPane.showInputDialog(null, "Ingrese el tipo del Aula"));
+            Aula aula = new Aula(nombreBloque,this.pestaña.txtNmbreAula.getText(), Integer.parseInt(this.pestaña.txtCapacidad.getText()),this.pestaña.txtTipo.getText());
             this.modeloAula.crearAula(aula, nombreBloque);
             actualizarAulas();
         }
         if (e.getSource() == this.pestaña.Btn_Modificar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            Aula aula = new Aula(nombreBloque, JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre del Aula"), JOptionPane.showInputDialog(null, "Ingrese el nuevo piso del Aula"), Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la nueva capacidad del Aula")), JOptionPane.showInputDialog(null, "Ingrese el nuevo tipo de Aula"));
-            JOptionPane.showMessageDialog(null, this.modeloAula.modificarAula(aula));
+            
+            
+            //aqui recordar que toca hacer una ventana aparte donde aparezca y no pueda volver a la anterior ventana
+            Aula aula = new Aula(nombreBloque,this.pestaña.txtNmbreAula.getText(), Integer.parseInt(this.pestaña.txtCapacidad.getText()),this.pestaña.txtTipo.getText());
+          
+            
+            
+            
             actualizarAulas();
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Aula) {
@@ -82,7 +88,7 @@ public class Controlador_Aulas implements ActionListener {
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
-
+        this.pestaña.jLabelNombreAula.setText("Aulas del Bloque: "+bloqueSeleccionado);
         if (bloqueSeleccionado != null) {
             ArrayList<Aula> aulas = this.modeloBloque.obtenerAulasPorBloque(bloqueSeleccionado);
 

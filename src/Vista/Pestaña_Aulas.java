@@ -45,10 +45,16 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAulas = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNmbreAula = new javax.swing.JTextField();
+        txtTipo = new javax.swing.JTextField();
+        txtCapacidad = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(730, 250));
-        setPreferredSize(new java.awt.Dimension(930, 490));
+        setMinimumSize(new java.awt.Dimension(700, 450));
+        setPreferredSize(new java.awt.Dimension(700, 450));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -60,7 +66,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         add(jLabelNombreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 110, 30));
 
         jLabel3.setText("Aula");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 110, 30));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 110, 30));
 
         jComboBoxAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aula" }));
         jComboBoxAula.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +74,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 jComboBoxAulaActionPerformed(evt);
             }
         });
-        add(jComboBoxAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 110, -1));
+        add(jComboBoxAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 110, -1));
 
         jComboBoxBloque.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bloque" }));
         jComboBoxBloque.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +82,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 jComboBoxBloqueActionPerformed(evt);
             }
         });
-        add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 110, -1));
+        add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 110, -1));
 
         Btn_Agregar_Aula.setBackground(new java.awt.Color(153, 255, 153));
         Btn_Agregar_Aula.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,18 +92,18 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 Btn_Agregar_AulaActionPerformed(evt);
             }
         });
-        add(Btn_Agregar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 110, 30));
+        add(Btn_Agregar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 110, 30));
 
         Btn_Modificar_Aula.setText("Modificar");
-        add(Btn_Modificar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 110, 30));
+        add(Btn_Modificar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, 110, 30));
 
         Btn_Eliminar_Aula.setBackground(new java.awt.Color(204, 0, 0));
         Btn_Eliminar_Aula.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Eliminar_Aula.setText("Eliminar");
-        add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 110, 30));
+        add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 110, 30));
 
         jLabel4.setText("Bloque");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 110, 30));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, 30));
 
         jTableAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,6 +126,18 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jScrollPane1);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 470, 220));
+
+        jLabel1.setText("Nombre:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+
+        jLabel2.setText("Tipo:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
+
+        jLabel5.setText("Capacidad:");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
+        add(txtNmbreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 190, -1));
+        add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 190, -1));
+        add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 190, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -154,12 +172,18 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Modificar_Aula;
     public javax.swing.JComboBox<String> jComboBoxAula;
     public javax.swing.JComboBox<String> jComboBoxBloque;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabelNombreAula;
     public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTableAulas;
+    public javax.swing.JTextField txtCapacidad;
+    public javax.swing.JTextField txtNmbreAula;
+    public javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 
 }

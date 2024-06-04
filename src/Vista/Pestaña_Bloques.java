@@ -40,10 +40,12 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Modificar_Bloque = new javax.swing.JButton();
         Btn_Eliminar_Bloque = new javax.swing.JButton();
         jComboBoxBloque = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        txtNombrebloque = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
-        setPreferredSize(new java.awt.Dimension(930, 490));
+        setPreferredSize(new java.awt.Dimension(600, 300));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -90,6 +92,10 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 110, 30));
 
         add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 100, -1));
+
+        jLabel1.setText("Nombre:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+        add(txtNombrebloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 140, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -115,8 +121,10 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Eliminar_Bloque;
     public javax.swing.JButton Btn_Modificar_Bloque;
     public javax.swing.JComboBox<String> jComboBoxBloque;
+    private javax.swing.JLabel jLabel1;
     public javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTableBloques;
+    public javax.swing.JTextField txtNombrebloque;
     // End of variables declaration//GEN-END:variables
 
 }
