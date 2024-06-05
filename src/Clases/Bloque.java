@@ -15,16 +15,11 @@ public class Bloque {
     private String nombre;
     ArrayList<Aula> aulas;
 
-    public Bloque(String nombre, ArrayList<Aula> aulas) {
+    public Bloque(String nombre) {
         this.nombre = nombre;
-        this.aulas = aulas;
-
+        this.aulas = new ArrayList<>();
     }
 
-        public Bloque(String nombre) {
-        this.nombre = nombre;
-
-    }
     public String getNombre() {
         return this.nombre;
     }

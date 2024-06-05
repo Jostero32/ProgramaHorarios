@@ -50,7 +50,7 @@ public class Controlador_Bloques implements ActionListener {
         DefaultTableModel model = new DefaultTableModel();
 
         for (Bloque bloque : bloques) {
-            model = new DefaultTableModel(new Object[]{bloque.getNombre()}, 0);
+            model = new DefaultTableModel(new Object[]{"Nombre"}, 0);
         }
 
         pestaña.jTableBloques.setModel(model);
@@ -61,7 +61,7 @@ public class Controlador_Bloques implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
-            Bloque bloque = new Bloque(this.pestaña.txtNombrebloque.getText(), null);
+            Bloque bloque = new Bloque(this.pestaña.txtNombrebloque.getText());
             this.modeloBloque.crearBloque(bloque);
 
         }

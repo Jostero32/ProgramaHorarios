@@ -62,7 +62,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelNombreAula.setText("Aulas del bloque: ");
-        add(jLabelNombreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 110, 30));
+        add(jLabelNombreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 280, 30));
 
         jLabel3.setText("Aula");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 110, 30));

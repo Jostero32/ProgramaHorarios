@@ -81,7 +81,9 @@ public class Modelo_Bloques {
             if (rs.next()) {
                 String nombreBD = rs.getString("nombre");
                 ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombreBD);
-                return new Bloque(nombreBD, aulas);
+                Bloque bloque=new Bloque(nombreBD);
+                bloque.setAulas(aulas);
+                return bloque;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +98,8 @@ public class Modelo_Bloques {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombre);
-                Bloque bloque = new Bloque(nombre, aulas);
+                Bloque bloque=new Bloque(nombre);
+                bloque.setAulas(aulas);
                 bloques.add(bloque);
             }
         } catch (Exception e) {
