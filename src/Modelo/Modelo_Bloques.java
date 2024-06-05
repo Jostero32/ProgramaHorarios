@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Modelo_Bloques {
         this.modeloAulas = new Modelo_Aulas(conn);
     }
 
-    public boolean crearBloque(Bloque bloque) {
+    public void crearBloque(Bloque bloque) {
         String sql = "INSERT INTO bloques (nombre) VALUES (?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, bloque.getNombre());
@@ -41,35 +42,40 @@ public class Modelo_Bloques {
                 }
             }
 
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha creado un nuevo bloque");
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+               JOptionPane.showMessageDialog(null, "Error al crear el nuevo bloque");
+
         }
     }
 
-    public boolean modificarBloque(String nombreAnterior, String nombreNuevo) {
+    public void modificarBloque(String nombreAnterior, String nombreNuevo) {
         String sql = "UPDATE bloques SET nombre = ? WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombreNuevo);
             pstmt.setString(2, nombreAnterior);
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha modificaado el bloque");
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+             JOptionPane.showMessageDialog(null, "Error al modificar el bloque");
         }
     }
 
-    public boolean eliminarBloque(String nombre) {
+    public void eliminarBloque(String nombre) {
         String sql = "DELETE FROM bloques WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el bloque: " + nombre);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+               JOptionPane.showMessageDialog(null, "Error al eliminar el bloque: " + nombre);
+
         }
     }
 
@@ -81,12 +87,12 @@ public class Modelo_Bloques {
             if (rs.next()) {
                 String nombreBD = rs.getString("nombre");
                 ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombreBD);
-                Bloque bloque=new Bloque(nombreBD);
+                Bloque bloque = new Bloque(nombreBD);
                 bloque.setAulas(aulas);
                 return bloque;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
             return null;
         }
         return null;
@@ -98,12 +104,12 @@ public class Modelo_Bloques {
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombre);
-                Bloque bloque=new Bloque(nombre);
+                Bloque bloque = new Bloque(nombre);
                 bloque.setAulas(aulas);
                 bloques.add(bloque);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
             return null;
         }
         return bloques;
@@ -124,7 +130,7 @@ public class Modelo_Bloques {
                 aulas.add(aula);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
         return aulas;
     }

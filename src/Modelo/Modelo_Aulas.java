@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Modelo_Aulas {
         this.conn = conn;
     }
 
-    public boolean crearAula(Aula aula, String nombreBloque) {
+    public void crearAula(Aula aula, String nombreBloque) {
         String sql = "INSERT INTO aulas (nombre, tipo, capacidad) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, aula.getNombre());
@@ -39,21 +40,23 @@ public class Modelo_Aulas {
                         asociarPstmt.setString(1, nombreBloque);
                         asociarPstmt.setInt(2, aulaId);
                         int asociarResult = asociarPstmt.executeUpdate();
-                        return asociarResult > 0;
+                        if (asociarResult > 0){
+                           JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
+                        }
                     } catch (Exception ex) {
-                        ex.printStackTrace();
-                        return false;
+                        
+                        JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
                     }
                 }
             }
-            return false;
+           
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+             JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
+           
         }
     }
 
-    public boolean modificarAula(Aula aula) {
+    public void modificarAula(Aula aula) {
         String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
 
         try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);) {
@@ -64,24 +67,26 @@ public class Modelo_Aulas {
             pstmtUpdateAula.setString(3, aula.getNombre());
             int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
 
-
-            // Devolver true si al menos una fila se vio afectada en cualquiera de las actualizaciones
-            return rowsAffectedAula > 0 ;
+             if(rowsAffectedAula > 0){
+                 JOptionPane.showMessageDialog(null, "Se ha modificado el Aula");
+             }
         } catch (Exception e) {
-            System.out.println("Error al modificar el aula: " + e);
-            return false;
+               JOptionPane.showMessageDialog(null, "Error al modificar el Aula");
+            
         }
     }
 
-    public boolean eliminarAula(String nombre) {
+    public void eliminarAula(String nombre) {
         String sql = "DELETE FROM aulas WHERE nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+             if(rowsAffected > 0){
+                 JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: "+nombre);
+             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+           
+              JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: "+nombre);
         }
     }
 
@@ -100,7 +105,7 @@ public class Modelo_Aulas {
                 return new Aula(nombreBloque, nombre, capacidad, tipo);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
         return null;
     }
@@ -123,7 +128,7 @@ public class Modelo_Aulas {
                 aulas.add(aula);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
         return aulas;
     }
