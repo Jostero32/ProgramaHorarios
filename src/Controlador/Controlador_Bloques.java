@@ -36,6 +36,7 @@ public class Controlador_Bloques implements ActionListener {
         this.pestaña.Btn_Modificar_Bloque.addActionListener(this);
         inicializarBloques();
         inicializarTabla();
+        actualizarBloques();
 
     }
 
@@ -63,23 +64,42 @@ public class Controlador_Bloques implements ActionListener {
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
             Bloque bloque = new Bloque(this.pestaña.txtNombrebloque.getText());
             this.modeloBloque.crearBloque(bloque);
-
+            actualizarBloques();
         }
 
         if (e.getSource() == this.pestaña.Btn_Modificar_Bloque) {
             String nombreAnterior = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            
-            
+
             //igual aqui hacer una interfaz aparte que se bloquee para que modifique
             this.modeloBloque.modificarBloque(nombreAnterior, this.pestaña.txtNombrebloque.getText());
-
+            actualizarBloques();
         }
         if (e.getSource() == this.pestaña.Btn_Eliminar_Bloque) {
             String nombre = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
             this.modeloBloque.eliminarBloque(nombre);
-
+            actualizarBloques();
         }
-   
+
+    }
+
+    private void actualizarBloques() {
+        String bloqueSeleccionado = (String) this.pestaña.jComboBoxBloque.getSelectedItem();
+
+        if (bloqueSeleccionado != null) {
+
+            // Limpiar el JComboBox de aulas antes de agregar nuevas aulas
+            this.pestaña.jComboBoxBloque.removeAllItems();
+
+            // Limpiar la JTable antes de agregar nuevas filas
+            DefaultTableModel model = (DefaultTableModel) this.pestaña.jTableBloques.getModel();
+            model.setRowCount(0);
+
+            // Agregar las aulas al JComboBox de aulas y a la JTable
+            for (Bloque bloque : bloques) {
+                this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());
+                model.addRow(new Object[]{bloque.getNombre()});
+            }
+        }
     }
 
     public Pestaña_Bloques getPestaña() {
