@@ -12,14 +12,13 @@ public class Aula {
 
     private String nombreBloque;
     private String nombre;
-    private String piso;
     private int capacidad;
     private String tipo;
 
-    public Aula(String nombreBloque, String nombre, String piso, int capacidad,String tipo) {
+    public Aula(String nombreBloque, String nombre, int capacidad,String tipo) {
         this.nombreBloque = nombreBloque;
         this.nombre = nombre;
-        this.piso = piso;
+       
         this.capacidad = capacidad;
         this.tipo = tipo;
     }
@@ -40,13 +39,6 @@ public class Aula {
         this.nombre = nombre;
     }
 
-    public String getPiso() {
-        return this.piso;
-    }
-
-    public void setPiso(String piso) {
-        this.piso = piso;
-    }
 
     public int getCapacidad() {
         return this.capacidad;

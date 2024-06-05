@@ -15,15 +15,16 @@ import java.sql.SQLException;
 public class Mysql {
 
 
-    private static final String URL = "jdbc:mysql://localhost:3306/programaHorarios?characterEncoding=UTF-8";
-    private static final String USER = "pc_java";
-    private static final String PASSWORD = "1234";
+   private static final String URL = "jdbc:mysql://localhost:3306/programaHorarios?characterEncoding=UTF-8";
+    private static final String USER = "root";
+    private static final String PASSWORD = "081005";
+
     private Connection connection;
 
     public Mysql() {
         try {
             // Cargar el driver de MySQL
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             // Establecer la conexión
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Conexión exitosa a la base de datos MySQL.");
