@@ -11,11 +11,11 @@ package Clases;
 public class Docente {
     private int id;
     private String nombre;
-    private String email;
+    private int cedula;
 
-    public Docente(String nombre, String email) {
+    public Docente(String nombre, int cedula) {
         this.nombre = nombre;
-        this.email = email;
+        this.cedula = cedula;
     }
 
     public int getId() {
@@ -35,11 +35,11 @@ public class Docente {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public int getCedula() {
+        return cedula;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.cedula = cedula;
     }
 }
