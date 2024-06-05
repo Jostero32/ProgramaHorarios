@@ -52,7 +52,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jtxtNombreDocente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jtxtCorreoDocente = new javax.swing.JTextField();
+        jtxtCedulaDocente = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -126,7 +126,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
 
         jLabel4.setText("Correo");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 110, 30));
-        add(jtxtCorreoDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 150, 40));
+        add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -134,7 +134,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
     this.tabla.setRowCount(0);
     
     for (Docente d : this.docentes) {
-        this.tabla.addRow(new Object[]{d.getNombre(), d.getEmail()});
+        this.tabla.addRow(new Object[]{d.getNombre(), d.getCedula()});
     }
 }
 
@@ -148,7 +148,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         for (Docente d : this.docentes) {
             if (d.getNombre().equals(nombreDocenteSeleccionado)) {
                 this.jtxtNombreDocente.setText(d.getNombre());
-                this.jtxtCorreoDocente.setText(d.getEmail());
+                this.jtxtCedulaDocente.setText(d.getCedula());
 
                 return;
             }
@@ -192,7 +192,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
     public javax.swing.JButton jtbtnAgregar;
     public javax.swing.JButton jtbtnEliminar;
     public javax.swing.JButton jtbtnModificar;
-    public javax.swing.JTextField jtxtCorreoDocente;
+    public javax.swing.JTextField jtxtCedulaDocente;
     public javax.swing.JTextField jtxtNombreDocente;
     // End of variables declaration//GEN-END:variables
     

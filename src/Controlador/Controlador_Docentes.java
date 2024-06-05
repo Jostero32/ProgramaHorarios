@@ -37,9 +37,9 @@ class Controlador_Docentes implements ActionListener {
         if (e.getSource() == this.interfaz.jtbtnAgregar) {
             try {
                 String nombre = this.interfaz.jtxtNombreDocente.getText();
-                String correo = this.interfaz.jtxtCorreoDocente.getText();
+                int cedula = Integer.parseInt(this.interfaz.jtxtCedulaDocente.getText());
 
-                Docente docente = new Docente(nombre, correo);
+                Docente docente = new Docente(nombre, cedula);
 
                 if (this.modelo.agregarDocente(docente)) {
                     this.interfaz.getDocentes().add(docente);
@@ -56,9 +56,9 @@ class Controlador_Docentes implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Docentes.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombreAnterior = this.interfaz.jtblTabla_Docentes.getValueAt(this.interfaz.jtblTabla_Docentes.getSelectedRow(), this.interfaz.jtblTabla_Docentes.getSelectedColumn()).toString();
-                    Docente docenteModificado = new Docente(this.interfaz.jtxtNombreDocente.getText(), this.interfaz.jtxtCorreoDocente.getText().toString());
-                    if (this.modelo.actualizarDocente(docenteModificado,nombreAnterior)) {
+                    String nombreAnterior = this.interfaz.jtblTabla_Docentes.getValueAt(this.interfaz.jtblTabla_Docentes.getSelectedRow(), 0).toString();
+                    Docente docenteModificado = new Docente(this.interfaz.jtxtNombreDocente.getText(), Integer.parseInt(this.interfaz.jtxtCedulaDocente.getText()));
+                    if (this.modelo.actualizarDocente(docenteModificado, nombreAnterior)) {
                         for (int i = 0; i < this.interfaz.getDocentes().size(); i++) {
                             Docente d = this.interfaz.getDocentes().get(i);
                             if (d.getNombre().matches(nombreAnterior)) {
@@ -85,21 +85,21 @@ class Controlador_Docentes implements ActionListener {
                 int selectedRow = this.interfaz.jtblTabla_Docentes.getSelectedRow();
                 if (selectedRow != -1) {
                     String nombre = this.interfaz.jtxtNombreDocente.getText();
-                    String correo = this.interfaz.jtxtCorreoDocente.getText();
+                    int cedula = Integer.parseInt(this.interfaz.jtxtCedulaDocente.getText());
 
-                    Docente docente = new Docente(nombre, correo);
+                    Docente docente = new Docente(nombre, cedula);
 
                     if (this.modelo.eliminarDocente(docente)) {
                         for (int i = 0; i < this.interfaz.getDocentes().size(); i++) {
                             Docente d = this.interfaz.getDocentes().get(i);
-                            if (d.getNombre().equals(nombre) && d.getEmail().equals(correo)) {
+                            if (d.getNombre().equals(nombre) && d.getCedula() == cedula) {
                                 this.interfaz.getDocentes().remove(d);
                                 break;
                             }
                         }
                         this.interfaz.actualizarTablaDocentes();
                         this.interfaz.jtxtNombreDocente.setText("");
-                        this.interfaz.jtxtCorreoDocente.setText("");
+                        this.interfaz.jtxtCedulaDocente.setText("");
                         JOptionPane.showMessageDialog(null, "Docente eliminado con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo eliminar el docente", "Error", JOptionPane.ERROR_MESSAGE);
