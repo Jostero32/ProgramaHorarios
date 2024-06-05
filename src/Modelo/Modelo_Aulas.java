@@ -45,13 +45,13 @@ public class Modelo_Aulas {
                         }
                     } catch (Exception ex) {
                         
-                        JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
+                        JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula","Crear", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
            
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
+             JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula","Error", JOptionPane.ERROR_MESSAGE);
            
         }
     }
@@ -68,10 +68,10 @@ public class Modelo_Aulas {
             int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
 
              if(rowsAffectedAula > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha modificado el Aula");
+                 JOptionPane.showMessageDialog(null, "Se ha modificado el Aula","Modificar", JOptionPane.INFORMATION_MESSAGE);
              }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al modificar el Aula");
+               JOptionPane.showMessageDialog(null, "Error al modificar el Aula","Error", JOptionPane.ERROR_MESSAGE);
             
         }
     }
@@ -82,11 +82,11 @@ public class Modelo_Aulas {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
              if(rowsAffected > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: "+nombre);
+                 JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: "+nombre,"Eliminar", JOptionPane.INFORMATION_MESSAGE);
              }
         } catch (Exception e) {
            
-              JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: "+nombre);
+              JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: "+nombre,"Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

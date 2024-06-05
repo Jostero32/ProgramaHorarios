@@ -43,10 +43,10 @@ public class Modelo_Bloques {
             }
 
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha creado un nuevo bloque");
+                JOptionPane.showMessageDialog(null, "Se ha creado un nuevo bloque","Crear", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al crear el nuevo bloque");
+               JOptionPane.showMessageDialog(null, "Error al crear el nuevo bloque","Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -58,10 +58,10 @@ public class Modelo_Bloques {
             pstmt.setString(2, nombreAnterior);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha modificaado el bloque");
+                JOptionPane.showMessageDialog(null, "Se ha modificado el bloque","Modificar", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al modificar el bloque");
+             JOptionPane.showMessageDialog(null, "Error al modificar el bloque","Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -71,10 +71,10 @@ public class Modelo_Bloques {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el bloque: " + nombre);
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el bloque: " + nombre,"Eliminar", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al eliminar el bloque: " + nombre);
+               JOptionPane.showMessageDialog(null, "Error al eliminar el bloque: " + nombre,"Error", JOptionPane.ERROR_MESSAGE);
 
         }
     }
