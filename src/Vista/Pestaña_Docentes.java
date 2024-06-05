@@ -148,9 +148,8 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         for (Docente d : this.docentes) {
             if (d.getNombre().equals(nombreDocenteSeleccionado)) {
                 this.jtxtNombreDocente.setText(d.getNombre());
-                this.jtxtCedulaDocente.setText(d.getCedula());
-
-                return;
+                this.jtxtCedulaDocente.setText(String.valueOf(d.getCedula()));
+                    return;
             }
         }
 
