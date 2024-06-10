@@ -70,7 +70,8 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        boton_agregar = new javax.swing.JMenuItem();
+        boton_eliminar = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -81,9 +82,6 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        boton_agregar = new javax.swing.JButton();
-        boton_editar = new javax.swing.JButton();
-        boton_eliminar = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,9 +90,16 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
             }
         });
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
-        jPopupMenu1.add(jCheckBoxMenuItem1);
+        boton_agregar.setText("Agregar");
+        boton_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_agregarActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(boton_agregar);
+
+        boton_eliminar.setText("Eliminar");
+        jPopupMenu1.add(boton_eliminar);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -151,10 +156,10 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 810, 550));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 810, 550));
 
         jLabel1.setText("Bloque:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 110, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 110, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bloques/Aulas", "Docentes/Materias" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,29 +167,20 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 160, 30));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 160, 30));
 
         jLabel2.setText("Aula:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 110, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 110, 30));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 160, 30));
+        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 160, 30));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 160, 30));
+        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 160, 30));
 
         jLabel3.setText("Filtro");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 30));
-
-        boton_agregar.setText("Agregar");
-        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 110, 50));
-
-        boton_editar.setText("Editar");
-        jPanel1.add(boton_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 120, 50));
-
-        boton_eliminar.setText("Eliminar");
-        jPanel1.add(boton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 110, 50));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, 150, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, 30));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 150, 40));
 
         jScrollPane1.setViewportView(jPanel1);
 
@@ -221,12 +217,13 @@ public class Pestaña_Reservas1 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void boton_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_agregarActionPerformed
+    }//GEN-LAST:event_boton_agregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton boton_agregar;
-    public javax.swing.JButton boton_editar;
-    public javax.swing.JButton boton_eliminar;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    public javax.swing.JMenuItem boton_agregar;
+    public javax.swing.JMenuItem boton_eliminar;
     public javax.swing.JComboBox<String> jComboBox1;
     public javax.swing.JComboBox<String> jComboBox2;
     public javax.swing.JComboBox<String> jComboBox3;

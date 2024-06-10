@@ -8,7 +8,7 @@ import Clases.Bloque;
 import Clases.Docente;
 import Clases.Materia;
 import Modelo.Modelo_Reservas;
-import Vista.Interfaz_Agregar_Horario;
+import Vista.Interfaz_Agregar_Horario1;
 import Vista.Pestaña_Reservas1;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,18 +35,16 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
     private Pestaña_Reservas1 interfaz;
     private Modelo_Reservas modelo;
     private String[][] horariosCalendario = new String[14][6];
-    private Interfaz_Agregar_Horario interfazAgregar;
+    private Interfaz_Agregar_Horario1 interfazAgregar;
     private java.util.Date fecha_fin;
     private java.util.Date fecha_inicio;
 
     public Controlador_Reservas1(Connection con) {
-        this.interfazAgregar = new Interfaz_Agregar_Horario();
+        this.interfazAgregar = new Interfaz_Agregar_Horario1();
         this.modelo = new Modelo_Reservas(con);
         this.interfaz = new Pestaña_Reservas1();
         this.interfaz.boton_agregar.addActionListener(this);
-        this.interfaz.boton_editar.addActionListener(this);
         this.interfaz.boton_eliminar.addActionListener(this);
-        this.interfazAgregar.ComboBox_Docentes.addActionListener(this);
         this.interfazAgregar.ComboBox_Bloques.addActionListener(this);
         this.interfazAgregar.BTN_Agregar1.addMouseListener(this);
         this.interfaz.jDateChooser1.addPropertyChangeListener(this);
@@ -83,15 +81,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
             this.interfazAgregar.BTN_Agregar1.setText("AGREGAR");
             this.actualizarCamposInterfazAgregar();
             this.interfazAgregar.setVisible(true);
-        }
-        if (e.getSource() == this.interfaz.boton_editar) {
-            this.interfazAgregar.BTN_Agregar1.setText("EDITAR");
-            this.actualizarCamposInterfazAgregar();
-            this.seleccionarCamposEditar();
-            this.interfazAgregar.setVisible(true);
-        }
-        if (e.getSource() == this.interfazAgregar.ComboBox_Docentes && this.interfazAgregar.ComboBox_Docentes.getSelectedItem() != null) {
-            this.actualizarMateriasDocente(Integer.parseInt(this.interfazAgregar.ComboBox_Docentes.getSelectedItem().toString().split("-")[0]));
         }
         if (e.getSource() == this.interfazAgregar.ComboBox_Bloques && this.interfazAgregar.ComboBox_Bloques.getSelectedItem() != null) {
             this.actualizarAulasBloque(Integer.parseInt(this.interfazAgregar.ComboBox_Bloques.getSelectedItem().toString().split("-")[0]));
@@ -134,7 +123,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
     }
 
     private void actualizarCamposInterfazAgregar() {
-        this.ActualizarDocentes();
         this.ActualizarBloques();
     }
 
@@ -143,28 +131,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
         if (horarios != null) {
             for (String h : horarios) {
                 this.interfazAgregar.ComboBox_Horario.addItem(h);
-            }
-        }
-    }
-
-    private void ActualizarDocentes() {
-        ArrayList<Docente> docentes = this.modelo.obtenerDocentes();
-        this.interfazAgregar.ComboBox_Docentes.removeAllItems();
-        if (docentes != null) {
-            for (Docente doc : docentes) {
-                this.interfazAgregar.ComboBox_Docentes.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getEmail());
-
-            }
-        }
-    }
-
-    private void actualizarMateriasDocente(int id) {
-        ArrayList<Materia> materias = this.modelo.obtenerMateriasDocente(id);
-        this.interfazAgregar.ComboBox_Materias.removeAllItems();
-        if (materias != null) {
-            for (Materia mat : materias) {
-                this.interfazAgregar.ComboBox_Materias.addItem(mat.getId() + "-" + mat.getNombre() + "/" + mat.getCodigo());
-
             }
         }
     }
@@ -197,22 +163,19 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
             try {
                 Date fecha_inicio = new Date(this.interfazAgregar.fecha_inicio.getDate().getTime());
                 Date fecha_fin = new Date(this.interfazAgregar.fecha_fin.getDate().getTime());
-                String materiaStr = (String) this.interfazAgregar.ComboBox_Materias.getSelectedItem();
+                String encargado = this.interfazAgregar.Encargado.getText();
+                String descripcion = this.interfazAgregar.Descripcion.getText();
                 String aulaStr = (String) this.interfazAgregar.ComboBox_Aulas.getSelectedItem();
                 String dia = (String) this.interfazAgregar.ComboBox_Dia.getSelectedItem();
                 String horarioStr = (String) this.interfazAgregar.ComboBox_Horario.getSelectedItem();
-                int materia_id = Integer.parseInt(materiaStr.split("-")[0]);
                 int aula_id = Integer.parseInt(aulaStr.split("-")[0]);
                 int horario_id = Integer.parseInt(horarioStr.split("-")[0]);
                 if ("-----".equals(dia)) {
                     dia = null;
                 }
                 if (this.interfazAgregar.BTN_Agregar1.getText().matches("AGREGAR")) {
-                    this.modelo.insertarReserva(materia_id, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
+                    this.modelo.insertarReserva(encargado,descripcion, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
                     JOptionPane.showMessageDialog(null, "Registro Agregado", "Exito", 1);
-                } else {
-                    this.modelo.actualizarReserva(materia_id, materia_id, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
-                    JOptionPane.showMessageDialog(null, "Registro Modificado", "Exito", 1);
                 }
                 this.interfazAgregar.dispose();
                 this.actualizarTablaHorario();
@@ -240,31 +203,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
 
     @Override
     public void mouseExited(MouseEvent e) {
-    }
-
-    private void seleccionarCamposEditar() {
-        if (this.interfaz.jTable1.getSelectedRow() != -1 && this.interfaz.jTable1.getSelectedColumn() != -1) {
-            try {
-                String[] campos = this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-");
-                this.interfazAgregar.ComboBox_Dia.setSelectedIndex(this.interfaz.jTable1.getSelectedColumn());
-                this.interfazAgregar.ComboBox_Horario.setSelectedIndex(this.interfaz.jTable1.getSelectedColumn() - 1);
-                for (int i = 0; i < this.interfazAgregar.ComboBox_Docentes.getItemCount(); i++) {
-                    if (this.interfazAgregar.ComboBox_Docentes.getItemAt(i).contains(campos[2])) {
-                        this.interfazAgregar.ComboBox_Docentes.setSelectedIndex(i);
-                        break;
-                    }
-                }
-                for (int i = 0; i < this.interfazAgregar.ComboBox_Materias.getItemCount(); i++) {
-                    if (this.interfazAgregar.ComboBox_Materias.getItemAt(i).split("-")[0].contains(campos[0])) {
-                        this.interfazAgregar.ComboBox_Materias.setSelectedIndex(i);
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-
-            }
-        }
-
     }
 
     @Override
@@ -297,7 +235,7 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
             ArrayList<Docente> docentes = this.modelo.obtenerDocentes();
             if (docentes != null) {
                 for (Docente doc : docentes) {
-                    this.interfaz.jComboBox2.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getEmail());
+                    this.interfaz.jComboBox2.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getCedula());
                 }
             }
         } else {

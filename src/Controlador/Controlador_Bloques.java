@@ -94,6 +94,7 @@ public class Controlador_Bloques implements ActionListener {
             DefaultTableModel model = (DefaultTableModel) this.pestaña.jTableBloques.getModel();
             model.setRowCount(0);
 
+            this.bloques=this.modeloBloque.verTodosLosBloques();
             // Agregar las aulas al JComboBox de aulas y a la JTable
             for (Bloque bloque : bloques) {
                 this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());

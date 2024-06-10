@@ -152,7 +152,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         this.interfazAgregar.ComboBox_Docentes.removeAllItems();
         if (docentes != null) {
             for (Docente doc : docentes) {
-                this.interfazAgregar.ComboBox_Docentes.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getEmail());
+                this.interfazAgregar.ComboBox_Docentes.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getCedula());
 
             }
         }
@@ -297,7 +297,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
             ArrayList<Docente> docentes = this.modelo.obtenerDocentes();
             if (docentes != null) {
                 for (Docente doc : docentes) {
-                    this.interfaz.jComboBox2.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getEmail());
+                    this.interfaz.jComboBox2.addItem(doc.getId() + "-" + doc.getNombre() + "/" + doc.getCedula());
                 }
             }
         } else {

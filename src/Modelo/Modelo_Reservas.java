@@ -50,7 +50,7 @@ public class Modelo_Reservas {
             ResultSet res = pstmt.executeQuery();
             docentes = new ArrayList<>();
             while (res.next()) {
-                Docente doc = new Docente(res.getString("nombre"), res.getString("email"));
+                Docente doc = new Docente(res.getString("nombre"), res.getInt("cedula"));
                 doc.setId(res.getInt("id"));
                 docentes.add(doc);
             }
@@ -121,6 +121,47 @@ public class Modelo_Reservas {
         }
     }
 
+    
+    
+        public void insertarReserva(String encargado,String descripcion, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id) throws SQLException {
+        if (!validarReserva(19000, aula_id, fecha_inicio, fecha_fin, dia, horario_id, -1)) {
+            throw new SQLException("Conflicto de reserva detectado.");
+        }
+
+        String insertQuery = "INSERT INTO reservas (persona_encargada,descripcion, aula_id, fecha_inicio, fecha_fin, dia, horario_id) VALUES (?, ?, ?, ?, ?, ?,?)";
+        try (PreparedStatement stmtInsert = conn.prepareStatement(insertQuery)) {
+            stmtInsert.setString(1, encargado);
+            stmtInsert.setString(2, descripcion);
+            stmtInsert.setInt(3, aula_id);
+            stmtInsert.setDate(4, new Date(fecha_inicio.getTime()));
+            stmtInsert.setDate(5, new Date(fecha_fin.getTime()));
+            stmtInsert.setString(6, dia);
+            stmtInsert.setInt(7, horario_id);
+            stmtInsert.executeUpdate();
+        }
+    }
+    
+        public void actualizarReserva(int reserva_id,String encargado,String descripcion, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id) throws SQLException {
+        if (!validarReserva(1900000, aula_id, fecha_inicio, fecha_fin, dia, horario_id, reserva_id)) {
+            throw new SQLException("Conflicto de reserva detectado.");
+        }
+
+        String updateQuery = "UPDATE reservas SET persona_encargada = ?,descripcion = ?, aula_id = ?, fecha_inicio = ?, fecha_fin = ?, dia = ?, horario_id = ? WHERE id = ?";
+        try (PreparedStatement stmtUpdate = conn.prepareStatement(updateQuery)) {
+            stmtUpdate.setString(1, encargado);
+            stmtUpdate.setString(2, descripcion);
+            stmtUpdate.setInt(3, aula_id);
+            stmtUpdate.setDate(4, new Date(fecha_inicio.getTime()));
+            stmtUpdate.setDate(5, new Date(fecha_fin.getTime()));
+            stmtUpdate.setString(6, dia);
+            stmtUpdate.setInt(7, horario_id);
+            stmtUpdate.setInt(8, reserva_id);
+            stmtUpdate.executeUpdate();
+        }
+    }
+
+    
+    
     private boolean validarReserva(int materia_id, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id, int reserva_id) throws SQLException {
         // Regla 1: Conflictos de Rango Completo incluyendo el horario_id y el día (solo para reservas sin día específico)
         if (dia == null) {
