@@ -1,0 +1,28 @@
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+##############################
+## NetBeans
+##############################
+nbproject/private/private.properties
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+
+##############################
+## Miscellaneous
+##############################
+*.log
+/nbproject/private/
