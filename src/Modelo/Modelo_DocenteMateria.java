@@ -43,12 +43,14 @@ public class Modelo_DocenteMateria {
             String docenteNombre = rs.getString("docente_nombre");
             int materiaId = rs.getInt("materia_id");
             String materiaNombre = rs.getString("materia_nombre");
-            char paralelo = rs.getString("paralelo").charAt(0);
+            String paraleloStr = rs.getString("paralelo");
+            char paralelo = paraleloStr != null ? paraleloStr.charAt(0) : ' '; // Usar un espacio en blanco como valor por defecto si es null
             lista.add(new DocenteMateria(docenteId, docenteNombre, materiaId, materiaNombre, paralelo));
         }
     }
     return lista;
 }
+
 
 
     public boolean eliminarDocenteMateria(int docenteId, int materiaId) throws SQLException {
