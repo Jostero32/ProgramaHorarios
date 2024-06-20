@@ -124,17 +124,18 @@ public class Controlador_DocentesMaterias implements ActionListener {
     }
 
     private void actualizarTablaDocentesMaterias() {
-        try {
-            DefaultTableModel model = (DefaultTableModel) this.pestaña.jtblTabla_Docentes_Materias.getModel();
-            model.setRowCount(0);
+    try {
+        DefaultTableModel model = (DefaultTableModel) this.pestaña.jtblTabla_Docentes_Materias.getModel();
+        model.setRowCount(0);
 
-            for (DocenteMateria dm : this.modelo.obtenerTodasLasRelaciones()) {
-                model.addRow(new Object[]{dm.getDocenteNombre(), dm.getMateriaNombre()});
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar las relaciones docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+        for (DocenteMateria dm : this.modelo.obtenerTodasLasRelaciones()) {
+            model.addRow(new Object[]{dm.getDocenteNombre(), dm.getMateriaNombre(), dm.getParalelo()});
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al cargar las relaciones docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     private void actualizarDocentes() {
         try {
