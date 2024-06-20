@@ -153,28 +153,49 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
     private void actualizarCampos() {
     int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
     if (selectedRow != -1) {
-        int docenteId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
-        int materiaId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+        // Estas líneas asumen que las columnas contienen nombres en el formato "nombre" directamente
+        String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
+        String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
 
-        jcbxDocente.setSelectedItem(String.valueOf(docenteId));
-        jcbxMateria.setSelectedItem(String.valueOf(materiaId));
+        // Asigna directamente los nombres sin intentar convertir de String a Integer
+        jcbxDocente.setSelectedItem(docenteNombre);
+        jcbxMateria.setSelectedItem(materiaNombre);
     }
 }
 
+    private int findIdByName(String name, ArrayList<String> list) {
+    for (String item : list) {
+        if (item.contains(name)) {
+            return Integer.parseInt(item.split(" - ")[0]);
+        }
+    }
+    return -1;  // Considera manejar mejor los casos donde no se encuentra el ID.
+}
+
+
 
     public void actualizarDocentes(ArrayList<String> docentes) {
-        jcbxDocente.removeAllItems();
+    jcbxDocente.removeAllItems();
+    if (docentes != null && !docentes.isEmpty()) {
         for (String docente : docentes) {
             jcbxDocente.addItem(docente);
         }
+    } else {
+        jcbxDocente.addItem("No hay docentes disponibles"); 
     }
+}
 
-    public void actualizarMaterias(ArrayList<String> materias) {
-        jcbxMateria.removeAllItems();
+public void actualizarMaterias(ArrayList<String> materias) {
+    jcbxMateria.removeAllItems();
+    if (materias != null && !materias.isEmpty()) {
         for (String materia : materias) {
             jcbxMateria.addItem(materia);
         }
+    } else {
+        jcbxMateria.addItem("No hay materias disponibles");  
     }
+}
+
     private void jtbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbtnAgregarActionPerformed
         // TODO add your handling code here:
 
@@ -185,44 +206,40 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseClicked
 
     private void jtblTabla_Docentes_MateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblTabla_Docentes_MateriasMouseClicked
-        // TODO add your handling code here:
-        
         int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
-        if (selectedRow != -1) {
-            int docenteId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
-            int materiaId = (int) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+    if (selectedRow != -1) {
+        // Obtén los nombres directamente desde la tabla
+        String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
+        String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
 
-            int cant = jcbxDocente.getItemCount();
-            int indice = 0;
-            for (int i = 0; i < cant; i++) {
-               String docenteNuevo = (String) jcbxDocente.getItemAt(i);
-                String[] lstDocente = docenteNuevo.split("-");
-                int newDocenteId = Integer.valueOf(lstDocente[0].replaceAll(" ",""));
-                
-                if(newDocenteId == docenteId){
-                    indice = i;
-                }
+        // Encuentra el índice del docente en el combobox
+        int cantDocentes = jcbxDocente.getItemCount();
+        int indiceDocente = -1;
+        for (int i = 0; i < cantDocentes; i++) {
+            String docenteItem = (String) jcbxDocente.getItemAt(i);
+            if (docenteItem.contains(docenteNombre)) {
+                indiceDocente = i;
+                break;
             }
-            
-            jcbxDocente.setSelectedIndex(indice);
-       
-            cant = jcbxMateria.getItemCount();
-            indice = 0;
-            for (int i = 0; i < cant; i++) {
-               String materiaNuevo = (String) jcbxMateria.getItemAt(i);
-                String[] lstMateria = materiaNuevo.split("-");
-                int newMateriaId = Integer.valueOf(lstMateria[0].replaceAll(" ",""));
-                
-                if(newMateriaId == materiaId){
-                    indice = i;
-                }
-            }
-            
-            jcbxMateria.setSelectedIndex(indice);
         }
-        
-        
-        
+        if (indiceDocente != -1) {
+            jcbxDocente.setSelectedIndex(indiceDocente);
+        }
+
+        // Encuentra el índice de la materia en el combobox
+        int cantMaterias = jcbxMateria.getItemCount();
+        int indiceMateria = -1;
+        for (int i = 0; i < cantMaterias; i++) {
+            String materiaItem = (String) jcbxMateria.getItemAt(i);
+            if (materiaItem.contains(materiaNombre)) {
+                indiceMateria = i;
+                break;
+            }
+        }
+        if (indiceMateria != -1) {
+            jcbxMateria.setSelectedIndex(indiceMateria);
+        }
+    }
     }//GEN-LAST:event_jtblTabla_Docentes_MateriasMouseClicked
 
     private DefaultTableModel tabla = new DefaultTableModel() {
