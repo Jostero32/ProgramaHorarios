@@ -23,22 +23,22 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     public Pestaña_Docentes_Materias() {
-    initComponents();
-    String columnas[] = {"Docente", "Materia", "Paralelo"};
-    this.tabla.setColumnIdentifiers(columnas);
-    this.jtblTabla_Docentes_Materias.setModel(tabla);
-    this.jtblTabla_Docentes_Materias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            if (!e.getValueIsAdjusting()) {
-                int filaSeleccionada = jtblTabla_Docentes_Materias.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    actualizarCampos();
+        initComponents();
+        String columnas[] = {"Docente", "Materia", "Paralelo"};
+        this.tabla.setColumnIdentifiers(columnas);
+        this.jtblTabla_Docentes_Materias.setModel(tabla);
+        this.jtblTabla_Docentes_Materias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int filaSeleccionada = jtblTabla_Docentes_Materias.getSelectedRow();
+                    if (filaSeleccionada != -1) {
+                        actualizarCampos();
+                    }
                 }
             }
-        }
-    });
-}
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +58,8 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jcbxDocente = new javax.swing.JComboBox<>();
         jcbxMateria = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jcbxParalelo = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -141,60 +143,68 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
 
         jcbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         add(jcbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 270, -1));
+
+        jLabel1.setText("Paralelo");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, -1, -1));
+
+        jcbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E" }));
+        add(jcbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 50, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     public void actualizarTablaDocentesMaterias(ArrayList<DocenteMateria> docentesMaterias) {
         tabla.setRowCount(0);
         for (DocenteMateria dm : docentesMaterias) {
-            tabla.addRow(new Object[]{dm.getDocenteId(), dm.getMateriaId()});
+            tabla.addRow(new Object[]{dm.getDocenteNombre(), dm.getMateriaNombre(), dm.getParalelo()});
         }
     }
 
     private void actualizarCampos() {
-    int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
-    if (selectedRow != -1) {
-        // Estas líneas asumen que las columnas contienen nombres en el formato "nombre" directamente
-        String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
-        String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+        int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
+        if (selectedRow != -1) {
+            String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
+            String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+            String paralelo = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2);
 
-        // Asigna directamente los nombres sin intentar convertir de String a Integer
-        jcbxDocente.setSelectedItem(docenteNombre);
-        jcbxMateria.setSelectedItem(materiaNombre);
-    }
-}
-
-    private int findIdByName(String name, ArrayList<String> list) {
-    for (String item : list) {
-        if (item.contains(name)) {
-            return Integer.parseInt(item.split(" - ")[0]);
+            jcbxDocente.setSelectedItem(docenteNombre);
+            jcbxMateria.setSelectedItem(materiaNombre);
+            jcbxParalelo.setSelectedItem(paralelo);
         }
     }
-    return -1;  // Considera manejar mejor los casos donde no se encuentra el ID.
-}
+
+    private int findIdByName(String name, ArrayList<String> list) {
+        for (String item : list) {
+            if (item.contains(name)) {
+                return Integer.parseInt(item.split(" - ")[0]);
+            }
+        }
+        return -1;  // Considera manejar mejor los casos donde no se encuentra el ID.
+    }
 
 
 
     public void actualizarDocentes(ArrayList<String> docentes) {
-    jcbxDocente.removeAllItems();
-    if (docentes != null && !docentes.isEmpty()) {
-        for (String docente : docentes) {
-            jcbxDocente.addItem(docente);
+        jcbxDocente.removeAllItems();
+        jcbxDocente.addItem("Seleccione docente");
+        if (docentes != null && !docentes.isEmpty()) {
+            for (String docente : docentes) {
+                jcbxDocente.addItem(docente);
+            }
+        } else {
+            jcbxDocente.addItem("No hay docentes disponibles");
         }
-    } else {
-        jcbxDocente.addItem("No hay docentes disponibles"); 
     }
-}
 
 public void actualizarMaterias(ArrayList<String> materias) {
-    jcbxMateria.removeAllItems();
-    if (materias != null && !materias.isEmpty()) {
-        for (String materia : materias) {
-            jcbxMateria.addItem(materia);
+        jcbxMateria.removeAllItems();
+        jcbxMateria.addItem("Seleccione materia");
+        if (materias != null && !materias.isEmpty()) {
+            for (String materia : materias) {
+                jcbxMateria.addItem(materia);
+            }
+        } else {
+            jcbxMateria.addItem("No hay materias disponibles");
         }
-    } else {
-        jcbxMateria.addItem("No hay materias disponibles");  
     }
-}
 
     private void jtbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbtnAgregarActionPerformed
         // TODO add your handling code here:
@@ -206,40 +216,45 @@ public void actualizarMaterias(ArrayList<String> materias) {
     }//GEN-LAST:event_formMouseClicked
 
     private void jtblTabla_Docentes_MateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblTabla_Docentes_MateriasMouseClicked
-        int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
-    if (selectedRow != -1) {
-        // Obtén los nombres directamente desde la tabla
-        String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
-        String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
+        if (selectedRow != -1) {
+            // Obtén los nombres directamente desde la tabla
+            String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
+            String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
+            String paralelo = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2);
 
-        // Encuentra el índice del docente en el combobox
-        int cantDocentes = jcbxDocente.getItemCount();
-        int indiceDocente = -1;
-        for (int i = 0; i < cantDocentes; i++) {
-            String docenteItem = (String) jcbxDocente.getItemAt(i);
-            if (docenteItem.contains(docenteNombre)) {
-                indiceDocente = i;
-                break;
+            // Encuentra el índice del docente en el combobox
+            int cantDocentes = jcbxDocente.getItemCount();
+            int indiceDocente = -1;
+            for (int i = 0; i < cantDocentes; i++) {
+                String docenteItem = (String) jcbxDocente.getItemAt(i);
+                if (docenteItem.contains(docenteNombre)) {
+                    indiceDocente = i;
+                    break;
+                }
             }
-        }
-        if (indiceDocente != -1) {
-            jcbxDocente.setSelectedIndex(indiceDocente);
+            if (indiceDocente != -1) {
+                jcbxDocente.setSelectedIndex(indiceDocente);
+            }
+
+            // Encuentra el índice de la materia en el combobox
+            int cantMaterias = jcbxMateria.getItemCount();
+            int indiceMateria = -1;
+            for (int i = 0; i < cantMaterias; i++) {
+                String materiaItem = (String) jcbxMateria.getItemAt(i);
+                if (materiaItem.contains(materiaNombre)) {
+                    indiceMateria = i;
+                    break;
+                }
+            }
+            if (indiceMateria != -1) {
+                jcbxMateria.setSelectedIndex(indiceMateria);
+            }
+
+            // Establece el paralelo seleccionado
+            jcbxParalelo.setSelectedItem(paralelo);
         }
 
-        // Encuentra el índice de la materia en el combobox
-        int cantMaterias = jcbxMateria.getItemCount();
-        int indiceMateria = -1;
-        for (int i = 0; i < cantMaterias; i++) {
-            String materiaItem = (String) jcbxMateria.getItemAt(i);
-            if (materiaItem.contains(materiaNombre)) {
-                indiceMateria = i;
-                break;
-            }
-        }
-        if (indiceMateria != -1) {
-            jcbxMateria.setSelectedIndex(indiceMateria);
-        }
-    }
     }//GEN-LAST:event_jtblTabla_Docentes_MateriasMouseClicked
 
     private DefaultTableModel tabla = new DefaultTableModel() {
@@ -249,11 +264,13 @@ public void actualizarMaterias(ArrayList<String> materias) {
         }
     };
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JComboBox<String> jcbxDocente;
     public javax.swing.JComboBox<String> jcbxMateria;
+    public javax.swing.JComboBox<String> jcbxParalelo;
     public javax.swing.JTable jtblTabla_Docentes_Materias;
     public javax.swing.JButton jtbtnAgregar;
     public javax.swing.JButton jtbtnEliminar;

@@ -42,28 +42,30 @@ public class Controlador_DocentesMaterias implements ActionListener {
     }
 
     private void agregarDocenteMateria() {
-        try {
-            String docenteSeleccionado = (String) this.pestaña.jcbxDocente.getSelectedItem();
-            String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
+    try {
+        String docenteSeleccionado = (String) this.pestaña.jcbxDocente.getSelectedItem();
+        String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
+        String paraleloSeleccionado = (String) this.pestaña.jcbxParalelo.getSelectedItem();
 
-            int docenteId = Integer.parseInt(docenteSeleccionado.split(" - ")[0]);
-            int materiaId = Integer.parseInt(materiaSeleccionada.split(" - ")[0]);
+        int docenteId = Integer.parseInt(docenteSeleccionado.split(" - ")[0]);
+        int materiaId = Integer.parseInt(materiaSeleccionada.split(" - ")[0]);
+        char paralelo = paraleloSeleccionado.charAt(0);
 
-            DocenteMateria docenteMateria = new DocenteMateria(docenteId, docenteSeleccionado.split(" - ")[1], materiaId, materiaSeleccionada.split(" - ")[1]);
+        DocenteMateria docenteMateria = new DocenteMateria(docenteId, docenteSeleccionado.split(" - ")[1], materiaId, materiaSeleccionada.split(" - ")[1], paralelo);
 
-            if (this.modelo.agregarDocenteMateria(docenteMateria)) {
-                JOptionPane.showMessageDialog(null, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-                actualizarTablaDocentesMaterias();
-                actualizarComboBox();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+        if (this.modelo.agregarDocenteMateria(docenteMateria)) {
+            JOptionPane.showMessageDialog(null, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            actualizarTablaDocentesMaterias();
+            actualizarComboBox();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
     private void modificarDocenteMateria() {
         try {
