@@ -271,6 +271,7 @@ public class Modelo_Reservas {
                                 + "-" + nombreDocente
                                 + "-" + idAula + "-" + nombreAula + "-" + rs.getInt("id");
                     } else {
+                        System.out.println("hola");
                         String encargado = rs.getString("persona_encargada");
                         String descripcion = rs.getString("descripcion");
                         reservaInfo = encargado + "-" + descripcion
@@ -303,18 +304,26 @@ public class Modelo_Reservas {
     }
 
     public String[][] getReservasEnRangoDeFechasYHorario(int aulaId, java.util.Date fechaInicio, java.util.Date fechaFin) throws SQLException {
-        String query = "SELECT reservas.*, materias.id AS materia_id, materias.nombre AS nombre_materia, "
-                + "docentes.nombre AS nombre_docente, aulas.id AS aula_id, aulas.nombre AS nombre_aula, "
-                + "horarios.hora_inicio, horarios.hora_fin "
-                + "FROM reservas "
-                + "JOIN materias ON reservas.materia_id = materias.id "
-                + "JOIN docente_materia ON materias.id = docente_materia.materia_id "
-                + "JOIN docentes ON docente_materia.docente_id = docentes.id "
-                + "JOIN aulas ON reservas.aula_id = aulas.id "
-                + "JOIN horarios ON reservas.horario_id = horarios.id "
-                + "WHERE reservas.aula_id = ? "
-                + "AND ? <= reservas.fecha_fin "
-                + "AND ? >= reservas.fecha_inicio";
+        String query = "SELECT " +
+                         "reservas.*, " +
+                         "materias.id AS materia_id, " +
+                         "materias.nombre AS nombre_materia, " +
+                         "docentes.nombre AS nombre_docente, " +
+                         "aulas.id AS aula_id, " +
+                         "aulas.nombre AS nombre_aula, " +
+                         "horarios.hora_inicio, " +
+                         "horarios.hora_fin " +
+                         "FROM " +
+                         "reservas " +
+                         "LEFT JOIN materias ON reservas.materia_id = materias.id " +
+                         "LEFT JOIN docente_materia ON materias.id = docente_materia.materia_id " +
+                         "LEFT JOIN docentes ON docente_materia.docente_id = docentes.id " +
+                         "JOIN aulas ON reservas.aula_id = aulas.id " +
+                         "JOIN horarios ON reservas.horario_id = horarios.id " +
+                         "WHERE " +
+                         "reservas.aula_id = ? " +
+                         "AND ? <= reservas.fecha_fin " +
+                         "AND ? >= reservas.fecha_inicio;";
 
         String[][] horarioVector = new String[14][6];
         for (String[] row : horarioVector) {
