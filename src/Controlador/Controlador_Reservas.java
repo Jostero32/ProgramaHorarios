@@ -124,7 +124,8 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         }
         if (e.getSource() == this.interfaz.boton_eliminar && this.interfaz.jTable1.getSelectedRow() != -1 && this.interfaz.jTable1.getSelectedColumn() != -1) {
             try {
-                this.modelo.eliminarReserva(Integer.parseInt(this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-")[5]));
+                String[] elementos = this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-");
+                this.modelo.eliminarReserva(Integer.parseInt(elementos[elementos.length - 1]));
                 JOptionPane.showMessageDialog(null, "Registro Eliminado", "Exito", 1);
                 this.actualizarTablaHorario();
             } catch (SQLException ex) {

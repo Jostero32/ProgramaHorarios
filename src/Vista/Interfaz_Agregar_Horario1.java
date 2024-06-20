@@ -81,6 +81,7 @@ public class Interfaz_Agregar_Horario1 extends javax.swing.JFrame {
         BTN_Agregar1.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
         BTN_Agregar1.setForeground(new java.awt.Color(255, 255, 255));
         BTN_Agregar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BTN_Agregar1.setText("AGREGAR");
         BTN_Agregar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 0, 0), null, new java.awt.Color(255, 0, 0)));
         BTN_Agregar1.setOpaque(true);
         jPanel1.add(BTN_Agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 90, 30));
