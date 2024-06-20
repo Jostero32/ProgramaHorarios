@@ -121,9 +121,7 @@ public class Modelo_Reservas {
         }
     }
 
-    
-    
-        public void insertarReserva(String encargado,String descripcion, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id) throws SQLException {
+    public void insertarReserva(String encargado, String descripcion, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id) throws SQLException {
         if (!validarReserva(19000, aula_id, fecha_inicio, fecha_fin, dia, horario_id, -1)) {
             throw new SQLException("Conflicto de reserva detectado.");
         }
@@ -140,28 +138,7 @@ public class Modelo_Reservas {
             stmtInsert.executeUpdate();
         }
     }
-    
-        public void actualizarReserva(int reserva_id,String encargado,String descripcion, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id) throws SQLException {
-        if (!validarReserva(1900000, aula_id, fecha_inicio, fecha_fin, dia, horario_id, reserva_id)) {
-            throw new SQLException("Conflicto de reserva detectado.");
-        }
 
-        String updateQuery = "UPDATE reservas SET persona_encargada = ?,descripcion = ?, aula_id = ?, fecha_inicio = ?, fecha_fin = ?, dia = ?, horario_id = ? WHERE id = ?";
-        try (PreparedStatement stmtUpdate = conn.prepareStatement(updateQuery)) {
-            stmtUpdate.setString(1, encargado);
-            stmtUpdate.setString(2, descripcion);
-            stmtUpdate.setInt(3, aula_id);
-            stmtUpdate.setDate(4, new Date(fecha_inicio.getTime()));
-            stmtUpdate.setDate(5, new Date(fecha_fin.getTime()));
-            stmtUpdate.setString(6, dia);
-            stmtUpdate.setInt(7, horario_id);
-            stmtUpdate.setInt(8, reserva_id);
-            stmtUpdate.executeUpdate();
-        }
-    }
-
-    
-    
     private boolean validarReserva(int materia_id, int aula_id, Date fecha_inicio, Date fecha_fin, String dia, int horario_id, int reserva_id) throws SQLException {
         // Regla 1: Conflictos de Rango Completo incluyendo el horario_id y el día (solo para reservas sin día específico)
         if (dia == null) {
@@ -282,15 +259,23 @@ public class Modelo_Reservas {
                 while (rs.next()) {
                     int horarioId = rs.getInt("horario_id");
                     String dia = rs.getString("dia");
-                    int idMateria = rs.getInt("id_materia");
-                    int idAula = rs.getInt("id_aula");
-                    String nombreMateria = rs.getString("nombre_materia");
-                    String nombreDocente = rs.getString("nombre_docente");
-                    String nombreAula = rs.getString("nombre_aula");
+                    int idAula = rs.getInt("aula_id");
 
-                    String reservaInfo = idMateria + "-" + nombreMateria
-                            + "-" + nombreDocente
-                            + "-" + idAula + "-" + nombreAula + "-" + rs.getInt("id");
+                    String reservaInfo = "";
+                    if (rs.getString("persona_encargada") == null) {
+                        int idMateria = rs.getInt("materia_id");
+                        String nombreMateria = rs.getString("nombre_materia");
+                        String nombreDocente = rs.getString("nombre_docente");
+                        String nombreAula = rs.getString("nombre_aula");
+                        reservaInfo = idMateria + "-" + nombreMateria
+                                + "-" + nombreDocente
+                                + "-" + idAula + "-" + nombreAula + "-" + rs.getInt("id");
+                    } else {
+                        String encargado = rs.getString("persona_encargada");
+                        String descripcion = rs.getString("descripcion");
+                        reservaInfo = encargado + "-" + descripcion
+                                + "-" + rs.getInt("id");
+                    }
 
                     if (dia != null) {
                         int diaIndex = getDiaIndex(dia);
@@ -298,9 +283,9 @@ public class Modelo_Reservas {
                     } else {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(rs.getDate("fecha_inicio"));
-                        int day1 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        int day1 = calendar.get(Calendar.DAY_OF_WEEK) - 1;
                         calendar.setTime(rs.getDate("fecha_fin"));
-                        int day2 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        int day2 = calendar.get(Calendar.DAY_OF_WEEK) - 1;
                         // Si el día es null, colocar la reserva en todos los días del rango
                         for (int i = 0; i < 6; i++) {
                             if (horarioId >= 1 && horarioId <= 14) {
@@ -344,16 +329,23 @@ public class Modelo_Reservas {
                 while (rs.next()) {
                     int horarioId = rs.getInt("horario_id");
                     String dia = rs.getString("dia");
-                    int idMateria = rs.getInt("materia_id");
                     int idAula = rs.getInt("aula_id");
-                    String nombreMateria = rs.getString("nombre_materia");
-                    String nombreDocente = rs.getString("nombre_docente");
-                    String nombreAula = rs.getString("nombre_aula");
 
-                    String reservaInfo = idMateria + "-" + nombreMateria
-                            + "-" + nombreDocente
-                            + "-" + idAula + "-" + nombreAula + "-" + rs.getInt("id");
-
+                    String reservaInfo = "";
+                    if (rs.getString("persona_encargada") == null) {
+                        int idMateria = rs.getInt("materia_id");
+                        String nombreMateria = rs.getString("nombre_materia");
+                        String nombreDocente = rs.getString("nombre_docente");
+                        String nombreAula = rs.getString("nombre_aula");
+                        reservaInfo = idMateria + "-" + nombreMateria
+                                + "-" + nombreDocente
+                                + "-" + idAula + "-" + nombreAula + "-" + rs.getInt("id");
+                    } else {
+                        String encargado = rs.getString("persona_encargada");
+                        String descripcion = rs.getString("descripcion");
+                        reservaInfo = encargado + "-" + descripcion
+                                + "-" + rs.getInt("id");
+                    }
                     if (dia != null) {
                         int diaIndex = getDiaIndex(dia);
                         horarioVector[horarioId][diaIndex] = reservaInfo;
@@ -361,9 +353,9 @@ public class Modelo_Reservas {
                         // Si el día es null, colocar la reserva en todos los días del rango
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(rs.getDate("fecha_inicio"));
-                        int day1 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        int day1 = calendar.get(Calendar.DAY_OF_WEEK) - 1;
                         calendar.setTime(rs.getDate("fecha_fin"));
-                        int day2 = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                        int day2 = calendar.get(Calendar.DAY_OF_WEEK) - 1;
                         for (int i = 0; i < 6; i++) {
                             if (horarioId >= 1 && horarioId <= 14) {
 
