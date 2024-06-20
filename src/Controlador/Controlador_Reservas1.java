@@ -103,9 +103,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
                 }
             }
         }
-        if (e.getSource() == this.interfaz.jComboBox1) {
-            this.actualizarCombosFiltro();
-        }
         if (e.getSource() == this.interfaz.jComboBox3 && this.fecha_inicio != null && this.fecha_fin != null && this.interfaz.jComboBox3.getSelectedItem() != null) {
             this.actualizarTablaHorario();
         }
@@ -152,14 +149,11 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
                 String encargado = this.interfazAgregar.Encargado.getText();
                 String descripcion = this.interfazAgregar.Descripcion.getText();
                 String aulaStr = (String) this.interfazAgregar.ComboBox_Aulas.getSelectedItem();
-                String dia = (String) this.interfazAgregar.ComboBox_Dia.getSelectedItem();
                 String horarioStr = (String) this.interfazAgregar.ComboBox_Horario.getSelectedItem();
                 int aula_id = Integer.parseInt(aulaStr.split("-")[0]);
                 int horario_id = Integer.parseInt(horarioStr.split("-")[0]);
-                if ("-----".equals(dia)) {
-                    dia = null;
-                }
-                    this.modelo.insertarReserva(encargado,descripcion, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
+
+                    this.modelo.insertarReserva(encargado,descripcion, aula_id, fecha_inicio, fecha_fin, null, horario_id);
                     JOptionPane.showMessageDialog(null, "Registro Agregado", "Exito", 1);
                 this.interfazAgregar.dispose();
                 this.actualizarTablaHorario();
