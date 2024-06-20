@@ -15,7 +15,7 @@ public class DocenteMateria {
         this.paralelo = paralelo;
     }
 
-    // Getters y setters para cada campo...
+
     public int getDocenteId() {
         return docenteId;
     }

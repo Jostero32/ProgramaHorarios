@@ -47,8 +47,11 @@ public class Controlador_DocentesMaterias implements ActionListener {
         String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
         String paraleloSeleccionado = (String) this.pestaña.jcbxParalelo.getSelectedItem();
 
-        if (docenteSeleccionado.equals("Seleccione docente") || materiaSeleccionada.equals("Seleccione materia") || paraleloSeleccionado.equals("Seleccione paralelo")) {
-            JOptionPane.showMessageDialog(this.pestaña, "Por favor, seleccione un docente, una materia y un paralelo válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Validar que no sean null o vacíos
+        if (docenteSeleccionado == null || docenteSeleccionado.isEmpty() ||
+            materiaSeleccionada == null || materiaSeleccionada.isEmpty() ||
+            paraleloSeleccionado == null || paraleloSeleccionado.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente, una materia y un paralelo válidos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -59,51 +62,63 @@ public class Controlador_DocentesMaterias implements ActionListener {
         DocenteMateria docenteMateria = new DocenteMateria(docenteId, docenteSeleccionado.split(" - ")[1], materiaId, materiaSeleccionada.split(" - ")[1], paralelo);
 
         if (this.modelo.agregarDocenteMateria(docenteMateria)) {
-            JOptionPane.showMessageDialog(this.pestaña, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             actualizarTablaDocentesMaterias();
             actualizarComboBox();
         } else {
-            JOptionPane.showMessageDialog(this.pestaña, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
         }
     } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this.pestaña, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this.pestaña, "Error al agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error al agregar la relación docente-materia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
 
 
+
     private void modificarDocenteMateria() {
-        try {
-            int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
-            if (filaSeleccionada != -1) {
-                String docenteAntiguoNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-                String materiaAntiguaNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+    try {
+        int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            String docenteAntiguoStr = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+            String materiaAntiguaStr = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+            int docenteAntiguo = Integer.parseInt(docenteAntiguoStr.split(" - ")[0]);
+            int materiaAntigua = Integer.parseInt(materiaAntiguaStr.split(" - ")[0]);
 
-                int docenteAntiguo = obtenerIdDesdeNombre(docenteAntiguoNombre, modelo.obtenerDocentes());
-                int materiaAntigua = obtenerIdDesdeNombre(materiaAntiguaNombre, modelo.obtenerMaterias());
+            String docenteNuevo = (String) this.pestaña.jcbxDocente.getSelectedItem();
+            String materiaNueva = (String) this.pestaña.jcbxMateria.getSelectedItem();
+            String paraleloSeleccionado = (String) this.pestaña.jcbxParalelo.getSelectedItem();
 
-                String docenteNuevo = (String) this.pestaña.jcbxDocente.getSelectedItem();
-                String materiaNueva = (String) this.pestaña.jcbxMateria.getSelectedItem();
-
-                int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
-                int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
-
-                if (this.modelo.modificarDocenteMateria(docenteAntiguo, materiaAntigua, newDocenteId, newMateriaId)) {
-                    JOptionPane.showMessageDialog(null, "Relación docente-materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-                    actualizarTablaDocentesMaterias();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo modificar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
+            // Validar que no sean null o vacíos
+            if (docenteNuevo == null || docenteNuevo.isEmpty() ||
+                materiaNueva == null || materiaNueva.isEmpty() ||
+                paraleloSeleccionado == null || paraleloSeleccionado.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente, una materia y un paralelo válidos", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al modificar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+
+            int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
+            int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
+            char newParalelo = paraleloSeleccionado.charAt(0);
+
+            if (this.modelo.modificarDocenteMateria(docenteAntiguo, materiaAntigua, newDocenteId, newMateriaId, newParalelo)) {
+                JOptionPane.showMessageDialog(null, "Relación docente-materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                actualizarTablaDocentesMaterias();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo modificar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al modificar la relación docente-materia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
+
+
 
     private void eliminarDocenteMateria() {
         try {
