@@ -32,22 +32,24 @@ public class Modelo_DocenteMateria {
     }
 
     public ArrayList<DocenteMateria> obtenerTodasLasRelaciones() throws SQLException {
-        String sql = "SELECT dm.docente_id, d.nombre as docente_nombre, dm.materia_id, m.nombre as materia_nombre " +
-                     "FROM docente_materia dm " +
-                     "JOIN docentes d ON dm.docente_id = d.id " +
-                     "JOIN materias m ON dm.materia_id = m.id";
-        ArrayList<DocenteMateria> lista = new ArrayList<>();
-        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                int docenteId = rs.getInt("docente_id");
-                String docenteNombre = rs.getString("docente_nombre");
-                int materiaId = rs.getInt("materia_id");
-                String materiaNombre = rs.getString("materia_nombre");
-                lista.add(new DocenteMateria(docenteId, docenteNombre, materiaId, materiaNombre));
-            }
+    String sql = "SELECT dm.docente_id, d.nombre as docente_nombre, dm.materia_id, m.nombre as materia_nombre, dm.paralelo " +
+                 "FROM docente_materia dm " +
+                 "JOIN docentes d ON dm.docente_id = d.id " +
+                 "JOIN materias m ON dm.materia_id = m.id";
+    ArrayList<DocenteMateria> lista = new ArrayList<>();
+    try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        while (rs.next()) {
+            int docenteId = rs.getInt("docente_id");
+            String docenteNombre = rs.getString("docente_nombre");
+            int materiaId = rs.getInt("materia_id");
+            String materiaNombre = rs.getString("materia_nombre");
+            char paralelo = rs.getString("paralelo").charAt(0);
+            lista.add(new DocenteMateria(docenteId, docenteNombre, materiaId, materiaNombre, paralelo));
         }
-        return lista;
     }
+    return lista;
+}
+
 
     public boolean eliminarDocenteMateria(int docenteId, int materiaId) throws SQLException {
         String sql = "DELETE FROM docente_materia WHERE docente_id = ? AND materia_id = ?";
