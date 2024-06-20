@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Clases.DocenteMateria;
@@ -16,8 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author Bryan
+ * Controlador para la gestión de la relación entre docentes y materias.
  */
 public class Controlador_DocentesMaterias implements ActionListener {
 
@@ -47,58 +42,45 @@ public class Controlador_DocentesMaterias implements ActionListener {
     }
 
     private void agregarDocenteMateria() {
-    try {
-        String docenteSeleccionado = (String) this.pestaña.jcbxDocente.getSelectedItem();
-        String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
+        try {
+            String docenteSeleccionado = (String) this.pestaña.jcbxDocente.getSelectedItem();
+            String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
 
-        int docenteId = Integer.parseInt(docenteSeleccionado.split(" - ")[0]);
-        int materiaId = Integer.parseInt(materiaSeleccionada.split(" - ")[0]);
+            int docenteId = Integer.parseInt(docenteSeleccionado.split(" - ")[0]);
+            int materiaId = Integer.parseInt(materiaSeleccionada.split(" - ")[0]);
 
-        DocenteMateria docenteMateria = new DocenteMateria(docenteId, materiaId);
+            DocenteMateria docenteMateria = new DocenteMateria(docenteId, docenteSeleccionado.split(" - ")[1], materiaId, materiaSeleccionada.split(" - ")[1]);
 
-        if (this.modelo.agregarDocenteMateria(docenteMateria)) {
-            JOptionPane.showMessageDialog(null, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-            actualizarTablaDocentesMaterias();
-            // Después de agregar con éxito, actualiza los ComboBox
-            actualizarComboBox();
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+            if (this.modelo.agregarDocenteMateria(docenteMateria)) {
+                JOptionPane.showMessageDialog(null, "Relación docente-materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                actualizarTablaDocentesMaterias();
+                actualizarComboBox();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Error al agregar la relación docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
-
 
     private void modificarDocenteMateria() {
         try {
             int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int docenteAntiguo = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-                int materiaAntigua = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+                String docenteAntiguoNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+                String materiaAntiguaNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+
+                int docenteAntiguo = obtenerIdDesdeNombre(docenteAntiguoNombre, modelo.obtenerDocentes());
+                int materiaAntigua = obtenerIdDesdeNombre(materiaAntiguaNombre, modelo.obtenerMaterias());
 
                 String docenteNuevo = (String) this.pestaña.jcbxDocente.getSelectedItem();
                 String materiaNueva = (String) this.pestaña.jcbxMateria.getSelectedItem();
 
-                // Extraer el ID del string seleccionado (asumiendo el formato "id - nombre")
-                
-                /*
-                int oldDocenteId = Integer.parseInt(docenteAntiguo.split(" - ")[0]);
-                int oldMateriaId = Integer.parseInt(materiaAntigua.split(" - ")[0]);
-                */
-                
-                String[] lstDocente = docenteNuevo.split("-");
-                int newDocenteId = Integer.valueOf(lstDocente[0].replaceAll(" ",""));
-                
-                String[] lstMateria = materiaNueva.split("-");
-                int newMateriaId = Integer.valueOf(lstMateria[0].replaceAll(" ",""));
-                
-                //int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
-                //int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
-                
-                
+                int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
+                int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
+
                 if (this.modelo.modificarDocenteMateria(docenteAntiguo, materiaAntigua, newDocenteId, newMateriaId)) {
                     JOptionPane.showMessageDialog(null, "Relación docente-materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     actualizarTablaDocentesMaterias();
@@ -119,10 +101,13 @@ public class Controlador_DocentesMaterias implements ActionListener {
         try {
             int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
             if (filaSeleccionada != -1) {
-                int docenteAntiguo = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-                int materiaAntigua = (int) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+                String docenteNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+                String materiaNombre = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
 
-                if (this.modelo.eliminarDocenteMateria(docenteAntiguo, materiaAntigua)) {
+                int docenteId = obtenerIdDesdeNombre(docenteNombre, modelo.obtenerDocentes());
+                int materiaId = obtenerIdDesdeNombre(materiaNombre, modelo.obtenerMaterias());
+
+                if (this.modelo.eliminarDocenteMateria(docenteId, materiaId)) {
                     JOptionPane.showMessageDialog(null, "Relación docente-materia eliminada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     actualizarTablaDocentesMaterias();
                 } else {
@@ -144,7 +129,7 @@ public class Controlador_DocentesMaterias implements ActionListener {
             model.setRowCount(0);
 
             for (DocenteMateria dm : this.modelo.obtenerTodasLasRelaciones()) {
-                model.addRow(new Object[]{dm.getDocenteId(), dm.getMateriaId()});
+                model.addRow(new Object[]{dm.getDocenteNombre(), dm.getMateriaNombre()});
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al cargar las relaciones docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
@@ -168,7 +153,7 @@ public class Controlador_DocentesMaterias implements ActionListener {
             JOptionPane.showMessageDialog(null, "Error al cargar las materias", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void actualizarComboBox() {
         try {
             this.pestaña.actualizarDocentes(modelo.obtenerDocentes());
@@ -184,5 +169,14 @@ public class Controlador_DocentesMaterias implements ActionListener {
 
     public void setPestaña(Pestaña_Docentes_Materias pestaña) {
         this.pestaña = pestaña;
+    }
+
+    private int obtenerIdDesdeNombre(String nombre, ArrayList<String> lista) {
+        for (String item : lista) {
+            if (item.contains(nombre)) {
+                return Integer.parseInt(item.split(" - ")[0]);
+            }
+        }
+        return -1; // O algún otro valor por defecto
     }
 }

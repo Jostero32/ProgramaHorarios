@@ -12,27 +12,31 @@ package Clases;
 
 public class DocenteMateria {
     private int docenteId;
+    private String docenteNombre;
     private int materiaId;
+    private String materiaNombre;
 
-    public DocenteMateria(int docenteId, int materiaId) {
+    public DocenteMateria(int docenteId, String docenteNombre, int materiaId, String materiaNombre) {
         this.docenteId = docenteId;
+        this.docenteNombre = docenteNombre;
         this.materiaId = materiaId;
+        this.materiaNombre = materiaNombre;
     }
 
     public int getDocenteId() {
         return docenteId;
     }
 
-    public void setDocenteId(int docenteId) {
-        this.docenteId = docenteId;
+    public String getDocenteNombre() {
+        return docenteNombre;
     }
 
     public int getMateriaId() {
         return materiaId;
     }
 
-    public void setMateriaId(int materiaId) {
-        this.materiaId = materiaId;
+    public String getMateriaNombre() {
+        return materiaNombre;
     }
 }
 
