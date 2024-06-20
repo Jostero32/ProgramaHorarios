@@ -124,7 +124,8 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         }
         if (e.getSource() == this.interfaz.boton_eliminar && this.interfaz.jTable1.getSelectedRow() != -1 && this.interfaz.jTable1.getSelectedColumn() != -1) {
             try {
-                this.modelo.eliminarReserva(Integer.parseInt(this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-")[5]));
+                String[] elementos = this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-");
+                this.modelo.eliminarReserva(Integer.parseInt(elementos[elementos.length - 1]));
                 JOptionPane.showMessageDialog(null, "Registro Eliminado", "Exito", 1);
                 this.actualizarTablaHorario();
             } catch (SQLException ex) {
@@ -211,7 +212,9 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
                     this.modelo.insertarReserva(materia_id, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
                     JOptionPane.showMessageDialog(null, "Registro Agregado", "Exito", 1);
                 } else {
-                    this.modelo.actualizarReserva(materia_id, materia_id, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
+                    String[] partes = materiaStr.split("-");
+                    int reserva_id = Integer.parseInt(partes[partes.length - 1]);
+                    this.modelo.actualizarReserva(reserva_id, materia_id, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
                     JOptionPane.showMessageDialog(null, "Registro Modificado", "Exito", 1);
                 }
                 this.interfazAgregar.dispose();
@@ -319,7 +322,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 14; j++) {
                         if (j < 13) {
-                            this.interfaz.jTable1.setValueAt(this.horariosCalendario[j][i], j-1, i);
+                            this.interfaz.jTable1.setValueAt(this.horariosCalendario[j][i], j - 1, i);
                         }
                     }
                 }
@@ -335,7 +338,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
                         if (!this.horariosCalendario[j][i].isEmpty()) {
                             if (j < 13) {
 
-                                this.interfaz.jTable1.setValueAt(this.horariosCalendario[j][i], j-1, i);
+                                this.interfaz.jTable1.setValueAt(this.horariosCalendario[j][i], j - 1, i);
                             }
                         }
                     }
