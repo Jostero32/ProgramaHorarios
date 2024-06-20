@@ -23,11 +23,11 @@ public class Pestaña_Docentes_Materias extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     public Pestaña_Docentes_Materias() {
-        initComponents();
-        String columnas[] = {"Docente", "Materia"};
-        this.tabla.setColumnIdentifiers(columnas);
-        this.jtblTabla_Docentes_Materias.setModel(tabla);
-        this.jtblTabla_Docentes_Materias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    initComponents();
+    String columnas[] = {"Docente", "Materia", "Paralelo"};
+    this.tabla.setColumnIdentifiers(columnas);
+    this.jtblTabla_Docentes_Materias.setModel(tabla);
+    this.jtblTabla_Docentes_Materias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
