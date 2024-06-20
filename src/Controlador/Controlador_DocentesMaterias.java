@@ -47,7 +47,6 @@ public class Controlador_DocentesMaterias implements ActionListener {
         String materiaSeleccionada = (String) this.pestaña.jcbxMateria.getSelectedItem();
         String paraleloSeleccionado = (String) this.pestaña.jcbxParalelo.getSelectedItem();
 
-        // Validar que no sean null o vacíos
         if (docenteSeleccionado == null || docenteSeleccionado.isEmpty() ||
             materiaSeleccionada == null || materiaSeleccionada.isEmpty() ||
             paraleloSeleccionado == null || paraleloSeleccionado.isEmpty()) {
@@ -77,20 +76,25 @@ public class Controlador_DocentesMaterias implements ActionListener {
 
 
 
-    private void modificarDocenteMateria() {
+private void modificarDocenteMateria() {
     try {
         int filaSeleccionada = this.pestaña.jtblTabla_Docentes_Materias.getSelectedRow();
         if (filaSeleccionada != -1) {
-            String docenteAntiguoStr = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
-            String materiaAntiguaStr = (String) this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
-            int docenteAntiguo = Integer.parseInt(docenteAntiguoStr.split(" - ")[0]);
-            int materiaAntigua = Integer.parseInt(materiaAntiguaStr.split(" - ")[0]);
+            // Obtener los valores de la tabla como objetos
+            Object docenteObj = this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 0);
+            Object materiaObj = this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 1);
+            Object paraleloObj = this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 2);
 
+            // Convertir los valores obtenidos a los tipos correctos
+            String docenteAntiguo = docenteObj.toString();
+            String materiaAntigua = materiaObj.toString();
+            char paraleloAntiguo = paraleloObj.toString().charAt(0);
+
+            // Obtener los nuevos valores seleccionados
             String docenteNuevo = (String) this.pestaña.jcbxDocente.getSelectedItem();
             String materiaNueva = (String) this.pestaña.jcbxMateria.getSelectedItem();
             String paraleloSeleccionado = (String) this.pestaña.jcbxParalelo.getSelectedItem();
 
-            // Validar que no sean null o vacíos
             if (docenteNuevo == null || docenteNuevo.isEmpty() ||
                 materiaNueva == null || materiaNueva.isEmpty() ||
                 paraleloSeleccionado == null || paraleloSeleccionado.isEmpty()) {
@@ -98,11 +102,30 @@ public class Controlador_DocentesMaterias implements ActionListener {
                 return;
             }
 
-            int newDocenteId = Integer.parseInt(docenteNuevo.split(" - ")[0]);
-            int newMateriaId = Integer.parseInt(materiaNueva.split(" - ")[0]);
+            // Obtener los IDs correspondientes a los nombres seleccionados
+            int newDocenteId = this.modelo.obtenerIdDocentePorNombre(docenteNuevo);
+            int newMateriaId = this.modelo.obtenerIdMateriaPorNombre(materiaNueva);
             char newParalelo = paraleloSeleccionado.charAt(0);
 
-            if (this.modelo.modificarDocenteMateria(docenteAntiguo, materiaAntigua, newDocenteId, newMateriaId, newParalelo)) {
+            if (newDocenteId == -1 || newMateriaId == -1) {
+                JOptionPane.showMessageDialog(null, "Error al obtener los IDs del docente o materia. Verifique los nombres seleccionados.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener los IDs correspondientes a los nombres antiguos
+            int oldDocenteId = this.modelo.obtenerIdDocentePorNombre(docenteAntiguo);
+            int oldMateriaId = this.modelo.obtenerIdMateriaPorNombre(materiaAntigua);
+
+            if (oldDocenteId == -1 || oldMateriaId == -1) {
+                JOptionPane.showMessageDialog(null, "Error al obtener los IDs del docente o materia antiguos. Verifique los datos en la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Crear un objeto DocenteMateria con los nuevos valores
+            DocenteMateria nuevaRelacion = new DocenteMateria(newDocenteId, docenteNuevo, newMateriaId, materiaNueva, newParalelo);
+
+            // Llamar al método del modelo para modificar la relación
+            if (this.modelo.modificarDocenteMateria(oldDocenteId, oldMateriaId, paraleloAntiguo, nuevaRelacion)) {
                 JOptionPane.showMessageDialog(null, "Relación docente-materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                 actualizarTablaDocentesMaterias();
             } else {
@@ -111,12 +134,12 @@ public class Controlador_DocentesMaterias implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila para modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un docente y una materia válidos", "Error", JOptionPane.ERROR_MESSAGE);
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error al modificar la relación docente-materia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
+
 
 
 

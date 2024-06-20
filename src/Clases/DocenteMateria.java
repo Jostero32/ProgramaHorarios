@@ -15,7 +15,6 @@ public class DocenteMateria {
         this.paralelo = paralelo;
     }
 
-
     public int getDocenteId() {
         return docenteId;
     }

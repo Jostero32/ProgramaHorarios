@@ -46,12 +46,13 @@ public class Modelo_DocenteMateria {
             int materiaId = rs.getInt("materia_id");
             String materiaNombre = rs.getString("materia_nombre");
             String paraleloStr = rs.getString("paralelo");
-            char paralelo = paraleloStr != null ? paraleloStr.charAt(0) : ' '; // Usar un espacio en blanco como valor por defecto si es null
+            char paralelo = paraleloStr != null && !paraleloStr.isEmpty() ? paraleloStr.charAt(0) : ' '; // Manejar null o cadena vacía
             lista.add(new DocenteMateria(docenteId, docenteNombre, materiaId, materiaNombre, paralelo));
         }
     }
     return lista;
 }
+
 
 
 
@@ -66,18 +67,51 @@ public class Modelo_DocenteMateria {
         }
     }
 
-    public boolean modificarDocenteMateria(int oldDocenteId, int oldMateriaId, int newDocenteId, int newMateriaId, char newParalelo) throws SQLException {
-    String sql = "UPDATE docente_materia SET docente_id = ?, materia_id = ?, paralelo = ? WHERE docente_id = ? AND materia_id = ?";
+    public boolean modificarDocenteMateria(int oldDocenteId, int oldMateriaId, char oldParalelo, DocenteMateria nuevaRelacion) throws SQLException {
+    String sql = "UPDATE docente_materia SET docente_id = ?, materia_id = ?, paralelo = ? WHERE docente_id = ? AND materia_id = ? AND paralelo = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setInt(1, newDocenteId);
-        pstmt.setInt(2, newMateriaId);
-        pstmt.setString(3, String.valueOf(newParalelo)); // Añadir el paralelo
+        pstmt.setInt(1, nuevaRelacion.getDocenteId());
+        pstmt.setInt(2, nuevaRelacion.getMateriaId());
+        pstmt.setString(3, String.valueOf(nuevaRelacion.getParalelo())); // Convertir char a String
         pstmt.setInt(4, oldDocenteId);
         pstmt.setInt(5, oldMateriaId);
+        pstmt.setString(6, String.valueOf(oldParalelo)); 
         int rowsAffected = pstmt.executeUpdate();
         return rowsAffected > 0;
     }
 }
+
+
+public int obtenerIdDocentePorNombre(String nombreDocente) {
+    String sql = "SELECT id FROM docentes WHERE nombre = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, nombreDocente);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("id");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al obtener el ID del docente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    return -1; // Devuelve -1 si no se encuentra el ID
+}
+
+public int obtenerIdMateriaPorNombre(String nombreMateria) {
+    String sql = "SELECT id FROM materias WHERE nombre = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, nombreMateria);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("id");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al obtener el ID de la materia: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    return -1; // Devuelve -1 si no se encuentra el ID
+}
+
 
 
 

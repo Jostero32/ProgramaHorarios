@@ -31,10 +31,7 @@ public Pestaña_Docentes_Materias() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    int filaSeleccionada = jtblTabla_Docentes_Materias.getSelectedRow();
-                    if (filaSeleccionada != -1) {
-                        actualizarCampos();
-                    }
+                    actualizarCampos();
                 }
             }
         });
@@ -163,13 +160,15 @@ public Pestaña_Docentes_Materias() {
     if (selectedRow != -1) {
         String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
         String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
-        String paralelo = String.valueOf(jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2));
+        String paraleloStr = String.valueOf(jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2)); // Obtener paralelo como String
 
         jcbxDocente.setSelectedItem(docenteNombre);
         jcbxMateria.setSelectedItem(materiaNombre);
-        jcbxParalelo.setSelectedItem(paralelo);
+        jcbxParalelo.setSelectedItem(paraleloStr); // Asegúrate de que paralelo sea String
     }
 }
+
+
 
     
     private int findIdByName(String name, ArrayList<String> list) {
@@ -214,12 +213,12 @@ public Pestaña_Docentes_Materias() {
     }//GEN-LAST:event_formMouseClicked
 
     private void jtblTabla_Docentes_MateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblTabla_Docentes_MateriasMouseClicked
- int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
+   int selectedRow = jtblTabla_Docentes_Materias.getSelectedRow();
     if (selectedRow != -1) {
-        // Obtén los nombres directamente desde la tabla
+        // Obtener los nombres y el paralelo directamente desde la tabla
         String docenteNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 0);
         String materiaNombre = (String) jtblTabla_Docentes_Materias.getValueAt(selectedRow, 1);
-        String paralelo = String.valueOf(jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2));
+        String paralelo = String.valueOf(jtblTabla_Docentes_Materias.getValueAt(selectedRow, 2)); // Obtener paralelo como String
 
         // Encuentra el índice del docente en el combobox
         int cantDocentes = jcbxDocente.getItemCount();
