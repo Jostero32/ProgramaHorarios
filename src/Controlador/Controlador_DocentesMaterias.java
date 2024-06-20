@@ -86,8 +86,8 @@ private void modificarDocenteMateria() {
             Object paraleloObj = this.pestaña.jtblTabla_Docentes_Materias.getValueAt(filaSeleccionada, 2);
 
             // Convertir los valores obtenidos a los tipos correctos
-            String docenteAntiguo = docenteObj.toString();
-            String materiaAntigua = materiaObj.toString();
+            String docenteAntiguo = docenteObj.toString().trim();
+            String materiaAntigua = materiaObj.toString().trim();
             char paraleloAntiguo = paraleloObj.toString().charAt(0);
 
             // Obtener los nuevos valores seleccionados
@@ -103,8 +103,8 @@ private void modificarDocenteMateria() {
             }
 
             // Obtener los IDs correspondientes a los nombres seleccionados
-            int newDocenteId = this.modelo.obtenerIdDocentePorNombre(docenteNuevo);
-            int newMateriaId = this.modelo.obtenerIdMateriaPorNombre(materiaNueva);
+            int newDocenteId = this.modelo.obtenerIdDocentePorNombre(docenteNuevo.split(" - ")[1].trim());
+            int newMateriaId = this.modelo.obtenerIdMateriaPorNombre(materiaNueva.split(" - ")[1].trim());
             char newParalelo = paraleloSeleccionado.charAt(0);
 
             if (newDocenteId == -1 || newMateriaId == -1) {
@@ -122,7 +122,7 @@ private void modificarDocenteMateria() {
             }
 
             // Crear un objeto DocenteMateria con los nuevos valores
-            DocenteMateria nuevaRelacion = new DocenteMateria(newDocenteId, docenteNuevo, newMateriaId, materiaNueva, newParalelo);
+            DocenteMateria nuevaRelacion = new DocenteMateria(newDocenteId, docenteNuevo.split(" - ")[1], newMateriaId, materiaNueva.split(" - ")[1], newParalelo);
 
             // Llamar al método del modelo para modificar la relación
             if (this.modelo.modificarDocenteMateria(oldDocenteId, oldMateriaId, paraleloAntiguo, nuevaRelacion)) {
@@ -138,7 +138,6 @@ private void modificarDocenteMateria() {
         JOptionPane.showMessageDialog(null, "Error al modificar la relación docente-materia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
-
 
 
 

@@ -85,7 +85,7 @@ public class Modelo_DocenteMateria {
 public int obtenerIdDocentePorNombre(String nombreDocente) {
     String sql = "SELECT id FROM docentes WHERE nombre = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setString(1, nombreDocente);
+        pstmt.setString(1, nombreDocente.trim());
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
             return rs.getInt("id");
@@ -100,7 +100,7 @@ public int obtenerIdDocentePorNombre(String nombreDocente) {
 public int obtenerIdMateriaPorNombre(String nombreMateria) {
     String sql = "SELECT id FROM materias WHERE nombre = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setString(1, nombreMateria);
+        pstmt.setString(1, nombreMateria.trim());
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
             return rs.getInt("id");
@@ -111,9 +111,6 @@ public int obtenerIdMateriaPorNombre(String nombreMateria) {
     }
     return -1; // Devuelve -1 si no se encuentra el ID
 }
-
-
-
 
     public ArrayList<String> obtenerDocentes() throws SQLException {
         String sql = "SELECT id, nombre FROM docentes";
