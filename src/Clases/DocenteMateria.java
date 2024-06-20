@@ -15,12 +15,14 @@ public class DocenteMateria {
     private String docenteNombre;
     private int materiaId;
     private String materiaNombre;
+    private char paralelo;
 
-    public DocenteMateria(int docenteId, String docenteNombre, int materiaId, String materiaNombre) {
+    public DocenteMateria(int docenteId, String docenteNombre, int materiaId, String materiaNombre, char paralelo) {
         this.docenteId = docenteId;
         this.docenteNombre = docenteNombre;
         this.materiaId = materiaId;
         this.materiaNombre = materiaNombre;
+        this.paralelo = paralelo;
     }
 
     public int getDocenteId() {
@@ -37,6 +39,10 @@ public class DocenteMateria {
 
     public String getMateriaNombre() {
         return materiaNombre;
+    }
+
+    public char getParalelo() {
+        return paralelo;
     }
 }
 
