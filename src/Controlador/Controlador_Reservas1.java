@@ -38,6 +38,7 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
     private Interfaz_Agregar_Horario1 interfazAgregar;
     private java.util.Date fecha_fin;
     private java.util.Date fecha_inicio;
+    private java.util.Date fecha_seleccionada;
 
     public Controlador_Reservas1(Connection con) {
         this.interfazAgregar = new Interfaz_Agregar_Horario1();
@@ -77,14 +78,11 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.interfaz.boton_agregar) {
-            this.interfazAgregar.BTN_Agregar1.setText("AGREGAR");
+        if (e.getSource() == this.interfaz.boton_agregar && this.interfaz.jTable1.getSelectedRow() != -1 && this.interfaz.jTable1.getSelectedColumn() != -1) {
             this.actualizarCamposInterfazAgregar();
             this.interfazAgregar.setVisible(true);
         }
-        if (e.getSource() == this.interfazAgregar.ComboBox_Bloques && this.interfazAgregar.ComboBox_Bloques.getSelectedItem() != null) {
-            this.actualizarAulasBloque(Integer.parseInt(this.interfazAgregar.ComboBox_Bloques.getSelectedItem().toString().split("-")[0]));
-        }
+
         if (e.getSource() == this.interfaz.jComboBox2 && this.interfaz.jComboBox2.getSelectedItem() != null) {
             this.interfaz.jComboBox3.removeAllItems();
             int id = Integer.parseInt(this.interfaz.jComboBox2.getSelectedItem().toString().split("-")[0]);
@@ -105,15 +103,13 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
                 }
             }
         }
-        if (e.getSource() == this.interfaz.jComboBox1) {
-            this.actualizarCombosFiltro();
-        }
         if (e.getSource() == this.interfaz.jComboBox3 && this.fecha_inicio != null && this.fecha_fin != null && this.interfaz.jComboBox3.getSelectedItem() != null) {
             this.actualizarTablaHorario();
         }
         if (e.getSource() == this.interfaz.boton_eliminar && this.interfaz.jTable1.getSelectedRow() != -1 && this.interfaz.jTable1.getSelectedColumn() != -1) {
             try {
-                this.modelo.eliminarReserva(Integer.parseInt(this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-")[5]));
+                String[] elementos=this.interfaz.jTable1.getValueAt(this.interfaz.jTable1.getSelectedRow(), this.interfaz.jTable1.getSelectedColumn()).toString().split("-");
+                this.modelo.eliminarReserva(Integer.parseInt(elementos[elementos.length-1]));
                 JOptionPane.showMessageDialog(null, "Registro Eliminado", "Exito", 1);
                 this.actualizarTablaHorario();
             } catch (SQLException ex) {
@@ -123,7 +119,15 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
     }
 
     private void actualizarCamposInterfazAgregar() {
-        this.ActualizarBloques();
+        this.interfazAgregar.ComboBox_Horario.setSelectedIndex(this.interfaz.jTable1.getSelectedRow());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.fecha_inicio);
+        calendar.add(Calendar.DAY_OF_YEAR, this.interfaz.jTable1.getSelectedColumn()-1);
+        this.fecha_seleccionada = calendar.getTime();
+        this.interfazAgregar.fecha_fin.setDate(this.fecha_seleccionada);
+        this.interfazAgregar.fecha_inicio.setDate(this.fecha_seleccionada);
+        this.interfazAgregar.ComboBox_Aulas.addItem(this.interfaz.jComboBox3.getSelectedItem().toString());
+        this.interfazAgregar.ComboBox_Bloques.addItem(this.interfaz.jComboBox2.getSelectedItem().toString());
     }
 
     private void agregarHorarios() {
@@ -135,27 +139,6 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
         }
     }
 
-    private void ActualizarBloques() {
-        ArrayList<String> bloques = this.modelo.obtenerBloques();
-        this.interfazAgregar.ComboBox_Bloques.removeAllItems();
-        if (bloques != null) {
-            for (String doc : bloques) {
-                this.interfazAgregar.ComboBox_Bloques.addItem(doc);
-
-            }
-        }
-    }
-
-    private void actualizarAulasBloque(int id) {
-        ArrayList<String> materias = this.modelo.obtenerAulasBloque(id);
-        this.interfazAgregar.ComboBox_Aulas.removeAllItems();
-        if (materias != null) {
-            for (String mat : materias) {
-                this.interfazAgregar.ComboBox_Aulas.addItem(mat);
-
-            }
-        }
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -166,17 +149,12 @@ public class Controlador_Reservas1 implements ActionListener, MouseListener, Pro
                 String encargado = this.interfazAgregar.Encargado.getText();
                 String descripcion = this.interfazAgregar.Descripcion.getText();
                 String aulaStr = (String) this.interfazAgregar.ComboBox_Aulas.getSelectedItem();
-                String dia = (String) this.interfazAgregar.ComboBox_Dia.getSelectedItem();
                 String horarioStr = (String) this.interfazAgregar.ComboBox_Horario.getSelectedItem();
                 int aula_id = Integer.parseInt(aulaStr.split("-")[0]);
                 int horario_id = Integer.parseInt(horarioStr.split("-")[0]);
-                if ("-----".equals(dia)) {
-                    dia = null;
-                }
-                if (this.interfazAgregar.BTN_Agregar1.getText().matches("AGREGAR")) {
-                    this.modelo.insertarReserva(encargado,descripcion, aula_id, fecha_inicio, fecha_fin, dia, horario_id);
+
+                    this.modelo.insertarReserva(encargado,descripcion, aula_id, fecha_inicio, fecha_fin, null, horario_id);
                     JOptionPane.showMessageDialog(null, "Registro Agregado", "Exito", 1);
-                }
                 this.interfazAgregar.dispose();
                 this.actualizarTablaHorario();
             } catch (SQLException ex) {
