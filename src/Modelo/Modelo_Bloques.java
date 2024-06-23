@@ -98,22 +98,24 @@ public class Modelo_Bloques {
         return null;
     }
 
-    public ArrayList<Bloque> verTodosLosBloques() {
-        String sql = "SELECT * FROM bloques";
-        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombre);
-                Bloque bloque = new Bloque(nombre);
-                bloque.setAulas(aulas);
-                bloques.add(bloque);
-            }
-        } catch (Exception e) {
-           
-            return null;
+   public ArrayList<Bloque> verTodosLosBloques() {
+    String sql = "SELECT * FROM bloques";
+    ArrayList<Bloque> bloques = new ArrayList<>(); // Crear una nueva lista para cada llamada
+    try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            ArrayList<Aula> aulas = modeloAulas.verAulasPorBloque(nombre);
+            Bloque bloque = new Bloque(nombre);
+            bloque.setAulas(aulas);
+            bloques.add(bloque);
         }
-        return bloques;
+    } catch (Exception e) {
+        e.printStackTrace(); // Para depuración
+        return null;
     }
+    return bloques;
+}
+
 
     public ArrayList<Aula> obtenerAulasPorBloque(String nombreBloque) {
         String sql = "SELECT a.nombre, a.tipo, a.capacidad FROM aulas a JOIN bloque_aula ba ON a.id = ba.aula_id JOIN bloques b ON ba.bloque_id = b.id WHERE b.nombre = ?";

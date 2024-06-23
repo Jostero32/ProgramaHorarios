@@ -36,7 +36,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
 
         jLabelNombreAula = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBoxAula = new javax.swing.JComboBox<>();
         jComboBoxBloque = new javax.swing.JComboBox<>();
         Btn_Agregar_Aula = new javax.swing.JButton();
         Btn_Modificar_Aula = new javax.swing.JButton();
@@ -66,14 +65,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
 
         jLabel3.setText("Aula");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 110, 30));
-
-        jComboBoxAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aula" }));
-        jComboBoxAula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxAulaActionPerformed(evt);
-            }
-        });
-        add(jComboBoxAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 110, -1));
 
         jComboBoxBloque.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bloque" }));
         jComboBoxBloque.addActionListener(new java.awt.event.ActionListener() {
@@ -116,27 +107,46 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 190, -1));
         add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 190, -1));
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
         jTableAulas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Nombre", "Tipo", "Capacidad"
+                "Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jTableAulas.setEnabled(false);
-        jTableAulas.setFocusable(false);
+        jTableAulas.setGridColor(new java.awt.Color(102, 102, 102));
+        jTableAulas.setRowHeight(30);
         jScrollPane1.setViewportView(jTableAulas);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 440, 140));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 390, 200));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -145,10 +155,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
-
-    private void jComboBoxAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxAulaActionPerformed
 
     private void jComboBoxBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBloqueActionPerformed
         // TODO add your handling code here:
@@ -169,7 +175,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Agregar_Aula;
     public javax.swing.JButton Btn_Eliminar_Aula;
     public javax.swing.JButton Btn_Modificar_Aula;
-    public javax.swing.JComboBox<String> jComboBoxAula;
     public javax.swing.JComboBox<String> jComboBoxBloque;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -177,7 +182,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabelNombreAula;
-    public javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTableAulas;
     public javax.swing.JTextField txtCapacidad;
     public javax.swing.JTextField txtNmbreAula;

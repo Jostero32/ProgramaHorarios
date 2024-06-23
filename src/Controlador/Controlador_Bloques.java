@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,73 +36,91 @@ public class Controlador_Bloques implements ActionListener {
         this.pestaña.Btn_Agregar_Bloque.addActionListener(this);
         this.pestaña.Btn_Eliminar_Bloque.addActionListener(this);
         this.pestaña.Btn_Modificar_Bloque.addActionListener(this);
-        inicializarBloques();
-        inicializarTabla();
         actualizarBloques();
 
+        // Añadir ListSelectionListener a la tabla
+        this.pestaña.jTableBloques.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    actualizarCamposTexto();
+                }
+            }
+        });
     }
 
-    private void inicializarBloques() {
-        this.pestaña.jComboBoxBloque.removeAllItems();
-        for (Bloque bloque : this.bloques) {
-            this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());
+    private void actualizarCamposTexto() {
+        int selectedRow = pestaña.jTableBloques.getSelectedRow();
+        if (selectedRow != -1) {
+            String nombre = (String) pestaña.jTableBloques.getValueAt(selectedRow, 0);
+            pestaña.txtNombrebloque.setText(nombre);
         }
-    }
-
-    private void inicializarTabla() {
-        DefaultTableModel model = new DefaultTableModel();
-
-        for (Bloque bloque : bloques) {
-            model = new DefaultTableModel(new Object[]{"Nombre"}, 0);
-        }
-
-        pestaña.jTableBloques.setModel(model);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == this.pestaña.Btn_Agregar_Bloque) {
-            Bloque bloque = new Bloque(this.pestaña.txtNombrebloque.getText());
+            String nombreNuevo = this.pestaña.txtNombrebloque.getText();
+            if (nombreBloqueExiste(nombreNuevo)) {
+                JOptionPane.showMessageDialog(null, "El nombre del bloque ya está ocupado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Bloque bloque = new Bloque(nombreNuevo);
             this.modeloBloque.crearBloque(bloque);
             actualizarBloques();
         }
 
         if (e.getSource() == this.pestaña.Btn_Modificar_Bloque) {
-            String nombreAnterior = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-
-            //igual aqui hacer una interfaz aparte que se bloquee para que modifique
-            this.modeloBloque.modificarBloque(nombreAnterior, this.pestaña.txtNombrebloque.getText());
-            actualizarBloques();
+            int selectedRow = this.pestaña.jTableBloques.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombreAnterior = this.pestaña.jTableBloques.getValueAt(selectedRow, 0).toString();
+                String nombreNuevo = this.pestaña.txtNombrebloque.getText();
+                if (!nombreAnterior.equals(nombreNuevo) && nombreBloqueExiste(nombreNuevo)) {
+                    JOptionPane.showMessageDialog(null, "El nombre del bloque ya está ocupado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                this.modeloBloque.modificarBloque(nombreAnterior, nombreNuevo);
+                actualizarBloques();
+            }
         }
+
         if (e.getSource() == this.pestaña.Btn_Eliminar_Bloque) {
-            String nombre = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            this.modeloBloque.eliminarBloque(nombre);
-            actualizarBloques();
+            int selectedRow = this.pestaña.jTableBloques.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombre = this.pestaña.jTableBloques.getValueAt(selectedRow, 0).toString();
+                this.modeloBloque.eliminarBloque(nombre);
+                actualizarBloques();
+            }
         }
+    }
 
+    private boolean nombreBloqueExiste(String nombre) {
+        for (Bloque bloque : bloques) {
+            if (bloque.getNombre().equals(nombre)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void actualizarBloques() {
-        String bloqueSeleccionado = (String) this.pestaña.jComboBoxBloque.getSelectedItem();
+        this.bloques = this.modeloBloque.verTodosLosBloques();
 
-        if (bloqueSeleccionado != null) {
-
-            // Limpiar el JComboBox de aulas antes de agregar nuevas aulas
-            this.pestaña.jComboBoxBloque.removeAllItems();
-
-            // Limpiar la JTable antes de agregar nuevas filas
-            DefaultTableModel model = (DefaultTableModel) this.pestaña.jTableBloques.getModel();
-            model.setRowCount(0);
-
-            this.bloques=this.modeloBloque.verTodosLosBloques();
-            // Agregar las aulas al JComboBox de aulas y a la JTable
-            for (Bloque bloque : bloques) {
-                this.pestaña.jComboBoxBloque.addItem(bloque.getNombre());
-                model.addRow(new Object[]{bloque.getNombre()});
+        // Crear un nuevo modelo para la tabla
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer todas las celdas no editables
             }
+        };
+
+        // Añadir los datos al nuevo modelo
+        for (Bloque bloque : bloques) {
+            model.addRow(new Object[]{bloque.getNombre()});
         }
+
+        // Establecer el nuevo modelo en la tabla
+        this.pestaña.jTableBloques.setModel(model);
     }
 
     public Pestaña_Bloques getPestaña() {

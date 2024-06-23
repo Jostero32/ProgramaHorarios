@@ -40,53 +40,91 @@ public class Modelo_Aulas {
                         asociarPstmt.setString(1, nombreBloque);
                         asociarPstmt.setInt(2, aulaId);
                         int asociarResult = asociarPstmt.executeUpdate();
-                        if (asociarResult > 0){
-                           JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
+                        if (asociarResult > 0) {
+                            JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
                         }
                     } catch (Exception ex) {
-                        
+
                         JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
                     }
                 }
             }
-           
+
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
-           
+            JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
+
         }
     }
 
-    public void modificarAula(Aula aula) {
-        String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
+public void modificarAula(String nombreAula, String nuevoNombre, String tipo, int capacidad, String nombreBloque) {
+    // Consulta para obtener el id del aula
+    String sqlSelectId = "SELECT a.id FROM aulas a, bloque_aula ba, bloques b WHERE a.nombre = ? AND a.id = ba.aula_id AND ba.bloque_id = b.id AND b.nombre = ?";
+    
+    // Consulta para actualizar el aula usando el id obtenido
+    String sqlUpdateAula = "UPDATE aulas SET nombre = ?, tipo = ?, capacidad = ? WHERE id = ?";
 
-        try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);) {
+    try {
+        conn.setAutoCommit(false); // Iniciar transacción
+        
+        // Obtener el ID del aula
+        try (PreparedStatement pstmtSelectId = conn.prepareStatement(sqlSelectId)) {
+            pstmtSelectId.setString(1, nombreAula);
+            pstmtSelectId.setString(2, nombreBloque);
+            ResultSet rs = pstmtSelectId.executeQuery();
+            if (rs.next()) {
+                int idAula = rs.getInt("id");
 
-            // Actualizar los datos de la aula
-            pstmtUpdateAula.setString(1, aula.getTipo());
-            pstmtUpdateAula.setInt(2, aula.getCapacidad());
-            pstmtUpdateAula.setString(3, aula.getNombre());
-            int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
+                // Actualizar el aula
+                try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula)) {
+                    pstmtUpdateAula.setString(1, nuevoNombre);
+                    pstmtUpdateAula.setString(2, tipo);
+                    pstmtUpdateAula.setInt(3, capacidad);
+                    pstmtUpdateAula.setInt(4, idAula);
+                    int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
 
-             if(rowsAffectedAula > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha modificado el Aula");
-             }
-        } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al modificar el Aula");
-            
+                    if (rowsAffectedAula > 0) {
+                        conn.commit(); // Confirmar transacción
+                        JOptionPane.showMessageDialog(null, "Se ha modificado el Aula");
+                    } else {
+                        conn.rollback(); // Revertir transacción si no se modificó ninguna fila
+                        JOptionPane.showMessageDialog(null, "No se encontró el Aula a modificar");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el Aula o el Bloque especificado");
+            }
+        }
+    } catch (Exception e) {
+        try {
+            conn.rollback(); // Revertir transacción en caso de excepción
+        } catch (Exception ex) {
+            // Manejar excepción al hacer rollback
+        }
+        JOptionPane.showMessageDialog(null, "Error al modificar el Aula: " + e.getMessage());
+    } finally {
+        try {
+            conn.setAutoCommit(true); // Restaurar auto-commit por defecto
+        } catch (Exception ex) {
+            // Manejar excepción al restaurar auto-commit
         }
     }
+}
 
-    public void eliminarAula(String nombre) {
-        String sql = "DELETE FROM aulas WHERE nombre = ?";
+
+
+    public void eliminarAula(String nombreAula, String nombreBloque) {
+        String sql = "DELETE aulas FROM aulas INNER JOIN bloque_aula ba ON aulas.id = ba.aula_id INNER JOIN bloques b ON ba.bloque_id = b.id WHERE aulas.nombre = ? AND b.nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombre);
+            pstmt.setString(1, nombreAula);
+            pstmt.setString(2, nombreBloque);
             int rowsAffected = pstmt.executeUpdate();
-             if(rowsAffected > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: "+nombre);
-             }
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: " + nombreAula);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el Aula a eliminar: " + nombreAula);
+            }
         } catch (Exception e) {
-           
-              JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: "+nombre);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: " + e.getMessage());
         }
     }
 
@@ -105,7 +143,7 @@ public class Modelo_Aulas {
                 return new Aula(nombreBloque, nombre, capacidad, tipo);
             }
         } catch (Exception e) {
-           
+
         }
         return null;
     }
@@ -128,7 +166,7 @@ public class Modelo_Aulas {
                 aulas.add(aula);
             }
         } catch (Exception e) {
-           
+
         }
         return aulas;
     }
