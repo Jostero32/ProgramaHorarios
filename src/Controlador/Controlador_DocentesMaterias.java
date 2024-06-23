@@ -169,44 +169,27 @@ private void modificarDocenteMateria() {
     }
 
     private void actualizarTablaDocentesMaterias() {
-    try {
         DefaultTableModel model = (DefaultTableModel) this.pestaña.jtblTabla_Docentes_Materias.getModel();
         model.setRowCount(0);
-
         for (DocenteMateria dm : this.modelo.obtenerTodasLasRelaciones()) {
             model.addRow(new Object[]{dm.getDocenteNombre(), dm.getMateriaNombre(), dm.getParalelo()});
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al cargar las relaciones docente-materia", "Error", JOptionPane.ERROR_MESSAGE);
-    }
 }
 
 
     private void actualizarDocentes() {
-        try {
-            ArrayList<String> docentes = modelo.obtenerDocentes();
-            pestaña.actualizarDocentes(docentes);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los docentes", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        ArrayList<String> docentes = modelo.obtenerDocentes();
+        pestaña.actualizarDocentes(docentes);
     }
 
     private void actualizarMaterias() {
-        try {
-            ArrayList<String> materias = modelo.obtenerMaterias();
-            pestaña.actualizarMaterias(materias);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar las materias", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        ArrayList<String> materias = modelo.obtenerMaterias();
+        pestaña.actualizarMaterias(materias);
     }
 
     private void actualizarComboBox() {
-        try {
-            this.pestaña.actualizarDocentes(modelo.obtenerDocentes());
-            this.pestaña.actualizarMaterias(modelo.obtenerMaterias());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar ComboBox", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        this.pestaña.actualizarDocentes(modelo.obtenerDocentes());
+        this.pestaña.actualizarMaterias(modelo.obtenerMaterias());
     }
 
     public Pestaña_Docentes_Materias getPestaña() {

@@ -22,7 +22,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
      */
     public Pestaña_Usuarios() {
         initComponents();
-        String columnas[] = {"Usuario"};
+        String columnas[] = {"Usuario","Tipo"};
         this.tabla.setColumnIdentifiers(columnas);
         this.Tabla_Usuarios.setModel(tabla);
         this.Tabla_Usuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -136,7 +136,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     public void ActualizarTablaUsuarios() {
         this.tabla.setRowCount(0);
         for (Usuario u : this.Usuarios) {
-            this.tabla.addRow(new Object[]{u.getUsuario()});
+            this.tabla.addRow(new Object[]{u.getUsuario(),u.getTipo()});
         }
     }
 
