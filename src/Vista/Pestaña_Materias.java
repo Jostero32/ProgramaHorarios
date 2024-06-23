@@ -121,7 +121,7 @@ public class Pestaña_Materias extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 370, 350));
 
         jLabel3.setText("Nombre de la Materia");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 120, 30));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 140, 30));
 
         jLabel4.setText("Código de la Materia");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 120, 30));
