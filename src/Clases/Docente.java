@@ -39,7 +39,4 @@ public class Docente {
         return cedula;
     }
 
-    public void setEmail(String email) {
-        this.cedula = cedula;
-    }
 }
