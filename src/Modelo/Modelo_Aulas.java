@@ -48,8 +48,6 @@ public class Modelo_Aulas {
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Error al asociar la nueva Aula al Bloque", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error al asociar el Aula con el Bloque");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo crear la nueva Aula", "Error", JOptionPane.ERROR_MESSAGE);
@@ -76,10 +74,10 @@ public class Modelo_Aulas {
         }
     }
 
-    public void eliminarAula(String nombreAula, String nombreBloque) {
+    public void eliminarAula(String nombre, String nombreBloque) {
         String sql = "DELETE aulas FROM aulas INNER JOIN bloque_aula ba ON aulas.id = ba.aula_id INNER JOIN bloques b ON ba.bloque_id = b.id WHERE aulas.nombre = ? AND b.nombre = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombreAula);
+            pstmt.setString(1, nombre);
             pstmt.setString(2, nombreBloque);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
