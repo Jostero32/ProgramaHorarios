@@ -50,6 +50,8 @@ public class Controlador_Inicio implements MouseListener {
         this.login=login;
         this.interfaz.Btn_CerrarSesion.addMouseListener(this);
         this.generarPestañas();
+        this.interfaz.jLabel3.setText("Bienvenido, "+this.usuario.getUsuario());
+        this.interfaz.jLabel4.setText("Tipo: "+this.usuario.getTipo());
     }
 
     private void generarPestañas() {
