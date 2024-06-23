@@ -24,37 +24,58 @@ public class Modelo_Aulas {
         this.conn = conn;
     }
 
-    public void crearAula(Aula aula, String nombreBloque) {
-        String sql = "INSERT INTO aulas (nombre, tipo, capacidad) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, aula.getNombre());
-            pstmt.setString(2, aula.getTipo());
-            pstmt.setInt(3, aula.getCapacidad());
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                ResultSet rs = pstmt.getGeneratedKeys();
-                if (rs.next()) {
-                    int aulaId = rs.getInt(1);
-                    String asociarSql = "INSERT INTO bloque_aula (bloque_id, aula_id) VALUES ((SELECT id FROM bloques WHERE nombre = ?), ?)";
-                    try (PreparedStatement asociarPstmt = conn.prepareStatement(asociarSql)) {
-                        asociarPstmt.setString(1, nombreBloque);
-                        asociarPstmt.setInt(2, aulaId);
-                        int asociarResult = asociarPstmt.executeUpdate();
-                        if (asociarResult > 0) {
-                            JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
-                        }
-                    } catch (Exception ex) {
+public void crearAula(Aula aula, String nombreBloque) {
+    // Verificar si ya existe un aula con el mismo nombre en el mismo bloque
+    if (existeAulaEnBloque(aula.getNombre(), nombreBloque)) {
+        JOptionPane.showMessageDialog(null, "No se pudo crear porque ya existe un aula con ese nombre en el mismo bloque.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
+    String sql = "INSERT INTO aulas (nombre, tipo, capacidad) VALUES (?, ?, ?)";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        pstmt.setString(1, aula.getNombre());
+        pstmt.setString(2, aula.getTipo());
+        pstmt.setInt(3, aula.getCapacidad());
+        int rowsAffected = pstmt.executeUpdate();
+        if (rowsAffected > 0) {
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                int aulaId = rs.getInt(1);
+                String asociarSql = "INSERT INTO bloque_aula (bloque_id, aula_id) VALUES ((SELECT id FROM bloques WHERE nombre = ?), ?)";
+                try (PreparedStatement asociarPstmt = conn.prepareStatement(asociarSql)) {
+                    asociarPstmt.setString(1, nombreBloque);
+                    asociarPstmt.setInt(2, aulaId);
+                    int asociarResult = asociarPstmt.executeUpdate();
+                    if (asociarResult > 0) {
                         JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
                     }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al asociar el Aula con el Bloque");
                 }
             }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
-
         }
+    } catch (Exception e) {
+   }
+}
+
+private boolean existeAulaEnBloque(String nombreAula, String nombreBloque) {
+    String sql = "SELECT COUNT(*) AS count FROM aulas a " +
+                 "INNER JOIN bloque_aula ba ON a.id = ba.aula_id " +
+                 "INNER JOIN bloques b ON ba.bloque_id = b.id " +
+                 "WHERE a.nombre = ? AND b.nombre = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, nombreAula);
+        pstmt.setString(2, nombreBloque);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt("count");
+            return count > 0; // Retorna true si hay al menos un registro con el nombre de aula especificado en el mismo bloque
+        }
+    } catch (Exception e) {
     }
+    return false;
+}
+
 
 public void modificarAula(String nombreAula, String nuevoNombre, String tipo, int capacidad, String nombreBloque) {
     // Consulta para obtener el id del aula

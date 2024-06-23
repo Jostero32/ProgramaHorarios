@@ -34,8 +34,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelNombreAula = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jComboBoxBloque = new javax.swing.JComboBox<>();
         Btn_Agregar_Aula = new javax.swing.JButton();
         Btn_Modificar_Aula = new javax.swing.JButton();
@@ -59,12 +57,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelNombreAula.setText("Aulas del bloque: ");
-        add(jLabelNombreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 280, 30));
-
-        jLabel3.setText("Aula");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 110, 30));
 
         jComboBoxBloque.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bloque" }));
         jComboBoxBloque.addActionListener(new java.awt.event.ActionListener() {
@@ -178,10 +170,8 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     public javax.swing.JComboBox<String> jComboBoxBloque;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabelNombreAula;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTableAulas;
     public javax.swing.JTextField txtCapacidad;

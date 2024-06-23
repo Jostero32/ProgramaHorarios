@@ -71,9 +71,15 @@ public class Controlador_Aulas implements ActionListener {
     }
 
     private void inicializarTabla() {
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Tipo", "Capacidad"}, 0);
-        pestaña.jTableAulas.setModel(model);
-    }
+    DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Tipo", "Capacidad"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Hacer que todas las celdas no sean editables
+        }
+    };
+    pestaña.jTableAulas.setModel(model);
+}
+
 
     private void limpiarCamposTexto() {
         this.pestaña.txtNmbreAula.setText("");
@@ -142,7 +148,7 @@ public void actionPerformed(ActionEvent e) {
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
-        this.pestaña.jLabelNombreAula.setText("Aulas del Bloque: " + bloqueSeleccionado);
+      
         if (bloqueSeleccionado != null) {
             ArrayList<Aula> aulas = this.modeloBloque.obtenerAulasPorBloque(bloqueSeleccionado);
 
