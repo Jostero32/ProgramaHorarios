@@ -128,7 +128,7 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Dia:");
+        jLabel8.setText("Día:  ");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, -1));
 
         ComboBox_Dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }));

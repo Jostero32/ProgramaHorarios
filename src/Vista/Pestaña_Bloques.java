@@ -86,6 +86,11 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         add(Btn_Agregar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 110, 30));
 
         Btn_Modificar_Bloque.setText("Modificar");
+        Btn_Modificar_Bloque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Modificar_BloqueActionPerformed(evt);
+            }
+        });
         add(Btn_Modificar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 110, 30));
 
         Btn_Eliminar_Bloque.setBackground(new java.awt.Color(204, 0, 0));
@@ -110,6 +115,10 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
     private void Btn_Agregar_BloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Agregar_BloqueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Btn_Agregar_BloqueActionPerformed
+
+    private void Btn_Modificar_BloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Modificar_BloqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Btn_Modificar_BloqueActionPerformed
 
     public DefaultTableModel tabla = new DefaultTableModel() {
         @Override
