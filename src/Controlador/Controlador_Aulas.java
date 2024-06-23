@@ -148,7 +148,7 @@ public void actionPerformed(ActionEvent e) {
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
-        this.pestaña.jLabelNombreAula.setText("Aulas del Bloque: " + bloqueSeleccionado);
+      
         if (bloqueSeleccionado != null) {
             ArrayList<Aula> aulas = this.modeloBloque.obtenerAulasPorBloque(bloqueSeleccionado);
 
