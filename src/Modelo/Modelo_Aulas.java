@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ASUS GAMER
+ * @autor Usuario
  */
 public class Modelo_Aulas {
 
@@ -40,39 +40,37 @@ public class Modelo_Aulas {
                         asociarPstmt.setString(1, nombreBloque);
                         asociarPstmt.setInt(2, aulaId);
                         int asociarResult = asociarPstmt.executeUpdate();
-                        if (asociarResult > 0){
-                           JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
+                        if (asociarResult > 0) {
+                            JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al asociar la nueva Aula al Bloque", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (Exception ex) {
-                        
-                        JOptionPane.showMessageDialog(null, "Se ha creado una nueva Aula");
+                        JOptionPane.showMessageDialog(null, "Error al asociar la nueva Aula al Bloque", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo crear la nueva Aula", "Error", JOptionPane.ERROR_MESSAGE);
             }
-           
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula");
-           
+            JOptionPane.showMessageDialog(null, "Error al crear una nueva Aula", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void modificarAula(Aula aula) {
         String sqlUpdateAula = "UPDATE aulas SET tipo = ?, capacidad = ? WHERE nombre = ?";
-
-        try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula);) {
-
-            // Actualizar los datos de la aula
+        try (PreparedStatement pstmtUpdateAula = conn.prepareStatement(sqlUpdateAula)) {
             pstmtUpdateAula.setString(1, aula.getTipo());
             pstmtUpdateAula.setInt(2, aula.getCapacidad());
             pstmtUpdateAula.setString(3, aula.getNombre());
             int rowsAffectedAula = pstmtUpdateAula.executeUpdate();
-
-             if(rowsAffectedAula > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha modificado el Aula");
-             }
+            if (rowsAffectedAula > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha modificado el Aula", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo modificar el Aula", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al modificar el Aula");
-            
+            JOptionPane.showMessageDialog(null, "Error al modificar el Aula", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -81,12 +79,13 @@ public class Modelo_Aulas {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
-             if(rowsAffected > 0){
-                 JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: "+nombre);
-             }
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el Aula: " + nombre, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar el Aula: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
-           
-              JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: "+nombre);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el Aula: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -105,7 +104,7 @@ public class Modelo_Aulas {
                 return new Aula(nombreBloque, nombre, capacidad, tipo);
             }
         } catch (Exception e) {
-           
+            JOptionPane.showMessageDialog(null, "Error al obtener los datos del Aula", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -123,12 +122,11 @@ public class Modelo_Aulas {
                 String nombre = rs.getString("nombre");
                 String tipo = rs.getString("tipo");
                 int capacidad = rs.getInt("capacidad");
-                // Agregando el nombre del bloque al constructor de Aula
                 Aula aula = new Aula(nombreBloque, nombre, capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {
-           
+            JOptionPane.showMessageDialog(null, "Error al obtener las Aulas del Bloque", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return aulas;
     }
