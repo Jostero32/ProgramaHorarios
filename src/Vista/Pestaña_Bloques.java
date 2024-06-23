@@ -34,14 +34,13 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableBloques = new javax.swing.JTable();
         Btn_Agregar_Bloque = new javax.swing.JButton();
         Btn_Modificar_Bloque = new javax.swing.JButton();
         Btn_Eliminar_Bloque = new javax.swing.JButton();
-        jComboBoxBloque = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         txtNombrebloque = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableBloques = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -52,28 +51,6 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTableBloques.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTableBloques.setEnabled(false);
-        jTableBloques.setFocusable(false);
-        jScrollPane1.setViewportView(jTableBloques);
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 360, 200));
 
         Btn_Agregar_Bloque.setBackground(new java.awt.Color(153, 255, 153));
         Btn_Agregar_Bloque.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,11 +75,51 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         Btn_Eliminar_Bloque.setText("Eliminar");
         add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 110, 30));
 
-        add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 100, -1));
-
         jLabel1.setText("Nombre:");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
         add(txtNombrebloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 140, -1));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTableBloques.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Nombre"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableBloques.setFocusCycleRoot(true);
+        jTableBloques.setGridColor(new java.awt.Color(102, 102, 102));
+        jTableBloques.setRowHeight(30);
+        jScrollPane1.setViewportView(jTableBloques);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 330, 200));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -131,9 +148,8 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
     public javax.swing.JButton Btn_Agregar_Bloque;
     public javax.swing.JButton Btn_Eliminar_Bloque;
     public javax.swing.JButton Btn_Modificar_Bloque;
-    public javax.swing.JComboBox<String> jComboBoxBloque;
     private javax.swing.JLabel jLabel1;
-    public javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTableBloques;
     public javax.swing.JTextField txtNombrebloque;
     // End of variables declaration//GEN-END:variables
