@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Usuario
+ * @autor Usuario
  */
 public class Modelo_Usuarios {
 
@@ -35,45 +35,38 @@ public class Modelo_Usuarios {
             return new Usuario(rs.getString("usuario"), rs.getString("clave"), rs.getString("tipo"));
         }
         return null;
-
     }
 
     public boolean agregarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios (usuario, clave, tipo) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try ( PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, usuario.getUsuario());
             pstmt.setString(2, usuario.getClave());
             pstmt.setString(3, usuario.getTipo());
             int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return true;
-            }
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El usuario ya existe.", "Error", 0);
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public ArrayList<Usuario> obtenerTodosLosUsuarios() throws SQLException {
         ArrayList<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try ( PreparedStatement pstmt = conn.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 usuarios.add(new Usuario(rs.getString("usuario"), rs.getString("clave"), rs.getString("tipo")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener usuarios.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return usuarios;
     }
 
     public boolean actualizarUsuario(Usuario usuario, String usuarioAnterior) {
-        String sql = "UPDATE usuarios SET usuario = ?, clave = ?, tipo = ? where usuario = ?";
+        String sql = "UPDATE usuarios SET usuario = ?, clave = ?, tipo = ? WHERE usuario = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, usuario.getUsuario());
@@ -82,26 +75,21 @@ public class Modelo_Usuarios {
             pstmt.setString(4, usuarioAnterior);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
-
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: El username ya existe.", "Error", 0);
-            } else {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
-    public boolean eliminarUsuario(Usuario U) {
+    public boolean eliminarUsuario(Usuario usuario) {
         String sql = "DELETE FROM usuarios WHERE usuario = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, U.getUsuario());
+        try ( PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, usuario.getUsuario());
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }

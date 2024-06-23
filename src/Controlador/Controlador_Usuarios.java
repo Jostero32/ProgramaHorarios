@@ -13,11 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Usuario
- */
-class Controlador_Usuarios implements ActionListener {
+public class Controlador_Usuarios implements ActionListener {
 
     private Pestaña_Usuarios interfaz;
     private Modelo_Usuarios modelo;
@@ -40,39 +36,38 @@ class Controlador_Usuarios implements ActionListener {
                 if (this.modelo.agregarUsuario(usuario)) {
                     this.interfaz.getUsuarios().add(usuario);
                     this.interfaz.ActualizarTablaUsuarios();
-                    JOptionPane.showMessageDialog(null, "Se agrego con Exito", "Correcto", 0);
+                    JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se agrego el usuario", "Error", 0);
+                    JOptionPane.showMessageDialog(null, "Error al crear usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Datos mal ingrsados", "Error", 0);
+                JOptionPane.showMessageDialog(null, "Datos mal ingresados", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (e.getSource() == this.interfaz.Btn_Modificar_U) {
             try {
                 int selectedRow = this.interfaz.Tabla_Usuarios.getSelectedRow();
                 if (selectedRow != -1) {
-                    String usuarioAnterior=this.interfaz.Tabla_Usuarios.getValueAt(this.interfaz.Tabla_Usuarios.getSelectedRow(), this.interfaz.Tabla_Usuarios.getSelectedColumn()).toString();
+                    String usuarioAnterior = this.interfaz.Tabla_Usuarios.getValueAt(selectedRow, 0).toString();
                     Usuario usuarioModificado = new Usuario(this.interfaz.jTextField1.getText(), String.valueOf(this.interfaz.Txt_Clave.getPassword()), this.interfaz.jComboBox1.getSelectedItem().toString());
-                    if (this.modelo.actualizarUsuario(usuarioModificado,usuarioAnterior)) {
+                    if (this.modelo.actualizarUsuario(usuarioModificado, usuarioAnterior)) {
                         for (int i = 0; i < this.interfaz.getUsuarios().size(); i++) {
                             Usuario u = this.interfaz.getUsuarios().get(i);
                             if (u.getUsuario().matches(usuarioAnterior)) {
-                                this.interfaz.getUsuarios().remove(u);
-                                this.interfaz.getUsuarios().add(usuarioModificado);
+                                this.interfaz.getUsuarios().set(i, usuarioModificado);
                                 break;
                             }
                         }
                         this.interfaz.ActualizarTablaUsuarios();
-                        JOptionPane.showMessageDialog(null, "Usuario modificado con éxito", "Correcto", 0);
+                        JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario", "Error", 0);
+                        JOptionPane.showMessageDialog(null, "Error al actualizar usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar", "Advertencia", 0);
+                    JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al modificar usuario", "Error", 0);
+                JOptionPane.showMessageDialog(null, "Error al modificar usuario", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -80,35 +75,31 @@ class Controlador_Usuarios implements ActionListener {
             try {
                 int selectedRow = this.interfaz.Tabla_Usuarios.getSelectedRow();
                 if (selectedRow != -1) {
-                    String username = this.interfaz.jTextField1.getText();
-                    String password = String.valueOf(this.interfaz.Txt_Clave.getPassword());
-                    String tipo = this.interfaz.jComboBox1.getSelectedItem().toString();
-
-                    Usuario usuario = new Usuario(username, password, tipo);
+                    String username = this.interfaz.Tabla_Usuarios.getValueAt(selectedRow, 0).toString();
+                    Usuario usuario = new Usuario(username, "", "");
 
                     if (this.modelo.eliminarUsuario(usuario)) {
                         for (int i = 0; i < this.interfaz.getUsuarios().size(); i++) {
                             Usuario u = this.interfaz.getUsuarios().get(i);
                             if (u.getUsuario().matches(usuario.getUsuario())) {
-                                this.interfaz.getUsuarios().remove(u);
+                                this.interfaz.getUsuarios().remove(i);
                                 break;
                             }
                         }
                         this.interfaz.ActualizarTablaUsuarios();
                         this.interfaz.jTextField1.setText("");
                         this.interfaz.Txt_Clave.setText("");
-                        JOptionPane.showMessageDialog(null, "Usuario eliminado con éxito", "Correcto", 0);
+                        JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario", "Error", 0);
+                        JOptionPane.showMessageDialog(null, "Error al eliminar usuario. Puede que el usuario no exista o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione un usuario para eliminar", "Advertencia", 0);
+                    JOptionPane.showMessageDialog(null, "Seleccione un usuario para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar usuario", "Error", 0);
+                JOptionPane.showMessageDialog(null, "Error al eliminar usuario", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
     public Pestaña_Usuarios getInterfaz() {
@@ -118,5 +109,4 @@ class Controlador_Usuarios implements ActionListener {
     public void setInterfaz(Pestaña_Usuarios interfaz) {
         this.interfaz = interfaz;
     }
-
 }
