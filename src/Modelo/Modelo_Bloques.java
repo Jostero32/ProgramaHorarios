@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author ASUS GAMER
+ * @autor Usuario
  */
 public class Modelo_Bloques {
 
@@ -35,19 +35,19 @@ public class Modelo_Bloques {
             pstmt.setString(1, bloque.getNombre());
             int rowsAffected = pstmt.executeUpdate();
 
-            // Crear aulas si el bloque tiene aulas
-            if (!bloque.getAulas().isEmpty()) {
-                for (Aula aula : bloque.getAulas()) {
-                    modeloAulas.crearAula(aula, bloque.getNombre());
-                }
-            }
-
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha creado un nuevo bloque");
+                // Crear aulas si el bloque tiene aulas
+                if (!bloque.getAulas().isEmpty()) {
+                    for (Aula aula : bloque.getAulas()) {
+                        modeloAulas.crearAula(aula, bloque.getNombre());
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Se ha creado un nuevo bloque", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo crear el bloque", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al crear el nuevo bloque");
-
+            JOptionPane.showMessageDialog(null, "Error al crear el nuevo bloque", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -58,10 +58,12 @@ public class Modelo_Bloques {
             pstmt.setString(2, nombreAnterior);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha modificaado el bloque");
+                JOptionPane.showMessageDialog(null, "Se ha modificado el bloque", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo modificar el bloque", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error al modificar el bloque");
+            JOptionPane.showMessageDialog(null, "Error al modificar el bloque", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -71,11 +73,12 @@ public class Modelo_Bloques {
             pstmt.setString(1, nombre);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el bloque: " + nombre);
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el bloque: " + nombre, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar el bloque: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "Error al eliminar el bloque: " + nombre);
-
+            JOptionPane.showMessageDialog(null, "Error al eliminar el bloque: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -92,8 +95,7 @@ public class Modelo_Bloques {
                 return bloque;
             }
         } catch (Exception e) {
-           
-            return null;
+            JOptionPane.showMessageDialog(null, "Error al obtener los datos del bloque", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -109,7 +111,7 @@ public class Modelo_Bloques {
                 bloques.add(bloque);
             }
         } catch (Exception e) {
-           
+            JOptionPane.showMessageDialog(null, "Error al obtener los bloques", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         return bloques;
@@ -125,14 +127,12 @@ public class Modelo_Bloques {
                 String nombre = rs.getString("nombre");
                 String tipo = rs.getString("tipo");
                 int capacidad = rs.getInt("capacidad");
-                // Ajustando la instancia de Aula para incluir el nombre del bloque
                 Aula aula = new Aula(nombreBloque, nombre, capacidad, tipo);
                 aulas.add(aula);
             }
         } catch (Exception e) {
-           
+            JOptionPane.showMessageDialog(null, "Error al obtener las aulas del bloque", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return aulas;
     }
-
 }
