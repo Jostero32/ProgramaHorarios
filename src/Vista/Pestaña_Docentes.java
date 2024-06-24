@@ -6,6 +6,8 @@
 package Vista;
 
 import Clases.Docente;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,7 +24,7 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
      */
     public Pestaña_Docentes() {
         initComponents();
-        String columnas[] = {"Docentes"};
+        String columnas[] = {"Docentes", "Cédula"};
         this.tabla.setColumnIdentifiers(columnas);
         this.jtblTabla_Docentes.setModel(tabla);
         this.jtblTabla_Docentes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -33,7 +35,19 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
                 }
             }
         });
+
+        // Añadir KeyListener para permitir solo números en el campo de cédula
+        this.jtxtCedulaDocente.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || jtxtCedulaDocente.getText().length() >= 10) {
+                    e.consume();  // Ignorar el evento si no es un número o si la longitud es mayor a 10
+                }
+            }
+        });
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,35 +143,31 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public void actualizarTablaDocentes() {
-    this.tabla.setRowCount(0);
-    
-    for (Docente d : this.docentes) {
-        this.tabla.addRow(new Object[]{d.getNombre(), d.getCedula()});
-    }
-}
-
-
-    private void actualizarCampos() {
-    int filaSeleccionada = this.jtblTabla_Docentes.getSelectedRow();
-
-    if (filaSeleccionada != -1) {
-        String nombreDocenteSeleccionado = this.jtblTabla_Docentes.getValueAt(filaSeleccionada, 0).toString();
+        this.tabla.setRowCount(0);
 
         for (Docente d : this.docentes) {
-            if (d.getNombre().equals(nombreDocenteSeleccionado)) {
-                this.jtxtNombreDocente.setText(d.getNombre());
-                this.jtxtCedulaDocente.setText(String.valueOf(d.getCedula()));
-                    return;
-            }
+            this.tabla.addRow(new Object[]{d.getNombre(), String.valueOf(d.getCedula())});
         }
-
-        // Ejemplo:
-        // this.jtxtNombreDocente.setText("");
-        // this.Txt_Email.setText("");
     }
-}
+
+    private void actualizarCampos() {
+        int filaSeleccionada = this.jtblTabla_Docentes.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            // Obtén el nombre del docente y la cédula desde la tabla
+            String nombreDocenteSeleccionado = this.jtblTabla_Docentes.getValueAt(filaSeleccionada, 0).toString();
+            String cedulaDocenteSeleccionado = this.jtblTabla_Docentes.getValueAt(filaSeleccionada, 1).toString();
+
+            // Actualiza los campos de texto con los valores seleccionados
+            this.jtxtNombreDocente.setText(nombreDocenteSeleccionado);
+            this.jtxtCedulaDocente.setText(cedulaDocenteSeleccionado);
+
+            // Desactivar la edición del campo de cédula
+            this.jtxtCedulaDocente.setEditable(false);
+        }
+    }
+
 
     private void jtbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbtnAgregarActionPerformed
         // TODO add your handling code here:
@@ -198,5 +208,5 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
     public javax.swing.JTextField jtxtCedulaDocente;
     public javax.swing.JTextField jtxtNombreDocente;
     // End of variables declaration//GEN-END:variables
-    
+
 }

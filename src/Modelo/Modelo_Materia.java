@@ -31,16 +31,12 @@ public class Modelo_Materia {
             pstmt.setString(2, materia.getCodigo());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Materia agregada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo agregar la materia.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
             if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: La materia ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }
@@ -69,16 +65,12 @@ public class Modelo_Materia {
             pstmt.setString(3, materiaAnterior);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Materia actualizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo actualizar la materia.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
             if (e.getSQLState().equals("23000")) {
-                JOptionPane.showMessageDialog(null, "Error: La materia ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }
@@ -91,13 +83,10 @@ public class Modelo_Materia {
             pstmt.setString(1, materia.getNombre());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Materia eliminada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo eliminar la materia.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
         return false;
