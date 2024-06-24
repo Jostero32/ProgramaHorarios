@@ -142,7 +142,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
 
     private void actualizarCampos() {
         for(Usuario u : this.Usuarios){
-            if(u.getUsuario().matches(this.Tabla_Usuarios.getValueAt(this.Tabla_Usuarios.getSelectedRow(), this.Tabla_Usuarios.getSelectedColumn()).toString())){
+            if(u.getUsuario().matches(this.Tabla_Usuarios.getValueAt(this.Tabla_Usuarios.getSelectedRow(), 0).toString())){
                 this.jTextField1.setText(u.getUsuario());
                 this.Txt_Clave.setText(u.getClave());
                 if(u.getTipo().matches("Admin")){
