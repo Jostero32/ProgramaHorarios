@@ -62,7 +62,7 @@ public class Controlador_Aulas implements ActionListener {
     }
 
     // Método para actualizar el JComboBox de bloques
-    private void actualizarBloques() {
+    public void actualizarBloques() {
         this.pestaña.jComboBoxBloque.removeAllItems();
         this.bloques = this.modeloBloque.verTodosLosBloques(); // Obtener los bloques de la base de datos
         for (Bloque bloque : this.bloques) {
@@ -71,15 +71,14 @@ public class Controlador_Aulas implements ActionListener {
     }
 
     private void inicializarTabla() {
-    DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Tipo", "Capacidad"}, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false; // Hacer que todas las celdas no sean editables
-        }
-    };
-    pestaña.jTableAulas.setModel(model);
-}
-
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nombre", "Tipo", "Capacidad"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hacer que todas las celdas no sean editables
+            }
+        };
+        pestaña.jTableAulas.setModel(model);
+    }
 
     private void limpiarCamposTexto() {
         this.pestaña.txtNmbreAula.setText("");
@@ -100,55 +99,55 @@ public class Controlador_Aulas implements ActionListener {
         }
     }
 
-     @Override
-public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == this.pestaña.jComboBoxBloque) {
-        limpiarCamposTexto();
-        actualizarAulas();
-    }
-
-    if (e.getSource() == this.pestaña.Btn_Agregar_Aula) {
-        String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-        Aula aula = new Aula(nombreBloque, this.pestaña.txtNmbreAula.getText(), Integer.parseInt(this.pestaña.txtCapacidad.getText()), this.pestaña.txtTipo.getText());
-        this.modeloAula.crearAula(aula, nombreBloque);
-        limpiarCamposTexto();
-        actualizarAulas();
-    }
-
-    if (e.getSource() == this.pestaña.Btn_Modificar_Aula) {
-        int selectedRow = this.pestaña.jTableAulas.getSelectedRow();
-        if (selectedRow != -1) {
-            String nombreAula = this.pestaña.jTableAulas.getValueAt(selectedRow, 0).toString();
-            String nuevoNombre = this.pestaña.txtNmbreAula.getText();
-            String tipo = this.pestaña.txtTipo.getText();
-            int capacidad = Integer.parseInt(this.pestaña.txtCapacidad.getText());
-            String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-
-            this.modeloAula.modificarAula(nombreAula, nuevoNombre, tipo, capacidad, nombreBloque);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.pestaña.jComboBoxBloque) {
             limpiarCamposTexto();
             actualizarAulas();
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un Aula para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    }
 
-    if (e.getSource() == this.pestaña.Btn_Eliminar_Aula) {
-        int selectedRow = this.pestaña.jTableAulas.getSelectedRow();
-        if (selectedRow != -1) {
-            String nombreAula = this.pestaña.jTableAulas.getValueAt(selectedRow, 0).toString();
+        if (e.getSource() == this.pestaña.Btn_Agregar_Aula) {
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
-            this.modeloAula.eliminarAula(nombreAula, nombreBloque);
+            Aula aula = new Aula(nombreBloque, this.pestaña.txtNmbreAula.getText(), Integer.parseInt(this.pestaña.txtCapacidad.getText()), this.pestaña.txtTipo.getText());
+            this.modeloAula.crearAula(aula, nombreBloque);
             limpiarCamposTexto();
             actualizarAulas();
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un Aula para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
+        if (e.getSource() == this.pestaña.Btn_Modificar_Aula) {
+            int selectedRow = this.pestaña.jTableAulas.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombreAula = this.pestaña.jTableAulas.getValueAt(selectedRow, 0).toString();
+                String nuevoNombre = this.pestaña.txtNmbreAula.getText();
+                String tipo = this.pestaña.txtTipo.getText();
+                int capacidad = Integer.parseInt(this.pestaña.txtCapacidad.getText());
+                String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
+
+                this.modeloAula.modificarAula(nombreAula, nuevoNombre, tipo, capacidad, nombreBloque);
+                limpiarCamposTexto();
+                actualizarAulas();
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un Aula para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        if (e.getSource() == this.pestaña.Btn_Eliminar_Aula) {
+            int selectedRow = this.pestaña.jTableAulas.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombreAula = this.pestaña.jTableAulas.getValueAt(selectedRow, 0).toString();
+                String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
+                this.modeloAula.eliminarAula(nombreAula, nombreBloque);
+                limpiarCamposTexto();
+                actualizarAulas();
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un Aula para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
-}
 
     private void actualizarAulas() {
         String bloqueSeleccionado = (String) pestaña.jComboBoxBloque.getSelectedItem();
-      
+
         if (bloqueSeleccionado != null) {
             ArrayList<Aula> aulas = this.modeloBloque.obtenerAulasPorBloque(bloqueSeleccionado);
 
