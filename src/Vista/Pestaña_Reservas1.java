@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Clases.Usuario;
+import Clases.PeriodoAcademico;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

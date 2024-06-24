@@ -23,8 +23,7 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cargarImagen(this.jLabel1, "/Recursos/Agregar_Fondo350-250.png");
-        this.fecha_inicio.setDate(new java.util.Date());
-        this.fecha_fin.setMinSelectableDate(this.fecha_inicio.getDate());
+
     }
     public void cargarImagen(javax.swing.JLabel jLabel,String src) {
         ImageIcon imageIcon = new ImageIcon(getClass().getResource(src));
@@ -43,6 +42,7 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         BTN_Agregar1 = new javax.swing.JLabel();
         BTN_Cancelar = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -52,15 +52,12 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         ComboBox_Materias = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        combo_periodos = new javax.swing.JComboBox<>();
         ComboBox_Dia = new javax.swing.JComboBox<>();
         ComboBox_Horario = new javax.swing.JComboBox<>();
         ComboBox_Docentes = new javax.swing.JComboBox<>();
-        fecha_inicio = new com.toedter.calendar.JDateChooser();
-        fecha_fin = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
@@ -80,6 +77,11 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
+        jLabel11.setText("Periodo:");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 60, -1));
 
         BTN_Agregar1.setBackground(new java.awt.Color(159, 20, 24));
         BTN_Agregar1.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
@@ -106,17 +108,16 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
         jLabel9.setText("Bloque:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 60, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 60, -1));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Aula:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 60, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 60, -1));
 
-        jPanel1.add(ComboBox_Aulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 170, 30));
+        jPanel1.add(ComboBox_Aulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 170, 30));
 
-        jPanel1.add(ComboBox_Bloques, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 170, 30));
+        jPanel1.add(ComboBox_Bloques, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 170, 30));
 
         jPanel1.add(ComboBox_Materias, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 170, 30));
 
@@ -131,6 +132,8 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel8.setText("Día:  ");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, -1));
 
+        jPanel1.add(combo_periodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 170, 30));
+
         ComboBox_Dia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }));
         jPanel1.add(ComboBox_Dia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 170, 30));
 
@@ -143,20 +146,6 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         });
         jPanel1.add(ComboBox_Docentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 170, 30));
 
-        fecha_inicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                fecha_inicioPropertyChange(evt);
-            }
-        });
-        jPanel1.add(fecha_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 140, 40));
-
-        fecha_fin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                fecha_finPropertyChange(evt);
-            }
-        });
-        jPanel1.add(fecha_fin, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 140, 40));
-
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,12 +157,6 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Materia:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 60, -1));
-
-        jLabel3.setText("Fecha Inicio:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 70, 30));
-
-        jLabel2.setText("Fecha Fin:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 70, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Agregar_Fondo350-250.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -235,16 +218,6 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
     }//GEN-LAST:event_formWindowLostFocus
 
-    private void fecha_inicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fecha_inicioPropertyChange
-        // TODO add your handling code here:
-        this.fecha_fin.setMinSelectableDate(this.fecha_inicio.getDate());
-    }//GEN-LAST:event_fecha_inicioPropertyChange
-
-    private void fecha_finPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fecha_finPropertyChange
-        // TODO add your handling code here:
-        this.fecha_inicio.setMaxSelectableDate(this.fecha_fin.getDate());
-    }//GEN-LAST:event_fecha_finPropertyChange
-
     /**
      * @param args the command line arguments
      */
@@ -292,12 +265,10 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> ComboBox_Docentes;
     public javax.swing.JComboBox<String> ComboBox_Horario;
     public javax.swing.JComboBox<String> ComboBox_Materias;
-    public com.toedter.calendar.JDateChooser fecha_fin;
-    public com.toedter.calendar.JDateChooser fecha_inicio;
+    public javax.swing.JComboBox<String> combo_periodos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

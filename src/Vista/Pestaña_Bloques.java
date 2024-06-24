@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Clases.Usuario;
+import Clases.PeriodoAcademico;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

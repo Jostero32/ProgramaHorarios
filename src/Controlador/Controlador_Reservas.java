@@ -7,6 +7,8 @@ package Controlador;
 import Clases.Bloque;
 import Clases.Docente;
 import Clases.Materia;
+import Clases.PeriodoAcademico;
+import Modelo.Modelo_PeriodoAcademico;
 import Modelo.Modelo_Reservas;
 import Vista.Interfaz_Agregar_Horario;
 import Vista.Pestaña_Reservas;
@@ -38,11 +40,14 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
     private Interfaz_Agregar_Horario interfazAgregar;
     private java.util.Date fecha_fin;
     private java.util.Date fecha_inicio;
+    private Modelo_PeriodoAcademico peridodosModelo;
+    private ArrayList<PeriodoAcademico> periodosAcademicos = new ArrayList<>();
 
     public Controlador_Reservas(Connection con) {
         this.interfazAgregar = new Interfaz_Agregar_Horario();
         this.modelo = new Modelo_Reservas(con);
         this.interfaz = new Pestaña_Reservas();
+        this.peridodosModelo = new Modelo_PeriodoAcademico(con);
         this.interfaz.boton_agregar.addActionListener(this);
         this.interfaz.boton_editar.addActionListener(this);
         this.interfaz.boton_eliminar.addActionListener(this);
@@ -54,6 +59,7 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         this.interfaz.jComboBox2.addActionListener(this);
         this.interfaz.jComboBox3.addActionListener(this);
         this.agregarHorarios();
+        this.agregarPeriodos();
         this.actualizarCombosFiltro();
         this.interfaz.jDateChooser1.setDate(new java.util.Date());
     }
@@ -148,6 +154,20 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
         }
     }
 
+    private void agregarPeriodos() {
+        try {
+            this.periodosAcademicos = this.peridodosModelo.obtenerTodosLosPeriodosAcademicos();
+            if (this.periodosAcademicos != null) {
+                for (PeriodoAcademico h : this.periodosAcademicos) {
+                    this.interfazAgregar.combo_periodos.addItem(h.getNombre());
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos", "Error", 0);
+        }
+
+    }
+
     private void ActualizarDocentes() {
         ArrayList<Docente> docentes = this.modelo.obtenerDocentes();
         this.interfazAgregar.ComboBox_Docentes.removeAllItems();
@@ -196,8 +216,8 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == this.interfazAgregar.BTN_Agregar1) {
             try {
-                Date fecha_inicio = new Date(this.interfazAgregar.fecha_inicio.getDate().getTime());
-                Date fecha_fin = new Date(this.interfazAgregar.fecha_fin.getDate().getTime());
+                Date fecha_inicio = new Date(this.periodosAcademicos.get(this.interfazAgregar.combo_periodos.getSelectedIndex()).getFecha_inicio().getTime());
+                Date fecha_fin = new Date(this.periodosAcademicos.get(this.interfazAgregar.combo_periodos.getSelectedIndex()).getFecha_fin().getTime());
                 String materiaStr = (String) this.interfazAgregar.ComboBox_Materias.getSelectedItem();
                 String aulaStr = (String) this.interfazAgregar.ComboBox_Aulas.getSelectedItem();
                 String dia = (String) this.interfazAgregar.ComboBox_Dia.getSelectedItem();
@@ -220,7 +240,6 @@ public class Controlador_Reservas implements ActionListener, MouseListener, Prop
                 this.interfazAgregar.dispose();
                 this.actualizarTablaHorario();
             } catch (SQLException ex) {
-                System.out.println(ex);
                 JOptionPane.showMessageDialog(null, "Error en la base de datos", "Error", 0);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Seleccione fechas", "Error", 0);

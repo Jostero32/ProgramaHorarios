@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Clases.Usuario;
+import Clases.PeriodoAcademico;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,20 +15,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class Pestaña_Usuarios extends javax.swing.JPanel {
+public class Pestaña_PeriodoAcademico extends javax.swing.JPanel {
 
     /**
      * Creates new form NewJPanel
      */
-    public Pestaña_Usuarios() {
+    public Pestaña_PeriodoAcademico() {
         initComponents();
-        String columnas[] = {"Usuario","Tipo"};
+        String columnas[] = {"Nombre","Fecha Inicio","Fecha Fin"};
         this.tabla.setColumnIdentifiers(columnas);
-        this.Tabla_Usuarios.setModel(tabla);
-        this.Tabla_Usuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        this.Tabla_PeriodosAcademicos.setModel(tabla);
+        this.Tabla_PeriodosAcademicos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (Tabla_Usuarios.getSelectedRow() != -1) {
+                if (Tabla_PeriodosAcademicos.getSelectedRow() != -1) {
                     actualizarCampos();
                 }
             }
@@ -44,16 +44,17 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         Btn_Agregar_U = new javax.swing.JButton();
         Btn_Modificar_U = new javax.swing.JButton();
         Btn_Eliminar_U = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tabla_Usuarios = new javax.swing.JTable();
-        Txt_Clave = new javax.swing.JPasswordField();
+        Tabla_PeriodosAcademicos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -64,6 +65,9 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("Fecha Fin");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 110, 30));
 
         Btn_Agregar_U.setText("Agregar");
         Btn_Agregar_U.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +85,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        Tabla_Usuarios.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla_PeriodosAcademicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -96,7 +100,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
                 {null}
             },
             new String [] {
-                "Usuario"
+                "Periodo Academico"
             }
         ) {
             Class[] types = new Class [] {
@@ -114,42 +118,36 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        Tabla_Usuarios.setGridColor(new java.awt.Color(102, 102, 102));
-        Tabla_Usuarios.setRowHeight(30);
-        Tabla_Usuarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(Tabla_Usuarios);
+        Tabla_PeriodosAcademicos.setGridColor(new java.awt.Color(102, 102, 102));
+        Tabla_PeriodosAcademicos.setRowHeight(30);
+        Tabla_PeriodosAcademicos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(Tabla_PeriodosAcademicos);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 370, 350));
-        add(Txt_Clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 150, 40));
 
-        jLabel2.setText("Usuario");
+        jLabel2.setText("Nombre");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 110, 30));
 
-        jLabel3.setText("Contraseña");
+        jLabel3.setText("Fecha Inicio");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 150, 40));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 110, -1));
+        add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 150, 40));
+        add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    public void ActualizarTablaUsuarios() {
+    public void ActualizarTablaPeriodos() {
         this.tabla.setRowCount(0);
-        for (Usuario u : this.Usuarios) {
-            this.tabla.addRow(new Object[]{u.getUsuario(),u.getTipo()});
+        for (PeriodoAcademico u : this.PeriodosAcademicos) {
+            this.tabla.addRow(new Object[]{u.getNombre(),u.getFecha_inicio(),u.getFecha_fin()});
         }
     }
 
     private void actualizarCampos() {
-        for(Usuario u : this.Usuarios){
-            if(u.getUsuario().matches(this.Tabla_Usuarios.getValueAt(this.Tabla_Usuarios.getSelectedRow(), 0).toString())){
-                this.jTextField1.setText(u.getUsuario());
-                this.Txt_Clave.setText(u.getClave());
-                if(u.getTipo().matches("Admin")){
-                    this.jComboBox1.setSelectedIndex(0);
-                }else{
-                    this.jComboBox1.setSelectedIndex(1);
-                }
+        for(PeriodoAcademico u : this.PeriodosAcademicos){
+            if(u.getNombre().matches(this.Tabla_PeriodosAcademicos.getValueAt(this.Tabla_PeriodosAcademicos.getSelectedRow(), 0).toString())){
+                this.jTextField1.setText(u.getNombre());
+                this.jDateChooser1.setDate(u.getFecha_inicio());
+                this.jDateChooser2.setDate(u.getFecha_fin());
                 return;
             }
         }
@@ -169,24 +167,25 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
             return false; // Hacer todas las celdas no editables
         }
     };
-    private ArrayList<Usuario> Usuarios = new ArrayList<>();
+    private ArrayList<PeriodoAcademico> PeriodosAcademicos = new ArrayList<>();
 
-    public ArrayList<Usuario> getUsuarios() {
-        return this.Usuarios;
+    public ArrayList<PeriodoAcademico> getPeriodosAcademicos() {
+        return this.PeriodosAcademicos;
     }
 
-    public void setUsuarios(ArrayList<Usuario> Usuarios) {
-        this.Usuarios = Usuarios;
+    public void setPeriodosAcademicos(ArrayList<PeriodoAcademico> PeriodosAcademicos) {
+        this.PeriodosAcademicos = PeriodosAcademicos;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton Btn_Agregar_U;
     public javax.swing.JButton Btn_Eliminar_U;
     public javax.swing.JButton Btn_Modificar_U;
-    public javax.swing.JTable Tabla_Usuarios;
-    public javax.swing.JPasswordField Txt_Clave;
-    public javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JTable Tabla_PeriodosAcademicos;
+    public com.toedter.calendar.JDateChooser jDateChooser1;
+    public com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
