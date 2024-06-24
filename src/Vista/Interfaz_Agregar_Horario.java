@@ -22,7 +22,7 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
     public Interfaz_Agregar_Horario() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.cargarImagen(this.jLabel1, "/Recursos/Agregar_Fondo350-250.png");
+        this.cargarImagen(this.jLabel1, "/Recursos/fondo agregar horario.jpg");
 
     }
     public void cargarImagen(javax.swing.JLabel jLabel,String src) {
@@ -155,7 +155,7 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel5.setText("Materia:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 60, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Agregar_Fondo350-250.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo agregar horario.jpg"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 370));
 
