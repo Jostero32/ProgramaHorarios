@@ -23,8 +23,6 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cargarImagen(this.jLabel1, "/Recursos/Agregar_Fondo350-250.png");
-        this.fecha_inicio.setDate(new java.util.Date());
-        this.fecha_fin.setMinSelectableDate(this.fecha_inicio.getDate());
     }
     public void cargarImagen(javax.swing.JLabel jLabel,String src) {
         ImageIcon imageIcon = new ImageIcon(getClass().getResource(src));
