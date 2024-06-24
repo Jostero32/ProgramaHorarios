@@ -137,13 +137,13 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 100, 30));
 
         boton_agregar.setText("Agregar");
-        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 110, 50));
+        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 130, 40));
 
         boton_editar.setText("Editar");
-        jPanel1.add(boton_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 120, 50));
+        jPanel1.add(boton_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 130, 40));
 
         boton_eliminar.setText("Eliminar");
-        jPanel1.add(boton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 110, 50));
+        jPanel1.add(boton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, 130, 40));
         jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 180, 40));
 
         jScrollPane1.setViewportView(jPanel1);
