@@ -143,6 +143,12 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
             this.tabla.addRow(new Object[]{u.getUsuario(),u.getTipo()});
         }
     }
+    
+    public void limpiarCampos() {
+        this.jTextField1.setText("");
+        this.Txt_Clave.setText("");
+        this.jComboBox1.setSelectedIndex(0);
+    }
 
     private void actualizarCampos() {
         for(Usuario u : this.Usuarios){
