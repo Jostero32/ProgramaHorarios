@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Clases.Materia;
@@ -13,10 +9,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Bryan
- */
 public class Controlador_Materias implements ActionListener {
 
     private Pestaña_Materias interfaz;
@@ -39,12 +31,19 @@ public class Controlador_Materias implements ActionListener {
                 String nombre = this.interfaz.jtxtNombreMateria.getText();
                 String codigo = this.interfaz.jtxtCodigoMateria.getText();
 
+                if (codigo.length() > 5) {
+                    JOptionPane.showMessageDialog(null, "El código de la materia no puede tener más de 5 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 Materia materia = new Materia(nombre, codigo);
 
                 if (this.modelo.agregarMateria(materia)) {
                     this.interfaz.getMaterias().add(materia);
                     this.interfaz.actualizarTablaMaterias();
                     JOptionPane.showMessageDialog(null, "Materia agregada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                    // Limpiar los campos de texto
+                    this.interfaz.limpiarCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo agregar la materia", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -56,9 +55,9 @@ public class Controlador_Materias implements ActionListener {
             try {
                 int selectedRow = this.interfaz.jtblTabla_Materias.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(this.interfaz.jtblTabla_Materias.getSelectedRow(),this.interfaz.jtblTabla_Materias.getSelectedColumn()).toString();
-                    Materia materiaModificada = new Materia(this.interfaz.jtxtNombreMateria.getText(), this.interfaz.jtxtCodigoMateria.getText().toString());
-                    if (this.modelo.actualizarMateria(materiaModificada,nombreAnterior)) {
+                    String nombreAnterior = this.interfaz.jtblTabla_Materias.getValueAt(this.interfaz.jtblTabla_Materias.getSelectedRow(), 0).toString();
+                    Materia materiaModificada = new Materia(this.interfaz.jtxtNombreMateria.getText(), this.interfaz.jtxtCodigoMateria.getText());
+                    if (this.modelo.actualizarMateria(materiaModificada, nombreAnterior)) {
                         for (int i = 0; i < this.interfaz.getMaterias().size(); i++) {
                             Materia m = this.interfaz.getMaterias().get(i);
                             if (m.getNombre().matches(nombreAnterior)) {
@@ -69,14 +68,14 @@ public class Controlador_Materias implements ActionListener {
                         }
                         this.interfaz.actualizarTablaMaterias();
                         JOptionPane.showMessageDialog(null, "Materia modificada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                        // Limpiar los campos de texto
+                        this.interfaz.limpiarCampos();
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo modificar la materia", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una materia para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "ID de materia inválido", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al modificar la materia", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -100,8 +99,7 @@ public class Controlador_Materias implements ActionListener {
                             }
                         }
                         this.interfaz.actualizarTablaMaterias();
-                        this.interfaz.jtxtNombreMateria.setText("");
-                        this.interfaz.jtxtCodigoMateria.setText("");
+                        this.interfaz.limpiarCampos();
                         JOptionPane.showMessageDialog(null, "Materia eliminada con éxito", "Correcto", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo eliminar la materia", "Error", JOptionPane.ERROR_MESSAGE);
@@ -109,8 +107,6 @@ public class Controlador_Materias implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleccione una materia para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "ID de materia inválido", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar la materia", "Error", JOptionPane.ERROR_MESSAGE);
             }

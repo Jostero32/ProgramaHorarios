@@ -6,6 +6,8 @@
 package Vista;
 
 import Clases.Materia;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -17,12 +19,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Pestaña_Materias extends javax.swing.JPanel {
 
-    /**
-     * Creates new form NewJPanel
-     */
     public Pestaña_Materias() {
         initComponents();
-        String columnas[] = {"Materias"};
+        String columnas[] = {"Materias", "Código"};
         this.tabla.setColumnIdentifiers(columnas);
         this.jtblTabla_Materias.setModel(tabla);
         this.jtblTabla_Materias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -30,6 +29,17 @@ public class Pestaña_Materias extends javax.swing.JPanel {
             public void valueChanged(ListSelectionEvent e) {
                 if (jtblTabla_Materias.getSelectedRow() != -1) {
                     actualizarCampos();
+                }
+            }
+        });
+
+        // Añadir KeyListener para permitir solo letras y números con un máximo de 5 caracteres en el campo de código
+        this.jtxtCodigoMateria.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetterOrDigit(c) || jtxtCodigoMateria.getText().length() >= 5) {
+                    e.consume();  // Ignorar el evento si no es una letra o número o si la longitud es mayor a 5
                 }
             }
         });
@@ -129,7 +139,6 @@ public class Pestaña_Materias extends javax.swing.JPanel {
         add(jtxtNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public void actualizarTablaMaterias() {
         this.tabla.setRowCount(0);
 
@@ -138,27 +147,25 @@ public class Pestaña_Materias extends javax.swing.JPanel {
         }
     }
 
-
-
     private void actualizarCampos() {
         int filaSeleccionada = this.jtblTabla_Materias.getSelectedRow();
 
         if (filaSeleccionada != -1) {
             String nombreMateriaSeleccionada = this.jtblTabla_Materias.getValueAt(filaSeleccionada, 0).toString();
+            String codigoMateriaSeleccionada = this.jtblTabla_Materias.getValueAt(filaSeleccionada, 1).toString();
 
-            for (Materia m : this.materias) {
-                if (m.getNombre().equals(nombreMateriaSeleccionada)) {
-                    this.jtxtNombreMateria.setText(m.getNombre());
-                    this.jtxtCodigoMateria.setText(m.getCodigo());
+            this.jtxtNombreMateria.setText(nombreMateriaSeleccionada);
+            this.jtxtCodigoMateria.setText(codigoMateriaSeleccionada);
 
-                    return;
-                }
-            }
-
-            // Ejemplo: limpiar campos si no se encuentra la materia
-            // this.jtxtNombreMateria.setText("");
-            // this.jtxtCodigoMateria.setText("");
+            // Desactivar la edición del campo de código
+            this.jtxtCodigoMateria.setEditable(false);
         }
+    }
+    
+    public void limpiarCampos() {
+        this.jtxtNombreMateria.setText("");
+        this.jtxtCodigoMateria.setText("");
+        this.jtxtCodigoMateria.setEditable(true);
     }
 
 
@@ -197,5 +204,5 @@ public class Pestaña_Materias extends javax.swing.JPanel {
     public javax.swing.JTextField jtxtCodigoMateria;
     public javax.swing.JTextField jtxtNombreMateria;
     // End of variables declaration//GEN-END:variables
-    
+
 }
