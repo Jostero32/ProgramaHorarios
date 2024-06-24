@@ -136,13 +136,13 @@ public Pestaña_Docentes_Materias() {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
 
         jcbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jcbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 270, -1));
+        add(jcbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 270, 40));
 
         jcbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jcbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 270, -1));
+        add(jcbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 270, 40));
 
         jLabel1.setText("Paralelo");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, -1, -1));
 
         jcbxParalelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E" }));
         add(jcbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 50, -1));

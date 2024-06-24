@@ -60,7 +60,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
                 Btn_Agregar_BloqueActionPerformed(evt);
             }
         });
-        add(Btn_Agregar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 110, 30));
+        add(Btn_Agregar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, 130, 40));
 
         Btn_Modificar_Bloque.setText("Modificar");
         Btn_Modificar_Bloque.addActionListener(new java.awt.event.ActionListener() {
@@ -68,16 +68,16 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
                 Btn_Modificar_BloqueActionPerformed(evt);
             }
         });
-        add(Btn_Modificar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 110, 30));
+        add(Btn_Modificar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 130, 40));
 
         Btn_Eliminar_Bloque.setBackground(new java.awt.Color(204, 0, 0));
         Btn_Eliminar_Bloque.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Eliminar_Bloque.setText("Eliminar");
-        add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 110, 30));
+        add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 130, 40));
 
         jLabel1.setText("Nombre:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
-        add(txtNombrebloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 140, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
+        add(txtNombrebloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, 210, 40));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -119,7 +119,7 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         jTableBloques.setRowHeight(30);
         jScrollPane1.setViewportView(jTableBloques);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 330, 200));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 410, 330));
     }// </editor-fold>//GEN-END:initComponents
 
     

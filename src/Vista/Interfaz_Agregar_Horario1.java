@@ -120,8 +120,8 @@ public class Interfaz_Agregar_Horario1 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(BTN_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 90, 30));
-        jPanel1.add(Descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 230, 30));
-        jPanel1.add(Encargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 230, 30));
+        jPanel1.add(Descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 230, 40));
+        jPanel1.add(Encargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 230, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Agregar_Fondo350-250.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);

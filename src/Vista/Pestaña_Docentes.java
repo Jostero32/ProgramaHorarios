@@ -168,6 +168,10 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
+    private void jtxtCedulaDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCedulaDocenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCedulaDocenteActionPerformed
+
     public DefaultTableModel tabla = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {

@@ -50,7 +50,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(700, 450));
-        setPreferredSize(new java.awt.Dimension(700, 450));
+        setPreferredSize(new java.awt.Dimension(930, 490));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -64,7 +64,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 jComboBoxBloqueActionPerformed(evt);
             }
         });
-        add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 110, -1));
+        add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 120, 30));
 
         Btn_Agregar_Aula.setBackground(new java.awt.Color(153, 255, 153));
         Btn_Agregar_Aula.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,30 +74,35 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
                 Btn_Agregar_AulaActionPerformed(evt);
             }
         });
-        add(Btn_Agregar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 110, 30));
+        add(Btn_Agregar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 360, 130, 40));
 
         Btn_Modificar_Aula.setText("Modificar");
-        add(Btn_Modificar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, 110, 30));
+        Btn_Modificar_Aula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Modificar_AulaActionPerformed(evt);
+            }
+        });
+        add(Btn_Modificar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 130, 40));
 
         Btn_Eliminar_Aula.setBackground(new java.awt.Color(204, 0, 0));
         Btn_Eliminar_Aula.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Eliminar_Aula.setText("Eliminar");
-        add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 110, 30));
+        add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 130, 40));
 
-        jLabel4.setText("Bloque");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, 30));
+        jLabel4.setText("Bloque/s:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 110, 30));
 
         jLabel1.setText("Nombre:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
 
         jLabel2.setText("Tipo:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, -1, -1));
 
         jLabel5.setText("Capacidad:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, -1));
-        add(txtNmbreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 190, -1));
-        add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 190, -1));
-        add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 190, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, -1, -1));
+        add(txtNmbreAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, 210, 40));
+        add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 210, 40));
+        add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 270, 210, 40));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -138,7 +143,7 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         jTableAulas.setRowHeight(30);
         jScrollPane1.setViewportView(jTableAulas);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 390, 200));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 390, 280));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -155,6 +160,10 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
     private void Btn_Agregar_AulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Agregar_AulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Btn_Agregar_AulaActionPerformed
+
+    private void Btn_Modificar_AulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Modificar_AulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Btn_Modificar_AulaActionPerformed
 
     public DefaultTableModel tabla = new DefaultTableModel() {
         @Override

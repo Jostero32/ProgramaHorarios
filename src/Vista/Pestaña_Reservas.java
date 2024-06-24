@@ -104,10 +104,10 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 630, 550));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 810, 550));
 
         jLabel1.setText("Bloque:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 110, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 110, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bloques/Aulas", "Docentes/Materias" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -115,29 +115,29 @@ public class Pestaña_Reservas extends javax.swing.JPanel {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 160, 30));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 160, 40));
 
         jLabel2.setText("Aula:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 110, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, 110, 30));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 160, 30));
+        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 160, 40));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
-        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 160, 30));
+        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, 160, 40));
 
         jLabel3.setText("Filtro");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 100, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 100, 30));
 
         boton_agregar.setText("Agregar");
-        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 110, 50));
+        jPanel1.add(boton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 110, 50));
 
         boton_editar.setText("Editar");
-        jPanel1.add(boton_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 120, 50));
+        jPanel1.add(boton_editar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 120, 50));
 
         boton_eliminar.setText("Eliminar");
-        jPanel1.add(boton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 110, 50));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 150, 40));
+        jPanel1.add(boton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 110, 50));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 180, 40));
 
         jScrollPane1.setViewportView(jPanel1);
 
