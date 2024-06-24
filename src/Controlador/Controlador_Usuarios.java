@@ -28,7 +28,22 @@ public class Controlador_Usuarios implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.interfaz.Btn_Agregar_U) {
             try {
-                Usuario usuario = new Usuario(this.interfaz.jTextField1.getText(), String.valueOf(this.interfaz.Txt_Clave.getPassword()), this.interfaz.jComboBox1.getSelectedItem().toString());
+                String nombreUsuario = this.interfaz.jTextField1.getText().trim();
+                String claveUsuario = String.valueOf(this.interfaz.Txt_Clave.getPassword()).trim();
+                String tipoUsuario = this.interfaz.jComboBox1.getSelectedItem().toString();
+
+                // Verificar que los campos no estén vacíos
+                if (nombreUsuario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El campo de usuario no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (claveUsuario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El campo de contraseña no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Usuario usuario = new Usuario(nombreUsuario, claveUsuario, tipoUsuario);
+
                 if (this.modelo.agregarUsuario(usuario)) {
                     this.interfaz.getUsuarios().add(usuario);
                     this.interfaz.ActualizarTablaUsuarios();
@@ -42,12 +57,28 @@ public class Controlador_Usuarios implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Datos mal ingresados", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         if (e.getSource() == this.interfaz.Btn_Modificar_U) {
             try {
                 int selectedRow = this.interfaz.Tabla_Usuarios.getSelectedRow();
                 if (selectedRow != -1) {
+                    String nombreUsuario = this.interfaz.jTextField1.getText().trim();
+                    String claveUsuario = String.valueOf(this.interfaz.Txt_Clave.getPassword()).trim();
+                    String tipoUsuario = this.interfaz.jComboBox1.getSelectedItem().toString();
                     String usuarioAnterior = this.interfaz.Tabla_Usuarios.getValueAt(selectedRow, 0).toString();
-                    Usuario usuarioModificado = new Usuario(this.interfaz.jTextField1.getText(), String.valueOf(this.interfaz.Txt_Clave.getPassword()), this.interfaz.jComboBox1.getSelectedItem().toString());
+
+                    // Verificar que los campos no estén vacíos
+                    if (nombreUsuario.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "El campo de usuario no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (claveUsuario.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "El campo de contraseña no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    Usuario usuarioModificado = new Usuario(nombreUsuario, claveUsuario, tipoUsuario);
+
                     if (this.modelo.actualizarUsuario(usuarioModificado, usuarioAnterior)) {
                         for (int i = 0; i < this.interfaz.getUsuarios().size(); i++) {
                             Usuario u = this.interfaz.getUsuarios().get(i);
