@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Clases.Usuario;
@@ -32,11 +28,28 @@ public class Controlador_Usuarios implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.interfaz.Btn_Agregar_U) {
             try {
-                Usuario usuario = new Usuario(this.interfaz.jTextField1.getText(), String.valueOf(this.interfaz.Txt_Clave.getPassword()), this.interfaz.jComboBox1.getSelectedItem().toString());
+                String nombreUsuario = this.interfaz.jTextField1.getText().trim();
+                String claveUsuario = String.valueOf(this.interfaz.Txt_Clave.getPassword()).trim();
+                String tipoUsuario = this.interfaz.jComboBox1.getSelectedItem().toString();
+
+                // Verificar que los campos no estén vacíos
+                if (nombreUsuario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El campo de usuario no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (claveUsuario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El campo de contraseña no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Usuario usuario = new Usuario(nombreUsuario, claveUsuario, tipoUsuario);
+
                 if (this.modelo.agregarUsuario(usuario)) {
                     this.interfaz.getUsuarios().add(usuario);
                     this.interfaz.ActualizarTablaUsuarios();
                     JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    // Limpiar los campos de texto
+                    this.interfaz.limpiarCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al crear usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -44,12 +57,28 @@ public class Controlador_Usuarios implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Datos mal ingresados", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         if (e.getSource() == this.interfaz.Btn_Modificar_U) {
             try {
                 int selectedRow = this.interfaz.Tabla_Usuarios.getSelectedRow();
                 if (selectedRow != -1) {
+                    String nombreUsuario = this.interfaz.jTextField1.getText().trim();
+                    String claveUsuario = String.valueOf(this.interfaz.Txt_Clave.getPassword()).trim();
+                    String tipoUsuario = this.interfaz.jComboBox1.getSelectedItem().toString();
                     String usuarioAnterior = this.interfaz.Tabla_Usuarios.getValueAt(selectedRow, 0).toString();
-                    Usuario usuarioModificado = new Usuario(this.interfaz.jTextField1.getText(), String.valueOf(this.interfaz.Txt_Clave.getPassword()), this.interfaz.jComboBox1.getSelectedItem().toString());
+
+                    // Verificar que los campos no estén vacíos
+                    if (nombreUsuario.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "El campo de usuario no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (claveUsuario.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "El campo de contraseña no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    Usuario usuarioModificado = new Usuario(nombreUsuario, claveUsuario, tipoUsuario);
+
                     if (this.modelo.actualizarUsuario(usuarioModificado, usuarioAnterior)) {
                         for (int i = 0; i < this.interfaz.getUsuarios().size(); i++) {
                             Usuario u = this.interfaz.getUsuarios().get(i);
@@ -60,6 +89,8 @@ public class Controlador_Usuarios implements ActionListener {
                         }
                         this.interfaz.ActualizarTablaUsuarios();
                         JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        // Limpiar los campos de texto
+                        this.interfaz.limpiarCampos();
                     } else {
                         JOptionPane.showMessageDialog(null, "Error al actualizar usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -87,8 +118,8 @@ public class Controlador_Usuarios implements ActionListener {
                             }
                         }
                         this.interfaz.ActualizarTablaUsuarios();
-                        this.interfaz.jTextField1.setText("");
-                        this.interfaz.Txt_Clave.setText("");
+                        // Limpiar los campos de texto
+                        this.interfaz.limpiarCampos();
                         JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Error al eliminar usuario. Puede que el usuario no exista o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
