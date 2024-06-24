@@ -22,7 +22,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
      */
     public Pestaña_Usuarios() {
         initComponents();
-        String columnas[] = {"Usuario"};
+        String columnas[] = {"Usuario","Tipo"};
         this.tabla.setColumnIdentifiers(columnas);
         this.Tabla_Usuarios.setModel(tabla);
         this.Tabla_Usuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -51,7 +51,6 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         Tabla_Usuarios = new javax.swing.JTable();
         Txt_Clave = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        BTN_Ver = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -127,20 +126,9 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         jLabel2.setText("Usuario");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 110, 30));
 
-        BTN_Ver.setText("Ver");
-        BTN_Ver.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BTN_VerMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                BTN_VerMouseReleased(evt);
-            }
-        });
-        add(BTN_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 180, 60, -1));
-
-        jLabel3.setText("Tipo:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 110, 30));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 210, 40));
+        jLabel3.setText("Contraseña");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
+        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 150, 40));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 240, 130, 35));
@@ -152,7 +140,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     public void ActualizarTablaUsuarios() {
         this.tabla.setRowCount(0);
         for (Usuario u : this.Usuarios) {
-            this.tabla.addRow(new Object[]{u.getUsuario()});
+            this.tabla.addRow(new Object[]{u.getUsuario(),u.getTipo()});
         }
     }
 
@@ -179,16 +167,6 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
-    private void BTN_VerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTN_VerMousePressed
-        // TODO add your handling code here:
-        this.Txt_Clave.setEchoChar((char) 0);
-    }//GEN-LAST:event_BTN_VerMousePressed
-
-    private void BTN_VerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTN_VerMouseReleased
-        // TODO add your handling code here:
-        this.Txt_Clave.setEchoChar('\u2022');
-    }//GEN-LAST:event_BTN_VerMouseReleased
-
     public DefaultTableModel tabla = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -205,7 +183,6 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         this.Usuarios = Usuarios;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton BTN_Ver;
     public javax.swing.JButton Btn_Agregar_U;
     public javax.swing.JButton Btn_Eliminar_U;
     public javax.swing.JButton Btn_Modificar_U;

@@ -132,6 +132,7 @@
         </Constraint>
       </Constraints>
     </Component>
+<<<<<<< HEAD
     <Component class="javax.swing.JButton" name="BTN_Ver">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver"/>
@@ -149,6 +150,8 @@
         </Constraint>
       </Constraints>
     </Component>
+=======
+>>>>>>> main
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tipo:"/>

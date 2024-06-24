@@ -120,19 +120,13 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 370, 350));
 
-        jLabel3.setText("Nombre");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 110, 30));
-        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 210, 40));
+        jLabel3.setText(" Nombre del Docente");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 140, 30));
+        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 150, 40));
 
-        jLabel4.setText("Correo");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 110, 30));
-
-        jtxtCedulaDocente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtCedulaDocenteActionPerformed(evt);
-            }
-        });
-        add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 210, 40));
+        jLabel4.setText("Cédula del Docente");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 130, 30));
+        add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 150, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
