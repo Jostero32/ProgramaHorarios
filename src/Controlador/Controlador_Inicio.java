@@ -11,6 +11,9 @@ import Vista.Interfaz_Inicio;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -23,7 +26,7 @@ public class Controlador_Inicio implements MouseListener {
     private Controlador_Usuarios controlador_usuarios;
     private Controlador_Login login;
 
-    //añadiendo el controlador de bloques y aulass
+    // Añadiendo el controlador de bloques y aulas
     private Controlador_Bloques controlador_bloque;
     private Controlador_Aulas controlador_aula;
     private Controlador_PeriodoAcademico controlador_periodo;
@@ -32,27 +35,38 @@ public class Controlador_Inicio implements MouseListener {
     private Controlador_DocentesMaterias controlador_docentes_materias;
     private Controlador_Reservas controlador_reservas;
     private Controlador_Reservas1 controlador_reservas1;
-    
-    
-    public Controlador_Inicio(Connection con,Usuario usuario, Controlador_Login login) throws SQLException{
-        this.interfaz=new Interfaz_Inicio();
-        this.controlador_usuarios=new Controlador_Usuarios(con);
 
-        //igual aqui añado el controlador de bloque
+    public Controlador_Inicio(Connection con, Usuario usuario, Controlador_Login login) throws SQLException {
+        this.interfaz = new Interfaz_Inicio();
+        this.controlador_usuarios = new Controlador_Usuarios(con);
+
+        // Igual aquí añado el controlador de bloque
         this.controlador_aula = new Controlador_Aulas(con);
         this.controlador_bloque = new Controlador_Bloques(con);
-        this.controlador_periodo=new Controlador_PeriodoAcademico(con);
+        this.controlador_periodo = new Controlador_PeriodoAcademico(con);
         this.controlador_docentes = new Controlador_Docentes(con);
         this.controlador_materias = new Controlador_Materias(con);
         this.controlador_docentes_materias = new Controlador_DocentesMaterias(con);
-        this.controlador_reservas=new Controlador_Reservas(con);
-        this.controlador_reservas1=new Controlador_Reservas1(con);
-        this.usuario=usuario;
-        this.login=login;
+        this.controlador_reservas = new Controlador_Reservas(con);
+        this.controlador_reservas1 = new Controlador_Reservas1(con);
+        this.usuario = usuario;
+        this.login = login;
         this.interfaz.Btn_CerrarSesion.addMouseListener(this);
         this.generarPestañas();
-        this.interfaz.jLabel3.setText("Bienvenido, "+this.usuario.getUsuario());
-        this.interfaz.jLabel4.setText("Tipo: "+this.usuario.getTipo());
+        this.interfaz.jLabel3.setText("Bienvenido, " + this.usuario.getUsuario());
+        this.interfaz.jLabel4.setText("Tipo: " + this.usuario.getTipo());
+
+        // Añadir ChangeListener al JTabbedPane
+        this.interfaz.jTabbedPane1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+                int selectedIndex = tabbedPane.getSelectedIndex();
+                if (tabbedPane.getTitleAt(selectedIndex).equals("Aulas")) {
+                    controlador_aula.actualizarBloques();
+                }
+            }
+        });
     }
 
     private void generarPestañas() {
@@ -100,5 +114,4 @@ public class Controlador_Inicio implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
 }
