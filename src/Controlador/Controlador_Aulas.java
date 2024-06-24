@@ -124,7 +124,7 @@ public void actionPerformed(ActionEvent e) {
             int capacidad = Integer.parseInt(this.pestaña.txtCapacidad.getText());
             String nombreBloque = this.pestaña.jComboBoxBloque.getSelectedItem().toString();
 
-            this.modeloAula.modificarAula( new Aula(nombreAula, nuevoNombre,  capacidad,tipo));
+            this.modeloAula.modificarAula(nombreAula, nuevoNombre, tipo, capacidad, nombreBloque);
             limpiarCamposTexto();
             actualizarAulas();
         } else {
