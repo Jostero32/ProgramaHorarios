@@ -55,6 +55,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(730, 250));
@@ -121,7 +122,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
         jScrollPane1.setViewportView(Tabla_Usuarios);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 370, 350));
-        add(Txt_Clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 150, 40));
+        add(Txt_Clave, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 210, 40));
 
         jLabel2.setText("Usuario");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 110, 30));
@@ -135,14 +136,17 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
                 BTN_VerMouseReleased(evt);
             }
         });
-        add(BTN_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 180, 60, -1));
+        add(BTN_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 180, 60, -1));
 
-        jLabel3.setText("Contraseña");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 150, 40));
+        jLabel3.setText("Tipo:");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 110, 30));
+        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 210, 40));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, 110, -1));
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 240, 130, 35));
+
+        jLabel4.setText("Contraseña");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void ActualizarTablaUsuarios() {
@@ -210,6 +214,7 @@ public class Pestaña_Usuarios extends javax.swing.JPanel {
     public javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

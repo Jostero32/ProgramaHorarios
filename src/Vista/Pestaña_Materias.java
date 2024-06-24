@@ -70,7 +70,7 @@ public class Pestaña_Materias extends javax.swing.JPanel {
                 jtbtnAgregarActionPerformed(evt);
             }
         });
-        add(jtbtnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 130, 40));
+        add(jtbtnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 130, 40));
 
         jtbtnModificar.setText("Modificar");
         add(jtbtnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, 130, 40));

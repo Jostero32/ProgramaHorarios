@@ -140,7 +140,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="520" y="80" width="150" height="40"/>
+          <AbsoluteConstraints x="520" y="80" width="210" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -155,12 +155,15 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="jtxtCedulaDocente">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtxtCedulaDocenteActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="520" y="210" width="150" height="40"/>
+          <AbsoluteConstraints x="520" y="210" width="210" height="40"/>
         </Constraint>
       </Constraints>
     </Component>

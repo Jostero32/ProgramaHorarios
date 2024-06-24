@@ -122,11 +122,17 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
 
         jLabel3.setText("Nombre");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 110, 30));
-        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 150, 40));
+        add(jtxtNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 210, 40));
 
         jLabel4.setText("Correo");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 110, 30));
-        add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 150, 40));
+
+        jtxtCedulaDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCedulaDocenteActionPerformed(evt);
+            }
+        });
+        add(jtxtCedulaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 210, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -167,6 +173,10 @@ public class Pestaña_Docentes extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
+
+    private void jtxtCedulaDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCedulaDocenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCedulaDocenteActionPerformed
 
     public DefaultTableModel tabla = new DefaultTableModel() {
         @Override
