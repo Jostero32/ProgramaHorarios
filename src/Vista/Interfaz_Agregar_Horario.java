@@ -83,17 +83,14 @@ public class Interfaz_Agregar_Horario extends javax.swing.JFrame {
         jLabel11.setText("Periodo:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 60, -1));
 
-        BTN_Agregar1.setBackground(new java.awt.Color(159, 20, 24));
         BTN_Agregar1.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
-        BTN_Agregar1.setForeground(new java.awt.Color(255, 255, 255));
         BTN_Agregar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BTN_Agregar1.setText("AGREGAR");
         BTN_Agregar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 0, 0), null, new java.awt.Color(255, 0, 0)));
         BTN_Agregar1.setOpaque(true);
         jPanel1.add(BTN_Agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 90, 30));
 
-        BTN_Cancelar.setBackground(new java.awt.Color(159, 20, 24));
         BTN_Cancelar.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
-        BTN_Cancelar.setForeground(new java.awt.Color(255, 255, 255));
         BTN_Cancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         BTN_Cancelar.setText("CANCELAR");
         BTN_Cancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 0, 0), null, new java.awt.Color(255, 0, 0)));

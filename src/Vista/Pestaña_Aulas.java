@@ -66,8 +66,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         });
         add(jComboBoxBloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 120, 30));
 
-        Btn_Agregar_Aula.setBackground(new java.awt.Color(153, 255, 153));
-        Btn_Agregar_Aula.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Agregar_Aula.setText("Agregar");
         Btn_Agregar_Aula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,8 +82,6 @@ public class Pestaña_Aulas extends javax.swing.JPanel {
         });
         add(Btn_Modificar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 130, 40));
 
-        Btn_Eliminar_Aula.setBackground(new java.awt.Color(204, 0, 0));
-        Btn_Eliminar_Aula.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Eliminar_Aula.setText("Eliminar");
         add(Btn_Eliminar_Aula, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 130, 40));
 

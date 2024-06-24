@@ -52,8 +52,6 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Btn_Agregar_Bloque.setBackground(new java.awt.Color(153, 255, 153));
-        Btn_Agregar_Bloque.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Agregar_Bloque.setText("Agregar");
         Btn_Agregar_Bloque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,8 +68,6 @@ public class Pestaña_Bloques extends javax.swing.JPanel {
         });
         add(Btn_Modificar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 130, 40));
 
-        Btn_Eliminar_Bloque.setBackground(new java.awt.Color(204, 0, 0));
-        Btn_Eliminar_Bloque.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Eliminar_Bloque.setText("Eliminar");
         add(Btn_Eliminar_Bloque, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 130, 40));
 
