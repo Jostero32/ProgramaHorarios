@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Clases.Usuario;
@@ -37,6 +33,8 @@ public class Controlador_Usuarios implements ActionListener {
                     this.interfaz.getUsuarios().add(usuario);
                     this.interfaz.ActualizarTablaUsuarios();
                     JOptionPane.showMessageDialog(null, "Usuario creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    // Limpiar los campos de texto
+                    this.interfaz.limpiarCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al crear usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -60,6 +58,8 @@ public class Controlador_Usuarios implements ActionListener {
                         }
                         this.interfaz.ActualizarTablaUsuarios();
                         JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        // Limpiar los campos de texto
+                        this.interfaz.limpiarCampos();
                     } else {
                         JOptionPane.showMessageDialog(null, "Error al actualizar usuario. El usuario puede ya existir o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -87,8 +87,8 @@ public class Controlador_Usuarios implements ActionListener {
                             }
                         }
                         this.interfaz.ActualizarTablaUsuarios();
-                        this.interfaz.jTextField1.setText("");
-                        this.interfaz.Txt_Clave.setText("");
+                        // Limpiar los campos de texto
+                        this.interfaz.limpiarCampos();
                         JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Error al eliminar usuario. Puede que el usuario no exista o hubo un problema en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
