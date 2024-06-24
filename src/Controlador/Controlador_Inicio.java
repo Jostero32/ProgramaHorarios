@@ -4,6 +4,7 @@
  */
 package Controlador;
 
+import Clases.PeriodoAcademico;
 import Clases.Usuario;
 import java.sql.Connection;
 import Vista.Interfaz_Inicio;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Usuario
+ * @author PeriodoAcademico
  */
 public class Controlador_Inicio implements MouseListener {
 
@@ -25,7 +26,7 @@ public class Controlador_Inicio implements MouseListener {
     //añadiendo el controlador de bloques y aulass
     private Controlador_Bloques controlador_bloque;
     private Controlador_Aulas controlador_aula;
-
+    private Controlador_PeriodoAcademico controlador_periodo;
     private Controlador_Docentes controlador_docentes;
     private Controlador_Materias controlador_materias;
     private Controlador_DocentesMaterias controlador_docentes_materias;
@@ -40,7 +41,7 @@ public class Controlador_Inicio implements MouseListener {
         //igual aqui añado el controlador de bloque
         this.controlador_aula = new Controlador_Aulas(con);
         this.controlador_bloque = new Controlador_Bloques(con);
-
+        this.controlador_periodo=new Controlador_PeriodoAcademico(con);
         this.controlador_docentes = new Controlador_Docentes(con);
         this.controlador_materias = new Controlador_Materias(con);
         this.controlador_docentes_materias = new Controlador_DocentesMaterias(con);
@@ -62,7 +63,7 @@ public class Controlador_Inicio implements MouseListener {
             this.interfaz.jTabbedPane1.addTab("Docentes", this.controlador_docentes.getInterfaz());
             this.interfaz.jTabbedPane1.addTab("Materias", this.controlador_materias.getInterfaz());
             this.interfaz.jTabbedPane1.addTab("DocentesMaterias", this.controlador_docentes_materias.getPestaña());
-
+            this.interfaz.jTabbedPane1.addTab("Periodo Academico", this.controlador_periodo.getInterfaz());
         }
         this.interfaz.jTabbedPane1.addTab("Horarios", this.controlador_reservas.getInterfaz());
         this.interfaz.jTabbedPane1.addTab("Reservas", this.controlador_reservas1.getInterfaz());

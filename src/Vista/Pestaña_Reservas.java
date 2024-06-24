@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Clases.Usuario;
+import Clases.PeriodoAcademico;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
